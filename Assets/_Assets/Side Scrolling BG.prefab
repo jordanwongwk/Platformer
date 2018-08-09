@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4033820058897332}
   - component: {fileID: 212655356167675058}
   - component: {fileID: 114730525194710756}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Side Scrolling BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4421748186005544}
   - component: {fileID: 212263581758852218}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4382250770720332}
   - component: {fileID: 212315933468412428}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4108737034777078}
   - component: {fileID: 212914713350754814}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,8 +268,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2067025657
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 569f1e89876e6b4428702d12ebc14133, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
