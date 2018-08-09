@@ -305,9 +305,11 @@ GameObject:
   m_Component:
   - component: {fileID: 531933809}
   - component: {fileID: 531933808}
-  - component: {fileID: 531933807}
   - component: {fileID: 531933810}
+  - component: {fileID: 531933807}
+  - component: {fileID: 531933813}
   - component: {fileID: 531933811}
+  - component: {fileID: 531933812}
   m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
@@ -327,8 +329,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.015395641, y: -0.104690194}
-  m_Size: {x: 0.44898033, y: 0.85367084}
+  m_Offset: {x: -0.00076556206, y: -0.09907091}
+  m_Size: {x: 0.41057348, y: 0.8649094}
   m_Direction: 0
 --- !u!212 &531933808
 SpriteRenderer:
@@ -407,8 +409,8 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!95 &531933811
 Animator:
   serializedVersion: 3
@@ -427,6 +429,44 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &531933812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 531933806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e142e672a9abfb74d9efe0aee3335cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 5
+  jumpSpeed: 23
+--- !u!61 &531933813
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 531933806}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.014502525, y: -0.5112123}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.8, y: 1.1}
+    newSize: {x: 0.8, y: 1.1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.45194054, y: 0.077575564}
+  m_EdgeRadius: 0
 --- !u!1 &658442045
 GameObject:
   m_ObjectHideFlags: 0
@@ -2407,7 +2447,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 1ab5777a71b8c094db12f3e4e08b5304, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
