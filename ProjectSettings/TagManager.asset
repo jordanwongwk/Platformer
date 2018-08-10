@@ -18,7 +18,7 @@ TagManager:
   - TileBackground
   - Player
   - Climbing
-  - 
+  - Hazard
   - 
   - 
   - 
@@ -50,9 +50,15 @@ TagManager:
   - name: Climbing
     uniqueID: 1307305585
     locked: 0
+  - name: Hazard
+    uniqueID: 2559570235
+    locked: 0
   - name: Player
     uniqueID: 1783416571
     locked: 0
   - name: Foreground
     uniqueID: 544439901
+    locked: 0
+  - name: RisingTide
+    uniqueID: 814478595
     locked: 0

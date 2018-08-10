@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
@@ -7,6 +8,7 @@ public class Player : MonoBehaviour {
 
     [SerializeField] float walkSpeed = 5.0f;
     [SerializeField] float jumpSpeed = 5.0f;
+    [SerializeField] float deathLaunch = 10.0f;
 
     Rigidbody2D myRigidBody;
     BoxCollider2D myFeetCollider;
@@ -14,6 +16,7 @@ public class Player : MonoBehaviour {
     Animator myAnimator;
 
     float initialGravityScale;
+    bool isAlive = true;
 
     // Use this for initialization
     void Start () {
@@ -27,9 +30,13 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Walking();
-        Jumping();
-        Climbing();
+        if (isAlive)
+        {
+            Walking();
+            Jumping();
+            Climbing();
+            CheckForPlayerDeath();
+        }
 	}
 
     void Walking()
@@ -85,5 +92,26 @@ public class Player : MonoBehaviour {
         {
             myAnimator.SetBool("isClimbing", true);
         }
+    }
+
+
+    void CheckForPlayerDeath()
+    {
+        if (myRigidBody.IsTouchingLayers(LayerMask.GetMask("Hazard")))
+        {
+            StartCoroutine(ProcessPlayerDeath());
+        }
+    }
+
+    IEnumerator ProcessPlayerDeath()
+    {
+        isAlive = false;
+        myRigidBody.velocity = new Vector2(0f, deathLaunch);
+        transform.eulerAngles = new Vector3(0f, 0f, 90f);
+        myAnimator.SetTrigger("isDying");
+        // TODO death sound?
+
+        yield return new WaitForSeconds(3.0f);          // If have death sound then death sound length
+        FindObjectOfType<GameManager>().RestartScene();
     }
 }
