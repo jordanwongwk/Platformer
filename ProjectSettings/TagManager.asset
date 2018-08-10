@@ -19,7 +19,7 @@ TagManager:
   - Player
   - Climbing
   - Hazard
-  - 
+  - Interactable
   - 
   - 
   - 
@@ -55,6 +55,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1783416571
+    locked: 0
+  - name: Interactable
+    uniqueID: 2356282437
     locked: 0
   - name: Foreground
     uniqueID: 544439901
