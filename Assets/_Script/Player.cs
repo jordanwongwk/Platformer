@@ -109,9 +109,10 @@ public class Player : MonoBehaviour {
         myRigidBody.velocity = new Vector2(0f, deathLaunch);
         transform.eulerAngles = new Vector3(0f, 0f, 90f);
         myAnimator.SetTrigger("isDying");
+        FindObjectOfType<GameManager>().LifeUpdate(-1);
         // TODO death sound?
 
         yield return new WaitForSeconds(3.0f);          // If have death sound then death sound length
-        FindObjectOfType<GameManager>().RestartScene();
+        FindObjectOfType<GameManager>().RestartLevel();
     }
 }

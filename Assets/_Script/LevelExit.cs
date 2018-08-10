@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinPickup : MonoBehaviour {
+public class LevelExit : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Coins pickup!");
-        Destroy(gameObject);
+        FindObjectOfType<GameManager>().ProceedNextLevel();
     }
 }
