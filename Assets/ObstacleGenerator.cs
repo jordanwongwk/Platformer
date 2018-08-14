@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObstacleGenerator : MonoBehaviour {
 
     [SerializeField] float navigateSpeed = 2.0f;
+    [SerializeField] float generationCooldown = 2.0f;
     [SerializeField] GameObject[] obstacleTiles;
 
     int lastGeneratedObsInt = 0;
@@ -44,7 +45,7 @@ public class ObstacleGenerator : MonoBehaviour {
     IEnumerator SpawningCooldown()
     {
         isSpawningObstacles = true;
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(generationCooldown);
         isSpawningObstacles = false;
     }
 }

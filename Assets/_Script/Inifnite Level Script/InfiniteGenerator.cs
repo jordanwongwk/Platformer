@@ -5,6 +5,7 @@ using UnityEngine;
 public class InfiniteGenerator : MonoBehaviour {
 
     [SerializeField] float navigateSpeed = 2.0f;
+    [SerializeField] float generationCooldown = 2.0f;
     [SerializeField] GameObject backgroundTiles;
 
     bool isSpawning = false;
@@ -28,7 +29,7 @@ public class InfiniteGenerator : MonoBehaviour {
     IEnumerator SpawningCooldown()
     {
         isSpawning = true;
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(generationCooldown);
         isSpawning = false;
     }
 }

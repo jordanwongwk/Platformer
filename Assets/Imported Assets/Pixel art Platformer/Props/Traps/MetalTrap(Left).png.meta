@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: b7a12508b7a463b48a683aca02f9eddb
+guid: 8d3dfa26d7521344ca8f34c823799022
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -27,7 +27,7 @@ TextureImporter:
   generateCubemap: 6
   cubemapConvolution: 0
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
@@ -74,12 +74,12 @@ TextureImporter:
     sprites: []
     outline: []
     physicsShape:
-    - - {x: -50, y: 0}
+    - - {x: -2, y: 50}
+      - {x: -50, y: 50}
       - {x: -50, y: -50}
-      - {x: 50, y: -50}
-      - {x: 50, y: 0}
+      - {x: -2, y: -50}
     bones: []
-    spriteID: 05f507a2b8a2beb4091b1e075e14c2ad
+    spriteID: 1e2136b62d9916241a6ad88d0fa1f94c
     vertices: []
     indices: 
     edges: []
