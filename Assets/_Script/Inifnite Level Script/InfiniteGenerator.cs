@@ -10,26 +10,24 @@ public class InfiniteGenerator : MonoBehaviour {
     bool isSpawning = false;
     BoxCollider2D generatorCol;
 
-	// Use this for initialization
 	void Start () {
         generatorCol = GetComponent<BoxCollider2D>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
         Vector3 currentTrans = transform.position;
         transform.position = new Vector3(currentTrans.x, currentTrans.y + (navigateSpeed * Time.deltaTime), currentTrans.z);
+
         if (!isSpawning && !generatorCol.IsTouchingLayers(LayerMask.GetMask("TileBackground")))
         {
-            Debug.Log("Blah");
-            isSpawning = true;
+            StartCoroutine(SpawningCooldown());         // Spawning cooldown to prevent repeated spawn for multiple colliders (SideWall)
             Instantiate(backgroundTiles, transform.position, Quaternion.identity);
-            StartCoroutine(SpawningCooldown());
         }
 	}
 
     IEnumerator SpawningCooldown()
     {
+        isSpawning = true;
         yield return new WaitForSeconds(2.0f);
         isSpawning = false;
     }
