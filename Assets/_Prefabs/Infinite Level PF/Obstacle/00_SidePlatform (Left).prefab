@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 2569400265443135048}
   - component: {fileID: 61988130920741722}
   m_Layer: 16
-  m_Name: SidePlatform (Left)
+  m_Name: 00_SidePlatform (Left)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -74,10 +74,10 @@ TextureImporter:
     sprites: []
     outline: []
     physicsShape:
-    - - {x: 25, y: -50}
-      - {x: 25, y: 50}
-      - {x: -25, y: 50}
-      - {x: -25, y: -50}
+    - - {x: 20, y: -50}
+      - {x: 20, y: 50}
+      - {x: -20, y: 50}
+      - {x: -20, y: -50}
     bones: []
     spriteID: 1d9add449e27d65419921442974e4deb
     vertices: []
