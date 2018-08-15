@@ -16,6 +16,7 @@ public class Player : MonoBehaviour {
     Animator myAnimator;
 
     float initialGravityScale;
+    float initialSpriteScale;
     bool isAlive = true;
 
     // Use this for initialization
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour {
         myAnimator = GetComponent<Animator>();
 
         initialGravityScale = myRigidBody.gravityScale;
+        initialSpriteScale = transform.localScale.x;
 	}
 	
 	// Update is called once per frame
@@ -49,7 +51,8 @@ public class Player : MonoBehaviour {
         {
             myAnimator.SetBool("isWalking", true);
             Vector3 myScale = transform.localScale;
-            myScale = new Vector3(Mathf.Sign(horizontalMove), myScale.y, myScale.z);
+            Debug.Log(myScale);
+            myScale = new Vector3(Mathf.Sign(horizontalMove) * initialSpriteScale, myScale.y, myScale.z);
             transform.localScale = myScale;
         }
         else
@@ -64,6 +67,7 @@ public class Player : MonoBehaviour {
 
         if (CrossPlatformInputManager.GetButtonDown("Jump"))
         {
+            myAnimator.SetTrigger("isJumping");
             Vector2 jumpVelocity = new Vector2(0f, jumpSpeed);
             myRigidBody.velocity += jumpVelocity;
         }
@@ -107,7 +111,6 @@ public class Player : MonoBehaviour {
     {
         isAlive = false;
         myRigidBody.velocity = new Vector2(0f, deathLaunch);
-        transform.eulerAngles = new Vector3(0f, 0f, 90f);
         myAnimator.SetTrigger("isDying");
         //FindObjectOfType<GameManager>().LifeUpdate(-1);
         // TODO death sound?
