@@ -19,10 +19,12 @@ public class ObstacleGenerator : MonoBehaviour {
 
     int lastGeneratedObsInt = 0;
     bool isSpawningObstacles = false;
+    GameObject obstaclesParent;
     BoxCollider2D obsGeneratorCollider;
 
     void Start()
     {
+        obstaclesParent = GameObject.FindGameObjectWithTag("Obstacles");
         obsGeneratorCollider = GetComponent<BoxCollider2D>();
     }
 
@@ -65,7 +67,8 @@ public class ObstacleGenerator : MonoBehaviour {
         lastGeneratedObsInt = generatedInt;
 
         var chosenObstacle = obstacles[generatedInt];
-        Instantiate(chosenObstacle, transform.position, Quaternion.identity);
+        GameObject newObstacle = Instantiate(chosenObstacle, transform.position, Quaternion.identity);
+        newObstacle.transform.parent = obstaclesParent.transform;
     }
 
     IEnumerator SpawningCooldown()

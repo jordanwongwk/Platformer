@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour {
 
-    [SerializeField] float speed = 5.0f;
+    public float speed = 5.0f;
     [SerializeField] Movement movementType;
     [SerializeField] Vector2 movementMin;
     [SerializeField] Vector2 movementMax;

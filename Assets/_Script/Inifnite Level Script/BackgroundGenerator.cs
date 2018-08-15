@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InfiniteGenerator : MonoBehaviour {
+public class BackgroundGenerator : MonoBehaviour {
 
     [SerializeField] float navigateSpeed = 2.0f;
     [SerializeField] float generationCooldown = 2.0f;
     [SerializeField] GameObject backgroundTiles;
 
     bool isSpawning = false;
+    GameObject backgroundParent;
     BoxCollider2D generatorCol;
 
 	void Start () {
+        backgroundParent = GameObject.FindGameObjectWithTag("Backgrounds");
         generatorCol = GetComponent<BoxCollider2D>();
 	}
 	
@@ -22,7 +24,8 @@ public class InfiniteGenerator : MonoBehaviour {
         if (!isSpawning && !generatorCol.IsTouchingLayers(LayerMask.GetMask("TileBackground")))
         {
             StartCoroutine(SpawningCooldown());         // Spawning cooldown to prevent repeated spawn for multiple colliders (SideWall)
-            Instantiate(backgroundTiles, transform.position, Quaternion.identity);
+            GameObject newBackground = Instantiate(backgroundTiles, transform.position, Quaternion.identity);
+            newBackground.transform.parent = backgroundParent.transform;
         }
 	}
 

@@ -51,7 +51,6 @@ public class Player : MonoBehaviour {
         {
             myAnimator.SetBool("isWalking", true);
             Vector3 myScale = transform.localScale;
-            Debug.Log(myScale);
             myScale = new Vector3(Mathf.Sign(horizontalMove) * initialSpriteScale, myScale.y, myScale.z);
             transform.localScale = myScale;
         }
@@ -98,7 +97,6 @@ public class Player : MonoBehaviour {
         }
     }
 
-
     void CheckForPlayerDeath()
     {
         if (myRigidBody.IsTouchingLayers(LayerMask.GetMask("Hazard")))
@@ -119,4 +117,20 @@ public class Player : MonoBehaviour {
         Debug.Log("Restarting");
         //FindObjectOfType<GameManager>().RestartLevel();
     }
+
+
+    // For attaching to moving platform!
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Platform")
+        {
+            transform.parent = collision.transform;
+        } 
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        transform.parent = null;
+    }
+    // End attaching to moving platform
 }
