@@ -28,4 +28,20 @@ public class PlatformLine : MonoBehaviour {
     {
         return pointsList;
     }
+
+    private void OnDrawGizmos()
+    {
+        Vector3 firstPos = transform.GetChild(0).position;
+        Vector3 lastPos = firstPos;
+
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+        {
+            Vector3 currentPos = transform.GetChild(i).position;
+
+            Gizmos.DrawWireSphere(currentPos, 0.05f);
+            Gizmos.DrawLine(lastPos, currentPos);
+
+            lastPos = currentPos;
+        }
+    }
 }

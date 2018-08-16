@@ -37,6 +37,8 @@ public class ObstacleGenerator : MonoBehaviour {
         {
             StartCoroutine(SpawningCooldown());
 
+            // TODO Use obstacleCount to keep track of obstacle spawned (switch mode for every 10?)
+
             if (transform.position.y <= changeToIntermediate)
             {
                 Debug.Log("simple");
