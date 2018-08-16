@@ -114,8 +114,10 @@ MonoBehaviour:
   - {fileID: 1223971572782424, guid: ad8e7b3f0ca13e24696901c7e756b0e4, type: 2}
   - {fileID: 1544468287476050, guid: 12e0821e9ab897a47a982c077b0c4382, type: 2}
   advancedObstacles:
-  - {fileID: 1224578522588654, guid: b572556da1a7c6b498666503f052dcca, type: 2}
-  - {fileID: 1803112284778784, guid: 2f73cedc7ace0e041a5b607c6eb7be26, type: 2}
+  - {fileID: 1814964611313436, guid: 3a9d1f039e08fe14a9ee5d006110ddcd, type: 2}
+  - {fileID: 1723898074438922, guid: 3c0f3d9fb8fd066459c9caabd75f61b4, type: 2}
+  - {fileID: 1697653105908196, guid: 1baefd8d384291745af4193997d8148e, type: 2}
+  - {fileID: 1970569361744032, guid: 0a9ed77c8896691489e2d111afe6f638, type: 2}
 --- !u!212 &212674711294004804
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -149,7 +151,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 814478595
-  m_SortingLayer: 10
+  m_SortingLayer: 12
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 81094d3a8e622874988a7c5bd2190b4f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

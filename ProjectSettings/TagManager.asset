@@ -68,8 +68,14 @@ TagManager:
   - name: Interactable
     uniqueID: 2356282437
     locked: 0
+  - name: Sub Foreground
+    uniqueID: 738548519
+    locked: 0
   - name: Foreground
     uniqueID: 544439901
+    locked: 0
+  - name: Foreground Front
+    uniqueID: 3638728889
     locked: 0
   - name: RisingTide
     uniqueID: 814478595
