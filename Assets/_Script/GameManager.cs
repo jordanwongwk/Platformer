@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour {
 
     [Header("General")]
     [SerializeField] Text waterDistanceToPlayer;
+    [SerializeField] Image[] waterLevelIndicatorImages;
+    [SerializeField] Slider waterLevelIndicatorSlider;
     [SerializeField] Text scoreText;
 
     [Header("Normal Mode")]
@@ -68,6 +70,25 @@ public class GameManager : MonoBehaviour {
 
     public void WaterLevelUpdate(float distance)
     {
-        waterDistanceToPlayer.text = distance.ToString("F2");       // To 2 Decimal Points
+        // TODO make distance check a separate function / delegate (because might need to change BGM)
+        foreach (Image image in waterLevelIndicatorImages)
+        {
+            if (distance <= 50.0f) { image.color = Color.red; }
+            else if (distance <= 100.0f) { image.color = Color.yellow; }
+            else { image.color = Color.green; }
+        }
+
+        waterLevelIndicatorSlider.value = (1 - distance / 200.0f);
+
+        // TODO Int or Float?
+        if (distance > 0f)
+        {
+            int distanceRoundUp = Mathf.RoundToInt(distance);
+            waterDistanceToPlayer.text = distanceRoundUp.ToString() + " m";
+        }
+        else
+        {
+            waterDistanceToPlayer.text = "0 m";
+        }
     }
 }
