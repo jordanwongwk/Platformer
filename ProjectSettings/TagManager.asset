@@ -8,6 +8,7 @@ TagManager:
   - Backgrounds
   - Platform
   - ObstacleForeground
+  - ObstacleBackground
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - Interactable
   - Generator
   - ObstacleForeground
-  - 
+  - RisingTide
   - 
   - 
   - 

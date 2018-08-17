@@ -6,15 +6,19 @@ public class RisingTide : MonoBehaviour {
 
     [SerializeField] float risingSpeed = 1.0f;
 
-    Rigidbody2D myRigidbody;
+    Player player;
+    GameManager gameManager;
 
 	// Use this for initialization
 	void Start () {
-        myRigidbody = GetComponent<Rigidbody2D>();
-	}
+        player = FindObjectOfType<Player>();
+        gameManager = FindObjectOfType<GameManager>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        myRigidbody.velocity = new Vector2(0f, risingSpeed * Time.deltaTime);
+        transform.position += new Vector3(0f, risingSpeed * Time.deltaTime, 0f);
+        float distanceDiff = player.transform.position.y - transform.position.y;
+        gameManager.WaterLevelUpdate(distanceDiff);
 	}
 }

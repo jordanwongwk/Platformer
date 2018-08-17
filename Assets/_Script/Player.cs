@@ -20,7 +20,6 @@ public class Player : MonoBehaviour {
     float initialSpriteScale;
     bool isAlive = true;
 
-    // Use this for initialization
     void Start () {
         myRigidBody = GetComponent<Rigidbody2D>();
         myFeetCollider = GetComponent<BoxCollider2D>();
@@ -31,7 +30,6 @@ public class Player : MonoBehaviour {
         initialSpriteScale = transform.localScale.x;
 	}
 	
-	// Update is called once per frame
 	void Update () {
         if (isAlive)
         {

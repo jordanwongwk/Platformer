@@ -6,9 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
-    [SerializeField] Text lifeText;
+    [Header("General")]
+    [SerializeField] Text waterDistanceToPlayer;
     [SerializeField] Text scoreText;
-    [SerializeField] int playerLife;
+
+    [Header("Normal Mode")]
+    [SerializeField] Text lifeText;         // TODO do I need life?
+    [SerializeField] int playerLife = 0;
 
     int playerScore = 0;
     public static GameManager instance;
@@ -28,8 +32,14 @@ public class GameManager : MonoBehaviour {
 
     private void Start()
     {
-        lifeText.text = playerLife.ToString();
-        scoreText.text = playerScore.ToString();
+        if (lifeText != null)
+        {
+            lifeText.text = playerLife.ToString();
+        }
+        else if (scoreText != null)
+        {
+            scoreText.text = playerScore.ToString();
+        }
     }
 
     public void RestartLevel()
@@ -54,5 +64,10 @@ public class GameManager : MonoBehaviour {
     {
         playerLife += life;
         lifeText.text = playerLife.ToString();
+    }
+
+    public void WaterLevelUpdate(float distance)
+    {
+        waterDistanceToPlayer.text = distance.ToString("F2");       // To 2 Decimal Points
     }
 }
