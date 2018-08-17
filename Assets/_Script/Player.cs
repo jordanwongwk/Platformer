@@ -14,7 +14,6 @@ public class Player : MonoBehaviour {
     BoxCollider2D myFeetCollider;
     CapsuleCollider2D myBodyCollider;
     Animator myAnimator;
-    public GameObject currentObstacle;
     Vector3 respawnPoint;
 
     float initialGravityScale;
@@ -105,29 +104,51 @@ public class Player : MonoBehaviour {
         {
             StartCoroutine(ProcessPlayerDeath());
         }
+        else if (myRigidBody.IsTouchingLayers(LayerMask.GetMask("RisingTide")))
+        {
+            StartCoroutine(ProcessPlayerPermenantDeath());
+        }
     }
 
     IEnumerator ProcessPlayerDeath()
     {
-        isAlive = false;
-        myRigidBody.velocity = new Vector2(0f, deathLaunch);
-        myAnimator.SetTrigger("isDying");
+        PlayerDeathSequence();
         //FindObjectOfType<GameManager>().LifeUpdate(-1);
         // TODO death sound?
 
-        yield return new WaitForSeconds(3.0f);          // If have death sound then death sound length
-        transform.position = respawnPoint;
-        myAnimator.SetTrigger("isRespawned");
+        yield return new WaitForSeconds(3.0f);          // TODO Set deathDelay : if have death sound then death sound length
         isAlive = true;
+        myAnimator.SetTrigger("isRespawned");
+        transform.position = respawnPoint;
     }
 
+    IEnumerator ProcessPlayerPermenantDeath()
+    {
+        PlayerDeathSequence();
+        yield return new WaitForSeconds(3.0f);
+        Debug.Log("Game Over!");
+    }
 
+    private void PlayerDeathSequence()
+    {
+        isAlive = false;
+        myRigidBody.velocity = new Vector2(0f, deathLaunch);
+        myAnimator.SetTrigger("isDying");
+        myRigidBody.gravityScale = initialGravityScale;
+    }
+
+    // Register the current obstacle the player is on
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "ObstacleForeground")
+        if (isAlive)
         {
-            currentObstacle = collision.gameObject;
-            respawnPoint = currentObstacle.transform.Find("RespawnPoint").position;
+            if (collision.gameObject.tag == "ObstacleForeground")
+            {
+                // TODO combine if statement
+                GameObject currentObstacle = collision.gameObject;
+                respawnPoint = currentObstacle.transform.Find("RespawnPoint").position;
+                Debug.Log("Location of death: " + currentObstacle);
+            }
         }
     }
 
