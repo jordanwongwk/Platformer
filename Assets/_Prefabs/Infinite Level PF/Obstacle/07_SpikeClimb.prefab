@@ -63,6 +63,21 @@ GameObject:
   - component: {fileID: 61268514546640698}
   m_Layer: 16
   m_Name: 07_SpikeClimb
+  m_TagString: ObstacleForeground
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1574204437316262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4051706011309558}
+  m_Layer: 16
+  m_Name: RespawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,6 +120,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4051706011309558
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1574204437316262}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4688752526601224}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4152219706622634
 Transform:
   m_ObjectHideFlags: 1
@@ -145,6 +173,7 @@ Transform:
   - {fileID: 4152219706622634}
   - {fileID: 4979479655932514}
   - {fileID: 4216059949453226}
+  - {fileID: 4051706011309558}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -332,14 +361,6 @@ CompositeCollider2D:
         Y: 150000000
       - X: 90000000
         Y: 150000000
-    - - X: 24800000
-        Y: 140000000
-      - X: 20000000
-        Y: 140000000
-      - X: 20000000
-        Y: 20000000
-      - X: 24800000
-        Y: 20000000
     - - X: 80000000
         Y: 140000000
       - X: 75200000
@@ -348,14 +369,14 @@ CompositeCollider2D:
         Y: 130000000
       - X: 80000000
         Y: 130000000
-    - - X: 54800000
-        Y: 120000000
-      - X: 45200000
-        Y: 120000000
-      - X: 45200000
-        Y: 70000000
-      - X: 54800000
-        Y: 70000000
+    - - X: 24800000
+        Y: 140000000
+      - X: 20000000
+        Y: 140000000
+      - X: 20000000
+        Y: 20000000
+      - X: 24800000
+        Y: 20000000
     - - X: 84799992
         Y: 120000000
       - X: 75200000
@@ -364,28 +385,36 @@ CompositeCollider2D:
         Y: 70000000
       - X: 84799992
         Y: 70000000
+    - - X: 54800000
+        Y: 120000000
+      - X: 45200000
+        Y: 120000000
+      - X: 45200000
+        Y: 70000000
+      - X: 54800000
+        Y: 70000000
   m_CompositePaths:
     m_Paths:
     - - {x: 9, y: 15.5}
       - {x: 2, y: 15.5}
       - {x: 2, y: 15}
       - {x: 9, y: 15}
-    - - {x: 2.48, y: 14}
-      - {x: 2, y: 14}
-      - {x: 2, y: 2}
-      - {x: 2.48, y: 2}
     - - {x: 8, y: 14}
       - {x: 7.52, y: 14}
       - {x: 7.52, y: 13}
       - {x: 8, y: 13}
-    - - {x: 5.48, y: 12}
-      - {x: 4.52, y: 12}
-      - {x: 4.52, y: 7}
-      - {x: 5.48, y: 7}
+    - - {x: 2.48, y: 14}
+      - {x: 2, y: 14}
+      - {x: 2, y: 2}
+      - {x: 2.48, y: 2}
     - - {x: 8.48, y: 12}
       - {x: 7.52, y: 12}
       - {x: 7.52, y: 7}
       - {x: 8.48, y: 7}
+    - - {x: 5.48, y: 12}
+      - {x: 4.52, y: 12}
+      - {x: 4.52, y: 7}
+      - {x: 5.48, y: 7}
   m_VertexDistance: 0.0005
 --- !u!66 &66877182432707770
 CompositeCollider2D:
@@ -438,14 +467,6 @@ CompositeCollider2D:
         Y: 120000000
       - X: 60000000
         Y: 120000000
-    - - X: 90000000
-        Y: 70000000
-      - X: 70000000
-        Y: 70000000
-      - X: 70000000
-        Y: 60000000
-      - X: 90000000
-        Y: 60000000
     - - X: 100000000
         Y: 50000000
       - X: 60000000
@@ -466,6 +487,14 @@ CompositeCollider2D:
         Y: 20000000
       - X: 100000000
         Y: 20000000
+    - - X: 90000000
+        Y: 70000000
+      - X: 70000000
+        Y: 70000000
+      - X: 70000000
+        Y: 60000000
+      - X: 90000000
+        Y: 60000000
     - - X: 70000000
         Y: 10000000
       - X: 50000000
@@ -492,10 +521,6 @@ CompositeCollider2D:
       - {x: 4, y: 13}
       - {x: 4, y: 12}
       - {x: 6, y: 12}
-    - - {x: 9, y: 7}
-      - {x: 7, y: 7}
-      - {x: 7, y: 6}
-      - {x: 9, y: 6}
     - - {x: 10, y: 5}
       - {x: 6, y: 5}
       - {x: 6, y: 7}
@@ -506,6 +531,10 @@ CompositeCollider2D:
       - {x: 9, y: 3}
       - {x: 9, y: 2}
       - {x: 10, y: 2}
+    - - {x: 9, y: 7}
+      - {x: 7, y: 7}
+      - {x: 7, y: 6}
+      - {x: 9, y: 6}
     - - {x: 7, y: 1}
       - {x: 5, y: 1}
       - {x: 5, y: 0}
@@ -720,7 +749,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 544439901
-  m_SortingLayer: 9
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

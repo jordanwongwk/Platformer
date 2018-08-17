@@ -7,6 +7,7 @@ TagManager:
   - Obstacles
   - Backgrounds
   - Platform
+  - ObstacleForeground
   layers:
   - Default
   - TransparentFX

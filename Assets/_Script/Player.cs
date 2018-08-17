@@ -14,6 +14,8 @@ public class Player : MonoBehaviour {
     BoxCollider2D myFeetCollider;
     CapsuleCollider2D myBodyCollider;
     Animator myAnimator;
+    public GameObject currentObstacle;
+    Vector3 respawnPoint;
 
     float initialGravityScale;
     float initialSpriteScale;
@@ -114,8 +116,19 @@ public class Player : MonoBehaviour {
         // TODO death sound?
 
         yield return new WaitForSeconds(3.0f);          // If have death sound then death sound length
-        Debug.Log("Restarting");
-        //FindObjectOfType<GameManager>().RestartLevel();
+        transform.position = respawnPoint;
+        myAnimator.SetTrigger("isRespawned");
+        isAlive = true;
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "ObstacleForeground")
+        {
+            currentObstacle = collision.gameObject;
+            respawnPoint = currentObstacle.transform.Find("RespawnPoint").position;
+        }
     }
 
 

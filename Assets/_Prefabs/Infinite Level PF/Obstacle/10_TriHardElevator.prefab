@@ -122,6 +122,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1209878983953126
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4248477155397454}
+  m_Layer: 16
+  m_Name: RespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1220724354047448
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,7 +338,7 @@ GameObject:
   - component: {fileID: 61878536567981590}
   m_Layer: 16
   m_Name: 10_TriHardElevator
-  m_TagString: Untagged
+  m_TagString: ObstacleForeground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -607,6 +622,19 @@ Transform:
   m_Father: {fileID: 4719708764400396}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4248477155397454
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1209878983953126}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4627575050168414}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4265152575671094
 Transform:
   m_ObjectHideFlags: 1
@@ -758,6 +786,7 @@ Transform:
   - {fileID: 4542276696412858}
   - {fileID: 4846600975617400}
   - {fileID: 4159778676847524}
+  - {fileID: 4248477155397454}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

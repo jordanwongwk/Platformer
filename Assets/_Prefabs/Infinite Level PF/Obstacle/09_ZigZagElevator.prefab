@@ -251,6 +251,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1441165560183660
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4087489223372468}
+  m_Layer: 16
+  m_Name: RespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1462955889202756
 GameObject:
   m_ObjectHideFlags: 1
@@ -364,7 +379,7 @@ GameObject:
   - component: {fileID: 61386952870548366}
   m_Layer: 16
   m_Name: 09_ZigZagElevator
-  m_TagString: Untagged
+  m_TagString: ObstacleForeground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -667,6 +682,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4087489223372468
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1441165560183660}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4659238024002016}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4150734239299372
 Transform:
   m_ObjectHideFlags: 1
@@ -1017,6 +1045,7 @@ Transform:
   - {fileID: 4675666429100664}
   - {fileID: 4487607193127306}
   - {fileID: 4852478708433688}
+  - {fileID: 4087489223372468}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1740,14 +1769,6 @@ CompositeCollider2D:
         Y: 120000000
       - X: 100000000
         Y: 120000000
-    - - X: 40000000
-        Y: 90000000
-      - X: 20000000
-        Y: 90000000
-      - X: 20000000
-        Y: 70000000
-      - X: 40000000
-        Y: 70000000
     - - X: 100000000
         Y: 90000000
       - X: 80000000
@@ -1756,6 +1777,14 @@ CompositeCollider2D:
         Y: 80000000
       - X: 100000000
         Y: 80000000
+    - - X: 40000000
+        Y: 90000000
+      - X: 20000000
+        Y: 90000000
+      - X: 20000000
+        Y: 70000000
+      - X: 40000000
+        Y: 70000000
     - - X: 100000000
         Y: 70000000
       - X: 80000000
@@ -1822,14 +1851,14 @@ CompositeCollider2D:
       - {x: 8, y: 13}
       - {x: 8, y: 12}
       - {x: 10, y: 12}
-    - - {x: 4, y: 9}
-      - {x: 2, y: 9}
-      - {x: 2, y: 7}
-      - {x: 4, y: 7}
     - - {x: 10, y: 9}
       - {x: 8, y: 9}
       - {x: 8, y: 8}
       - {x: 10, y: 8}
+    - - {x: 4, y: 9}
+      - {x: 2, y: 9}
+      - {x: 2, y: 7}
+      - {x: 4, y: 7}
     - - {x: 10, y: 7}
       - {x: 8, y: 7}
       - {x: 8, y: 6}

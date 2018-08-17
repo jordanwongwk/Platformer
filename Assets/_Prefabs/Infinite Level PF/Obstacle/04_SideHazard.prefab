@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 61355189616928104}
   m_Layer: 16
   m_Name: 04_SideHazard
-  m_TagString: Untagged
+  m_TagString: ObstacleForeground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,6 +58,21 @@ GameObject:
   - component: {fileID: 4736654883617908}
   m_Layer: 16
   m_Name: Hazard (Non-Tile)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1431389398999994
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4957038664777212}
+  m_Layer: 16
+  m_Name: RespawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -182,6 +197,7 @@ Transform:
   - {fileID: 4598060187094830}
   - {fileID: 4087498612592378}
   - {fileID: 4736654883617908}
+  - {fileID: 4957038664777212}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -199,6 +215,19 @@ Transform:
   - {fileID: 4181828131629214}
   m_Father: {fileID: 4699741457951266}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4957038664777212
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1431389398999994}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4699741457951266}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50763138864017286
 Rigidbody2D:
@@ -791,7 +820,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 544439901
-  m_SortingLayer: 9
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
