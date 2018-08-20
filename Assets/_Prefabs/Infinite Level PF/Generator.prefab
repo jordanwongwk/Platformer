@@ -101,7 +101,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navigateSpeed: 5
   generationCooldown: 0.5
-  backgroundTiles: []
+  backgroundTiles:
+  - {fileID: 1203553400033268, guid: 4ab6023704de0fa4488107a9e47d862d, type: 2}
+  - {fileID: 1190920644019810, guid: ea2aa5d0de731264c9dc18fec92d6d07, type: 2}
+  - {fileID: 1287444676376380, guid: cd1e644440ae66a418401c797ec7d7b2, type: 2}
+  - {fileID: 1637553086091768, guid: 08156c81dce7b6b48a330d62ec72f385, type: 2}
+  - {fileID: 1181456633156064, guid: 2a86163c2c03be64ca25b53aa235f39e, type: 2}
 --- !u!212 &212369298905391458
 SpriteRenderer:
   m_ObjectHideFlags: 1
