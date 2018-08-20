@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fd04100919ae11941b734ce2bfed1d58
+guid: 41870ea6a0dda1749b4302483c4a2c19
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Starlight Personal
+  fontName: Brady Bunch Remastered
   fontNames:
-  - Starlight Personal
+  - Brady Bunch Remastered
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

@@ -6,7 +6,7 @@ public class BackgroundGenerator : MonoBehaviour {
 
     [SerializeField] float navigateSpeed = 2.0f;
     [SerializeField] float generationCooldown = 2.0f;
-    [SerializeField] GameObject backgroundTiles;
+    [SerializeField] GameObject[] backgroundTiles;
 
     bool isSpawning = false;
     GameObject backgroundParent;
@@ -24,7 +24,10 @@ public class BackgroundGenerator : MonoBehaviour {
         if (!isSpawning && !generatorCol.IsTouchingLayers(LayerMask.GetMask("TileBackground")))
         {
             StartCoroutine(SpawningCooldown());         // Spawning cooldown to prevent repeated spawn for multiple colliders (SideWall)
-            GameObject newBackground = Instantiate(backgroundTiles, transform.position, Quaternion.identity);
+
+            int generatedInt = Random.Range(0, backgroundTiles.Length);
+            var chosenBackground = backgroundTiles[generatedInt];
+            GameObject newBackground = Instantiate(chosenBackground, transform.position, Quaternion.identity);
             newBackground.transform.parent = backgroundParent.transform;
         }
 	}

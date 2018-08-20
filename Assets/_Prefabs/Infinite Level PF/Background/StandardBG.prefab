@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 50705842170890554}
   - component: {fileID: 61025180960857412}
   m_Layer: 10
-  m_Name: GeneratedBGAndSides
+  m_Name: StandardBG
   m_TagString: ObstacleBackground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
