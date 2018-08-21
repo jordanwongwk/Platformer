@@ -23,12 +23,11 @@ public class BackgroundGenerator : MonoBehaviour {
 
         if (!isSpawning && !generatorCol.IsTouchingLayers(LayerMask.GetMask("TileBackground")))
         {
-            StartCoroutine(SpawningCooldown());         // Spawning cooldown to prevent repeated spawn for multiple colliders (SideWall)
-
             int generatedInt = Random.Range(0, backgroundTiles.Length);
             var chosenBackground = backgroundTiles[generatedInt];
             GameObject newBackground = Instantiate(chosenBackground, transform.position, Quaternion.identity);
             newBackground.transform.parent = backgroundParent.transform;
+            StartCoroutine(SpawningCooldown());         // Spawning cooldown to prevent repeated spawn for multiple colliders (SideWall)
         }
 	}
 

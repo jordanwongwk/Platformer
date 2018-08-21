@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Levels/InfiniteTower.unity
+    path: Assets/_Levels/00_MainMenu.unity
+    guid: 87b53ffe64f36a24badc60e6a87d4dbc
+  - enabled: 1
+    path: Assets/_Levels/01_LoadingScreen.unity
+    guid: 1cf25722c22073446adca572767bf0b6
+  - enabled: 1
+    path: Assets/_Levels/02_InfiniteTower.unity
     guid: 299431e0ad37b91438e02b30f87ef188
   m_configObjects: {}

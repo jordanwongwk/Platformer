@@ -35,8 +35,6 @@ public class ObstacleGenerator : MonoBehaviour {
 
         if (!isSpawningObstacles && !obsGeneratorCollider.IsTouchingLayers(LayerMask.GetMask("ObstacleForeground")))
         {
-            StartCoroutine(SpawningCooldown());
-
             // TODO Use obstacleCount to keep track of obstacle spawned (switch mode for every 10?)
 
             if (transform.position.y <= changeToIntermediate)
@@ -71,6 +69,7 @@ public class ObstacleGenerator : MonoBehaviour {
         var chosenObstacle = obstacles[generatedInt];
         GameObject newObstacle = Instantiate(chosenObstacle, transform.position, Quaternion.identity);
         newObstacle.transform.parent = obstaclesParent.transform;
+        StartCoroutine(SpawningCooldown());             // Put this here to prevent being called before this function is called
     }
 
     IEnumerator SpawningCooldown()
