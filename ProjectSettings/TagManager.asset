@@ -55,6 +55,9 @@ TagManager:
   - name: Line
     uniqueID: 243566605
     locked: 0
+  - name: PropsBehindPlayer
+    uniqueID: 3670973503
+    locked: 0
   - name: Climbing
     uniqueID: 1307305585
     locked: 0
