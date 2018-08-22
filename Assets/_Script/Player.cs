@@ -124,6 +124,8 @@ public class Player : MonoBehaviour {
     {
         PlayerDeathSequence();
         yield return new WaitForSeconds(3.0f);
+        Time.timeScale = 0f;
+        FindObjectOfType<GameManager>().OpenGameOverPanel();
         Debug.Log("Game Over!");
     }
 
@@ -145,7 +147,6 @@ public class Player : MonoBehaviour {
                 // TODO combine if statement
                 GameObject currentObstacle = collision.gameObject;
                 respawnPoint = currentObstacle.transform.Find("RespawnPoint").position;
-                Debug.Log("Location of death: " + currentObstacle);
             }
         }
     }

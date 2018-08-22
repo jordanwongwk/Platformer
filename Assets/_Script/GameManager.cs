@@ -11,26 +11,14 @@ public class GameManager : MonoBehaviour {
     [SerializeField] Image[] waterLevelIndicatorImages;
     [SerializeField] Slider waterLevelIndicatorSlider;
     [SerializeField] Text scoreText;
+    [SerializeField] GameObject gameOverPanel;
+    [SerializeField] GameObject pausePanel;
 
     [Header("Normal Mode")]
     [SerializeField] Text lifeText;         // TODO do I need life?
     [SerializeField] int playerLife = 0;
 
     int playerScore = 0;
-    public static GameManager instance;
-
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
 
     private void Start()
     {
@@ -44,17 +32,15 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void RestartLevel()
+    private void Update()
     {
-        int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentLevelIndex);
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0f;
+            pausePanel.SetActive(true);
+        }
     }
 
-    public void ProceedNextLevel()
-    {
-        int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentLevelIndex + 1);
-    }
 
     public void ScoreUpdate(int score)
     {
@@ -78,7 +64,7 @@ public class GameManager : MonoBehaviour {
             else { image.color = Color.green; }
         }
 
-        waterLevelIndicatorSlider.value = (1 - distance / 200.0f);
+        waterLevelIndicatorSlider.value = distance / 200.0f;
 
         // TODO Int or Float?
         if (distance > 0f)
@@ -90,5 +76,16 @@ public class GameManager : MonoBehaviour {
         {
             waterDistanceToPlayer.text = "0 m";
         }
+    }
+
+    public void OpenGameOverPanel()
+    {
+        gameOverPanel.SetActive(true);
+    }
+
+    public void ClosePausePanel()
+    {
+        Time.timeScale = 1f;
+        pausePanel.SetActive(false);
     }
 }

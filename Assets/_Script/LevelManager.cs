@@ -9,13 +9,49 @@ public class LevelManager : MonoBehaviour {
     [SerializeField] int mainMenuIndex;
     [SerializeField] int gameLoadingBuildIndex;
 
-    [Header("Panels Configurations")]
-    [SerializeField] GameObject leaderboardPanel;
-    [SerializeField] GameObject optionsPanel;
-    [SerializeField] GameObject creditsPanel;
+    public static LevelManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
 
     public void StartGame()
     {
         SceneManager.LoadScene(gameLoadingBuildIndex);
     }
+
+    public void QuitGame()
+    {
+        Debug.Log("Game is quitting.");
+        Application.Quit();
+    }
+
+    public void ExitToMainMenu()
+    {
+        SceneManager.LoadScene(mainMenuIndex);
+        Time.timeScale = 1.0f;
+    }
+
+    #region For Stage Progression Mode
+    public void RestartLevel()
+    {
+        int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentLevelIndex);
+    }
+
+    public void ProceedNextLevel()
+    {
+        int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentLevelIndex + 1);
+    }
+    #endregion
 }
