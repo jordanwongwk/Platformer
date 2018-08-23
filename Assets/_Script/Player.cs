@@ -9,11 +9,16 @@ public class Player : MonoBehaviour {
     [SerializeField] float walkSpeed = 5.0f;
     [SerializeField] float jumpSpeed = 5.0f;
     [SerializeField] float deathLaunch = 10.0f;
+    [SerializeField] AudioClip jumpSound;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip gameOverSound;
 
     Rigidbody2D myRigidBody;
     BoxCollider2D myFeetCollider;
     CapsuleCollider2D myBodyCollider;
     Animator myAnimator;
+    AudioSource myAudioSource;
+
     Vector3 respawnPoint;
 
     float initialGravityScale;
@@ -25,6 +30,7 @@ public class Player : MonoBehaviour {
         myFeetCollider = GetComponent<BoxCollider2D>();
         myBodyCollider = GetComponent<CapsuleCollider2D>();
         myAnimator = GetComponent<Animator>();
+        myAudioSource = GetComponent<AudioSource>();
 
         initialGravityScale = myRigidBody.gravityScale;
         initialSpriteScale = transform.localScale.x;
@@ -67,6 +73,7 @@ public class Player : MonoBehaviour {
         {
             myAnimator.SetTrigger("isJumping");
             Vector2 jumpVelocity = new Vector2(0f, jumpSpeed);
+            myAudioSource.PlayOneShot(jumpSound);
             myRigidBody.velocity += jumpVelocity;
         }
     }
@@ -124,6 +131,7 @@ public class Player : MonoBehaviour {
     {
         PlayerDeathSequence();
         yield return new WaitForSeconds(3.0f);
+        myAudioSource.PlayOneShot(gameOverSound);
         Time.timeScale = 0f;
         FindObjectOfType<GameManager>().OpenGameOverPanel();
         Debug.Log("Game Over!");
@@ -132,6 +140,7 @@ public class Player : MonoBehaviour {
     private void PlayerDeathSequence()
     {
         isAlive = false;
+        myAudioSource.PlayOneShot(deathSound);
         myRigidBody.velocity = new Vector2(0f, deathLaunch);
         myAnimator.SetTrigger("isDying");
         myRigidBody.gravityScale = initialGravityScale;
