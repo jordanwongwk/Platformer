@@ -1451,7 +1451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16834ebedec925343a9d1e076fd03bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.5
+  speed: 1
   timeWaitAtPoint: 1.5
   designatedMoveLine: {fileID: 1888955189291532}
   isMovingPositiveDirection: 0
@@ -1538,7 +1538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16834ebedec925343a9d1e076fd03bbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.5
+  speed: 1
   timeWaitAtPoint: 1.5
   designatedMoveLine: {fileID: 1857487833673080}
   isMovingPositiveDirection: 0
