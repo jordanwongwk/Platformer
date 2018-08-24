@@ -6,16 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
-    [Header("General")]
-    [SerializeField] Text waterDistanceToPlayer;
-    [SerializeField] Image[] waterLevelIndicatorImages;
-    [SerializeField] Slider waterLevelIndicatorSlider;
-    [SerializeField] Text scoreText;
+    [Header("Setup")]
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] GameObject pausePanel;
+    [SerializeField] AudioSource masterMusicPlayer;
 
-    [Header("Normal Mode")]
+    [Header("Water Slider Options")]
+    [SerializeField] Slider waterLevelIndicatorSlider;
+    [SerializeField] Text waterDistanceToPlayer;
+    [SerializeField] Image[] waterLevelIndicatorImages;
+
+    [Header("UI Handler")]
     [SerializeField] Text lifeText;         // TODO do I need life?
+    [SerializeField] Text scoreText;
     [SerializeField] int playerLife = 0;
 
     int playerScore = 0;
@@ -30,6 +33,8 @@ public class GameManager : MonoBehaviour {
         {
             scoreText.text = playerScore.ToString();
         }
+
+        masterMusicPlayer.volume = PlayerPrefsManager.GetMusicVolume();
     }
 
     private void Update()

@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour {
     [SerializeField] GameObject creditsPanel;
     [SerializeField] GameObject quitConfirmationPanel;
 
+    bool isOptionPanelOn = false;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -21,22 +23,33 @@ public class UIManager : MonoBehaviour {
     public void EnableOptionsPanel()
     {
         Time.timeScale = 0f;
+        isOptionPanelOn = true;
         optionsPanel.SetActive(true);
     }
 
     public void ConfirmOptionChanges()
     {
-        // TODO Recognize changes and implement to player prefs
-        Debug.Log("Player Prefs Updated!");
         Time.timeScale = 1f;
+        float musicVolumeChange = GetComponent<OptionManager>().GetMusicVolumeChange();
+        float soundVolumeChange = GetComponent<OptionManager>().GetSoundVolumeChange();
+
+        PlayerPrefsManager.SetMusicVolume(musicVolumeChange);
+        PlayerPrefsManager.SetSoundVolume(soundVolumeChange);
+        isOptionPanelOn = false;
         optionsPanel.SetActive(false);
     }
 
     public void CancelOptionChanges()
     {
-        // TODO nullified changes?
         Time.timeScale = 1f;
+        GetComponent<OptionManager>().DefaultOptions();
+        isOptionPanelOn = false;
         optionsPanel.SetActive(false);
+    }
+
+    public bool OptionPanelStatus()
+    {
+        return isOptionPanelOn;
     }
     #endregion
 

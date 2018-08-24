@@ -9,14 +9,14 @@ public class ObstacleGenerator : MonoBehaviour {
     [SerializeField] float generationCooldown = 2.0f;
 
     [Header("Tier Threshold")]
-    [SerializeField] float changeToIntermediate = 250.0f;
-    [SerializeField] float changeToAdvanced = 750.0f;
+    [SerializeField] int obstacleCountToChange = 15;
 
     [Header("Obstacles Array")]
     [SerializeField] GameObject[] simpleObstacles;
     [SerializeField] GameObject[] intermediateObstacles;
     [SerializeField] GameObject[] advancedObstacles;
 
+    int currentObstacleCount = 0;
     int lastGeneratedObsInt = 0;
     bool isSpawningObstacles = false;
     GameObject obstaclesParent;
@@ -35,19 +35,17 @@ public class ObstacleGenerator : MonoBehaviour {
 
         if (!isSpawningObstacles && !obsGeneratorCollider.IsTouchingLayers(LayerMask.GetMask("ObstacleForeground")))
         {
-            // TODO Use obstacleCount to keep track of obstacle spawned (switch mode for every 10?)
-
-            if (transform.position.y <= changeToIntermediate)
+            if (currentObstacleCount < obstacleCountToChange)
             {
                 Debug.Log("simple");
                 SpawningObstacle(simpleObstacles);
             }
-            else if (transform.position.y > changeToIntermediate && transform.position.y <= changeToAdvanced)
+            else if (currentObstacleCount < obstacleCountToChange * 2)
             {
                 Debug.Log("intermediate");
                 SpawningObstacle(intermediateObstacles);
             }
-            else if (transform.position.y > changeToAdvanced)
+            else 
             {
                 Debug.Log("advanced");
                 SpawningObstacle(advancedObstacles);
@@ -69,6 +67,9 @@ public class ObstacleGenerator : MonoBehaviour {
         var chosenObstacle = obstacles[generatedInt];
         GameObject newObstacle = Instantiate(chosenObstacle, transform.position, Quaternion.identity);
         newObstacle.transform.parent = obstaclesParent.transform;
+
+        currentObstacleCount++;
+        Debug.Log("Current Count: " + currentObstacleCount);
         StartCoroutine(SpawningCooldown());             // Put this here to prevent being called before this function is called
     }
 

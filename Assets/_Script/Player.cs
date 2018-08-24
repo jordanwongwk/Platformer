@@ -34,6 +34,7 @@ public class Player : MonoBehaviour {
 
         initialGravityScale = myRigidBody.gravityScale;
         initialSpriteScale = transform.localScale.x;
+        myAudioSource.volume = PlayerPrefsManager.GetSoundVolume();
 	}
 	
 	void Update () {

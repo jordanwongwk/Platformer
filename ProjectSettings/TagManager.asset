@@ -9,6 +9,7 @@ TagManager:
   - Platform
   - ObstacleForeground
   - ObstacleBackground
+  - MusicPlayer
   layers:
   - Default
   - TransparentFX
