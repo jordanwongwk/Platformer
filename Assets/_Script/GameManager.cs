@@ -21,30 +21,25 @@ public class GameManager : MonoBehaviour {
     [SerializeField] float dangerZone = 50.0f;
     [SerializeField] float cautionZone = 100.0f;
 
-    [Header("UI Handler")]
-    [SerializeField] Text lifeText;         // TODO do I need life?
+    [Header("Score Handler")]
     [SerializeField] Text scoreText;
     [SerializeField] float scoreMultiplier = 1.5f;
-    [SerializeField] int playerLife = 0;
+
+    [Header("Game Over Panel")]
+    [SerializeField] Text timeText;
+    [SerializeField] Text hazardHitsText;
+    [SerializeField] Text totalScoreText;
 
 
     int playerScore = 0;
-    float currentScore = 0;
+    float currentScore;
     Player myPlayer;
 
     private void Start()
     {
-        if (lifeText != null)
-        {
-            lifeText.text = playerLife.ToString();
-        }
-        else if (scoreText != null)
-        {
-            scoreText.text = playerScore.ToString();
-        }
-
         myPlayer = FindObjectOfType<Player>();
         masterMusicPlayer.volume = PlayerPrefsManager.GetMusicVolume();
+        scoreText.text = playerScore.ToString();
     }
 
     private void Update()
@@ -54,24 +49,20 @@ public class GameManager : MonoBehaviour {
         {
             Time.timeScale = 0f;
             pausePanel.SetActive(true);
-            ScoreUpdate();
         }
+
+        ScoreUpdate();
     }
 
-    void ScoreUpdate()
+    public void ScoreUpdate()
     {
-        if (playerScore >= currentScore) { return; }
+        currentScore = myPlayer.transform.position.y * 100f * scoreMultiplier;
 
-        currentScore = myPlayer.transform.position.y * scoreMultiplier * 100f;
+        if (playerScore >= currentScore) {  return;  }
+
         playerScore = Mathf.RoundToInt(currentScore);
         scoreText.text = playerScore.ToString();
     }
-
-    //public void LifeUpdate(int life)
-    //{
-    //    playerLife += life;
-    //    lifeText.text = playerLife.ToString();
-    //}
 
     public void WaterLevelUpdate(float distance)
     {
@@ -104,5 +95,19 @@ public class GameManager : MonoBehaviour {
     {
         Time.timeScale = 1f;
         pausePanel.SetActive(false);
+    }
+
+    public void GameOverPanelUpdate()
+    {
+        // Play time
+        float minutes = Mathf.Floor(Time.time / 60f);
+        float seconds = Time.time % 60f;
+        timeText.text = minutes.ToString("00") + " : " + seconds.ToString("00");
+
+        // Hazard hit counts
+        hazardHitsText.text = myPlayer.GetHazardHits().ToString();
+
+        // Final score
+        totalScoreText.text = playerScore.ToString();
     }
 }

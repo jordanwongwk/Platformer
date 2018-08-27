@@ -21,6 +21,7 @@ public class Player : MonoBehaviour {
 
     Vector3 respawnPoint;
 
+    int hazardHitCounts = 0;
     float initialGravityScale;
     float initialSpriteScale;
     bool isAlive = true;
@@ -119,9 +120,7 @@ public class Player : MonoBehaviour {
     IEnumerator ProcessPlayerDeath()
     {
         PlayerDeathSequence();
-        //FindObjectOfType<GameManager>().LifeUpdate(-1);
-        // TODO death sound?
-
+        hazardHitCounts++;
         yield return new WaitForSeconds(3.0f);          // TODO Set deathDelay : if have death sound then death sound length
         isAlive = true;
         myAnimator.SetTrigger("isRespawned");
@@ -131,11 +130,11 @@ public class Player : MonoBehaviour {
     IEnumerator ProcessPlayerPermenantDeath()
     {
         PlayerDeathSequence();
+        FindObjectOfType<GameManager>().GameOverPanelUpdate();
         yield return new WaitForSeconds(3.0f);
         myAudioSource.PlayOneShot(gameOverSound);
         Time.timeScale = 0f;
         FindObjectOfType<GameManager>().OpenGameOverPanel();
-        Debug.Log("Game Over!");
     }
 
     private void PlayerDeathSequence()
@@ -161,7 +160,6 @@ public class Player : MonoBehaviour {
         }
     }
 
-
     // For attaching to moving platform!
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -176,4 +174,9 @@ public class Player : MonoBehaviour {
         transform.parent = null;
     }
     // End attaching to moving platform
+
+    public int GetHazardHits()
+    {
+        return hazardHitCounts;
+    }
 }
