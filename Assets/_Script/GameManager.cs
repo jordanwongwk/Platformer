@@ -15,13 +15,22 @@ public class GameManager : MonoBehaviour {
     [SerializeField] Slider waterLevelIndicatorSlider;
     [SerializeField] Text waterDistanceToPlayer;
     [SerializeField] Image[] waterLevelIndicatorImages;
+    [SerializeField] float maxSliderLength = 200.0f;
+
+    [Header("Water Caution Level")]
+    [SerializeField] float dangerZone = 50.0f;
+    [SerializeField] float cautionZone = 100.0f;
 
     [Header("UI Handler")]
     [SerializeField] Text lifeText;         // TODO do I need life?
     [SerializeField] Text scoreText;
+    [SerializeField] float scoreMultiplier = 1.5f;
     [SerializeField] int playerLife = 0;
 
+
     int playerScore = 0;
+    float currentScore = 0;
+    Player myPlayer;
 
     private void Start()
     {
@@ -34,44 +43,47 @@ public class GameManager : MonoBehaviour {
             scoreText.text = playerScore.ToString();
         }
 
+        myPlayer = FindObjectOfType<Player>();
         masterMusicPlayer.volume = PlayerPrefsManager.GetMusicVolume();
     }
 
     private void Update()
     {
+        // Pause Game
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Time.timeScale = 0f;
             pausePanel.SetActive(true);
+            ScoreUpdate();
         }
     }
 
-
-    public void ScoreUpdate(int score)
+    void ScoreUpdate()
     {
-        playerScore += score;
+        if (playerScore >= currentScore) { return; }
+
+        currentScore = myPlayer.transform.position.y * scoreMultiplier * 100f;
+        playerScore = Mathf.RoundToInt(currentScore);
         scoreText.text = playerScore.ToString();
     }
 
-    public void LifeUpdate(int life)
-    {
-        playerLife += life;
-        lifeText.text = playerLife.ToString();
-    }
+    //public void LifeUpdate(int life)
+    //{
+    //    playerLife += life;
+    //    lifeText.text = playerLife.ToString();
+    //}
 
     public void WaterLevelUpdate(float distance)
     {
-        // TODO make distance check a separate function / delegate (because might need to change BGM)
         foreach (Image image in waterLevelIndicatorImages)
         {
-            if (distance <= 50.0f) { image.color = Color.red; }
-            else if (distance <= 100.0f) { image.color = Color.yellow; }
+            if (distance <= dangerZone) { image.color = Color.red; }
+            else if (distance <= cautionZone) { image.color = Color.yellow; }
             else { image.color = Color.green; }
         }
 
-        waterLevelIndicatorSlider.value = distance / 200.0f;
+        waterLevelIndicatorSlider.value = distance / maxSliderLength;
 
-        // TODO Int or Float?
         if (distance > 0f)
         {
             int distanceRoundUp = Mathf.RoundToInt(distance);
