@@ -121,10 +121,18 @@ public class Player : MonoBehaviour {
     {
         PlayerDeathSequence();
         hazardHitCounts++;
-        yield return new WaitForSeconds(3.0f);          // TODO Set deathDelay : if have death sound then death sound length
-        isAlive = true;
+        Debug.Log("Dead");
+        yield return new WaitForSeconds(3.0f);      // TODO Set deathDelay : if have death sound then death sound length
         myAnimator.SetTrigger("isRespawned");
         transform.position = respawnPoint;
+        StartCoroutine(ChangeIsAliveStatus());
+    }
+
+    // To prevent death on 2nd time when respawning
+    IEnumerator ChangeIsAliveStatus()
+    {
+        yield return new WaitForSeconds(0.5f);
+        isAlive = true;                             
     }
 
     IEnumerator ProcessPlayerPermenantDeath()

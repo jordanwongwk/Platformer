@@ -21,4 +21,9 @@ public class RisingTide : MonoBehaviour {
         float distanceDiff = player.transform.position.y - transform.position.y;
         gameManager.WaterLevelUpdate(distanceDiff);
 	}
+
+    public void RisingWaterSpeed(float addedSpeed)
+    {
+        risingSpeed += addedSpeed;
+    }
 }

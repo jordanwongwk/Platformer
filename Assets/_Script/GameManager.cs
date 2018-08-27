@@ -30,9 +30,12 @@ public class GameManager : MonoBehaviour {
     [SerializeField] Text hazardHitsText;
     [SerializeField] Text totalScoreText;
 
+    [SerializeField] float timeForRaisingWaterSpeed = 5.0f;     // Fixed for all difficulty
+    float waterSpeedAddition = 1.0f;     // TODO Change for different difficulty
 
     int playerScore = 0;
     float currentScore;
+    float lastRaisedTime = 0;
     Player myPlayer;
 
     private void Start()
@@ -52,9 +55,10 @@ public class GameManager : MonoBehaviour {
         }
 
         ScoreUpdate();
+        CheckForTimeToRaiseWaterSpeed();
     }
 
-    public void ScoreUpdate()
+    void ScoreUpdate()
     {
         currentScore = myPlayer.transform.position.y * 100f * scoreMultiplier;
 
@@ -62,6 +66,17 @@ public class GameManager : MonoBehaviour {
 
         playerScore = Mathf.RoundToInt(currentScore);
         scoreText.text = playerScore.ToString();
+    }
+
+    void CheckForTimeToRaiseWaterSpeed()
+    {
+        if (Time.time >= timeForRaisingWaterSpeed + lastRaisedTime)
+        {
+            lastRaisedTime = Time.time;
+            FindObjectOfType<RisingTide>().RisingWaterSpeed(waterSpeedAddition);
+
+            //TODO Add SFX and UI Text for water rising
+        }
     }
 
     public void WaterLevelUpdate(float distance)
