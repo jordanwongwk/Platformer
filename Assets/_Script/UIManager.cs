@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour {
 
     [Header("Panels Configurations")]
+    [SerializeField] GameObject gameModeSelectionPanel;
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject creditsPanel;
     [SerializeField] GameObject quitConfirmationPanel;
@@ -18,6 +19,20 @@ public class UIManager : MonoBehaviour {
             EnableQuitPanel();
         }
     }
+
+    #region Game Mode Selection Panel
+    public void EnableGameModeSelectionPanel()
+    {
+        Time.timeScale = 0f;
+        gameModeSelectionPanel.SetActive(true);
+    }
+
+    public void DisableGameModeSelectionPanel()
+    {
+        Time.timeScale = 1f;
+        gameModeSelectionPanel.SetActive(false);
+    }
+    #endregion
 
     #region Options Panel
     public void EnableOptionsPanel()

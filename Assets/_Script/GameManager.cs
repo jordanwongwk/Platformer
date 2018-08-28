@@ -17,31 +17,42 @@ public class GameManager : MonoBehaviour {
     [SerializeField] Image[] waterLevelIndicatorImages;
     [SerializeField] float maxSliderLength = 200.0f;
 
-    [Header("Water Caution Level")]
+    [Header("Water Caution Mechanism")]
     [SerializeField] float dangerZone = 50.0f;
     [SerializeField] float cautionZone = 100.0f;
+    [SerializeField] AudioClip waterRisingAlert;
+    [SerializeField] Text waterRisingTextAlert;
 
     [Header("Score Handler")]
     [SerializeField] Text scoreText;
-    [SerializeField] float scoreMultiplier = 1.5f;
 
     [Header("Game Over Panel")]
     [SerializeField] Text timeText;
     [SerializeField] Text hazardHitsText;
     [SerializeField] Text totalScoreText;
 
+
     [SerializeField] float timeForRaisingWaterSpeed = 5.0f;     // Fixed for all difficulty
-    float waterSpeedAddition = 1.0f;     // TODO Change for different difficulty
+
+    [SerializeField] float waterSpeedAddition = 0f;     // TODO Change for different difficulty
+    [SerializeField] float scoreMultiplier = 0f;
 
     int playerScore = 0;
     float currentScore;
     float lastRaisedTime = 0;
     Player myPlayer;
+    AudioSource managerAudioSource;
 
     private void Start()
     {
         myPlayer = FindObjectOfType<Player>();
+        managerAudioSource = GetComponent<AudioSource>();
+
         masterMusicPlayer.volume = PlayerPrefsManager.GetMusicVolume();
+        managerAudioSource.volume = PlayerPrefsManager.GetSoundVolume();
+        waterSpeedAddition = PlayerPrefsManager.GetRisingWaterAdditionalSpeed();
+        scoreMultiplier = PlayerPrefsManager.GetScoreMultiplier();
+
         scoreText.text = playerScore.ToString();
     }
 
@@ -50,8 +61,7 @@ public class GameManager : MonoBehaviour {
         // Pause Game
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Time.timeScale = 0f;
-            pausePanel.SetActive(true);
+            OpenPausePanel();
         }
 
         ScoreUpdate();
@@ -70,13 +80,21 @@ public class GameManager : MonoBehaviour {
 
     void CheckForTimeToRaiseWaterSpeed()
     {
-        if (Time.time >= timeForRaisingWaterSpeed + lastRaisedTime)
+        if (Time.timeSinceLevelLoad >= timeForRaisingWaterSpeed + lastRaisedTime)
         {
-            lastRaisedTime = Time.time;
+            lastRaisedTime = Time.timeSinceLevelLoad;
             FindObjectOfType<RisingTide>().RisingWaterSpeed(waterSpeedAddition);
 
-            //TODO Add SFX and UI Text for water rising
+            StartCoroutine(WaterRiseWarning());
         }
+    }
+
+    IEnumerator WaterRiseWarning()
+    {
+        managerAudioSource.PlayOneShot(waterRisingAlert);
+        waterRisingTextAlert.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3.0f);          // TODO set a variable or const?
+        waterRisingTextAlert.gameObject.SetActive(false);
     }
 
     public void WaterLevelUpdate(float distance)
@@ -106,6 +124,12 @@ public class GameManager : MonoBehaviour {
         gameOverPanel.SetActive(true);
     }
 
+    public void OpenPausePanel()
+    {
+        Time.timeScale = 0f;
+        pausePanel.SetActive(true);
+    }
+
     public void ClosePausePanel()
     {
         Time.timeScale = 1f;
@@ -115,8 +139,8 @@ public class GameManager : MonoBehaviour {
     public void GameOverPanelUpdate()
     {
         // Play time
-        float minutes = Mathf.Floor(Time.time / 60f);
-        float seconds = Time.time % 60f;
+        float minutes = Mathf.Floor(Time.timeSinceLevelLoad / 60f);
+        float seconds = Time.timeSinceLevelLoad % 60f;
         timeText.text = minutes.ToString("00") + " : " + seconds.ToString("00");
 
         // Hazard hit counts
