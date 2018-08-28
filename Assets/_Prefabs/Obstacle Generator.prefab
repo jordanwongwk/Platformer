@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navigateSpeed: 5
   generationCooldown: 1
-  obstacleCountToChange: 15
+  obstacleCountToChange: 4
   simpleObstacles:
   - {fileID: 1225195384755102, guid: 185a398d9fc1e5c438bc5dc55a8753ed, type: 2}
   - {fileID: 1100781589082398, guid: 1db1f86496daa934d9a3b7e75fb82bf4, type: 2}
@@ -114,9 +114,10 @@ MonoBehaviour:
   - {fileID: 1544468287476050, guid: 12e0821e9ab897a47a982c077b0c4382, type: 2}
   advancedObstacles:
   - {fileID: 1814964611313436, guid: 3a9d1f039e08fe14a9ee5d006110ddcd, type: 2}
-  - {fileID: 1723898074438922, guid: 3c0f3d9fb8fd066459c9caabd75f61b4, type: 2}
+  - {fileID: 1546638105081338, guid: 3102ff862551c2c45880a6cd2e38d2ce, type: 2}
   - {fileID: 1697653105908196, guid: 1baefd8d384291745af4193997d8148e, type: 2}
   - {fileID: 1970569361744032, guid: 0a9ed77c8896691489e2d111afe6f638, type: 2}
+  endlessModeObstacles: []
 --- !u!212 &212674711294004804
 SpriteRenderer:
   m_ObjectHideFlags: 1
