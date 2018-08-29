@@ -6,72 +6,101 @@ public class AutomatedPlatform : MonoBehaviour {
 
     [SerializeField] float dropSpeed = 5.0f;
     [SerializeField] float riseSpeed = 1.0f;
-    [Tooltip("Only works with 2 points, make sure the 1st child is at lower pos and 2nd child is at higher pos.")]
+    [Tooltip("Only works with 2 points, make sure the 1st child is the destination and 2nd child is the resting pos.")]
     [SerializeField] GameObject designatedMoveLine;
     [SerializeField] GameObject dropTriggerCollider;
+    [SerializeField] AudioClip triggerSound;
 
     [Header("Advanced Settings")]
-    [Tooltip("Should the object forced to reach the bottom even collider is null?")]
-    [SerializeField] bool forcedHitBottom = false;
-    [Tooltip("Should the object reach the top first before initiate another fall?")]
-    [SerializeField] bool forcedReachTop = false;
+    [Tooltip("Should the object forced to reach the destination even collider is null?")]
+    [SerializeField] bool forcedReachDestination = false;
+    [Tooltip("Should the object reach the initial point before initiate another trigger?")]
+    [SerializeField] bool forcedReturnToInitial = false;
 
-    bool isMovingDown = false;
+    bool isTriggeredToMove = false;
+    bool isObjectBusy = false;          // use to control the number of times coroutine is being called, once is enough for performance
     float journeyCovered;
     BoxCollider2D myBoxCollider;
+    AudioSource myAudioSource;
 
     List<GameObject> pointsList = new List<GameObject>();
 
-    const int LOWER_POINT = 0;
-    const int HIGHER_POINT = 1;
+    const int DESTINATION_POINT = 0;
+    const int INITIAL_POINT = 1;
 
     void Start ()
     {
 	    pointsList = designatedMoveLine.GetComponent<PlatformLine>().GetPlatformPointsList();
         myBoxCollider = dropTriggerCollider.GetComponent<BoxCollider2D>();
+
+        if (triggerSound != null)
+        {
+            myAudioSource = GetComponent<AudioSource>();
+            myAudioSource.volume = PlayerPrefsManager.GetSoundVolume();
+        }
     }
 
     void Update()
     {
-        // Check if the platform should go up or down
-        if (myBoxCollider.IsTouchingLayers(LayerMask.GetMask("Player")))
+        // Trigger object to go destination
+        // The check for "isTriggeredToMove" is to make sure that it doesn't call the functions when its not needed (idle, moving back etc)
+        if (!isTriggeredToMove && myBoxCollider.IsTouchingLayers(LayerMask.GetMask("Player")))
         {
-            if (!forcedReachTop)
+            if (!forcedReturnToInitial)
             {
-                isMovingDown = true;
+                TriggerAudioClip();             // Consider Removing this?
+                isTriggeredToMove = true;
             }
-            else if (forcedReachTop && transform.position == pointsList[HIGHER_POINT].transform.position)
+            else if (forcedReturnToInitial && transform.position == pointsList[INITIAL_POINT].transform.position)
             {
-                isMovingDown = true;
+                if (!isObjectBusy)
+                {
+                    TriggerAudioClip();
+                    StartCoroutine(CooldownBeforeMoving(true, 0f));
+                }
             }
         }
-        else
+        // Object only move back when player moves away from trigger
+        else if (isTriggeredToMove && !myBoxCollider.IsTouchingLayers(LayerMask.GetMask("Player")))
         {
-            if (!forcedHitBottom)
+            if (!forcedReachDestination)
             {
-                isMovingDown = false;
+                isTriggeredToMove = false;
             }
-            else if (forcedHitBottom && transform.position == pointsList[LOWER_POINT].transform.position)
+            else if (forcedReachDestination && transform.position == pointsList[DESTINATION_POINT].transform.position)
             {
-                StartCoroutine(CooldownBeforeMoving(false));
+                if (!isObjectBusy)
+                { 
+                    StartCoroutine(CooldownBeforeMoving(false, 1.0f));
+                }
             }
         }
-
+        
         // Automated movement
-        if (isMovingDown)
+        if (isTriggeredToMove)
         {
-            Move(pointsList[LOWER_POINT], dropSpeed);
+            Move(pointsList[DESTINATION_POINT], dropSpeed);
         }
         else 
         {
-            Move(pointsList[HIGHER_POINT], riseSpeed);
+            Move(pointsList[INITIAL_POINT], riseSpeed);
         }
     }
 
-    IEnumerator CooldownBeforeMoving(bool state)
+    private void TriggerAudioClip()
     {
-        yield return new WaitForSeconds(1.0f);          // TODO need variable?
-        isMovingDown = state;
+        if (triggerSound != null && myAudioSource.isPlaying == false)
+        {
+            myAudioSource.PlayOneShot(triggerSound);
+        }
+    }
+
+    IEnumerator CooldownBeforeMoving(bool state, float delay)
+    {
+        isObjectBusy = true;
+        yield return new WaitForSeconds(delay);
+        isTriggeredToMove = state;
+        isObjectBusy = false;
     }
 
     void Move(GameObject destination, float speed)
