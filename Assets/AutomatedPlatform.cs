@@ -9,13 +9,18 @@ public class AutomatedPlatform : MonoBehaviour {
     [Tooltip("Only works with 2 points, make sure the 1st child is the destination and 2nd child is the resting pos.")]
     [SerializeField] GameObject designatedMoveLine;
     [SerializeField] GameObject dropTriggerCollider;
-    [SerializeField] AudioClip triggerSound;
 
     [Header("Advanced Settings")]
     [Tooltip("Should the object forced to reach the destination even collider is null?")]
     [SerializeField] bool forcedReachDestination = false;
     [Tooltip("Should the object reach the initial point before initiate another trigger?")]
     [SerializeField] bool forcedReturnToInitial = false;
+    [SerializeField] float triggerMoveDelay = 0f;
+    [SerializeField] float returnInitialDelay = 1.0f;
+
+    [Header("Optional: Sounds")]
+    [SerializeField] AudioClip dropSound;
+    [SerializeField] AudioClip triggerSound;
 
     bool isTriggeredToMove = false;
     bool isObjectBusy = false;          // use to control the number of times coroutine is being called, once is enough for performance
@@ -32,12 +37,8 @@ public class AutomatedPlatform : MonoBehaviour {
     {
 	    pointsList = designatedMoveLine.GetComponent<PlatformLine>().GetPlatformPointsList();
         myBoxCollider = dropTriggerCollider.GetComponent<BoxCollider2D>();
-
-        if (triggerSound != null)
-        {
-            myAudioSource = GetComponent<AudioSource>();
-            myAudioSource.volume = PlayerPrefsManager.GetSoundVolume();
-        }
+        myAudioSource = GetComponent<AudioSource>();
+        myAudioSource.volume = GameManager.GetSoundVolume();
     }
 
     void Update()
@@ -48,15 +49,15 @@ public class AutomatedPlatform : MonoBehaviour {
         {
             if (!forcedReturnToInitial)
             {
-                TriggerAudioClip();             // Consider Removing this?
+                PlayAudioClip(dropSound);             // Consider Removing this?
                 isTriggeredToMove = true;
             }
             else if (forcedReturnToInitial && transform.position == pointsList[INITIAL_POINT].transform.position)
             {
                 if (!isObjectBusy)
                 {
-                    TriggerAudioClip();
-                    StartCoroutine(CooldownBeforeMoving(true, 0f));
+                    PlayAudioClip(triggerSound);
+                    StartCoroutine(CooldownBeforeMoving(true, triggerMoveDelay, true));
                 }
             }
         }
@@ -71,7 +72,7 @@ public class AutomatedPlatform : MonoBehaviour {
             {
                 if (!isObjectBusy)
                 { 
-                    StartCoroutine(CooldownBeforeMoving(false, 1.0f));
+                    StartCoroutine(CooldownBeforeMoving(false, returnInitialDelay, false));
                 }
             }
         }
@@ -87,28 +88,37 @@ public class AutomatedPlatform : MonoBehaviour {
         }
     }
 
-    private void TriggerAudioClip()
+    private void PlayAudioClip(AudioClip clipToPlay = null)
     {
-        if (triggerSound != null && myAudioSource.isPlaying == false)
+        if (clipToPlay != null && myAudioSource.isPlaying == false)
         {
-            myAudioSource.PlayOneShot(triggerSound);
+            myAudioSource.PlayOneShot(clipToPlay);
         }
     }
 
-    IEnumerator CooldownBeforeMoving(bool state, float delay)
+    IEnumerator CooldownBeforeMoving(bool state, float delay, bool playSound)
     {
         isObjectBusy = true;
         yield return new WaitForSeconds(delay);
         isTriggeredToMove = state;
+
+        if (playSound)
+        {
+            PlayAudioClip(dropSound);
+        }
+
         isObjectBusy = false;
     }
 
     void Move(GameObject destination, float speed)
     {
-        float journey = speed * Time.deltaTime;
-        float totalDistance = Vector3.Distance(transform.position, destination.transform.position);
-        journeyCovered = journey / totalDistance;
+        if (Time.deltaTime != 0)            // Time.timescale = 0 will cause error of output result being (NaN, NaN, NaN)
+        {
+            float journey = speed * Time.deltaTime;
+            float totalDistance = Vector3.Distance(transform.position, destination.transform.position);
+            journeyCovered = journey / totalDistance;
 
-        transform.position = Vector3.Lerp(transform.position, destination.transform.position, journeyCovered);
+            transform.position = Vector3.Lerp(transform.position, destination.transform.position, journeyCovered);
+        }
     }
 }

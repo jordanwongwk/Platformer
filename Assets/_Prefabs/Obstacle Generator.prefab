@@ -117,6 +117,11 @@ MonoBehaviour:
   - {fileID: 1546638105081338, guid: 3102ff862551c2c45880a6cd2e38d2ce, type: 2}
   - {fileID: 1697653105908196, guid: 1baefd8d384291745af4193997d8148e, type: 2}
   - {fileID: 1970569361744032, guid: 0a9ed77c8896691489e2d111afe6f638, type: 2}
+  eliteObstacles:
+  - {fileID: 1416847491940272, guid: 93b431f08366a33409e3847dad883051, type: 2}
+  - {fileID: 1147502291307312, guid: 34178d8cf4344c845b2746ffba5ec392, type: 2}
+  - {fileID: 1824286840056890, guid: d50484df7de84434c904f2281a831cc9, type: 2}
+  - {fileID: 1466678782294574, guid: 9677c8f03d1e01c478f8846a1d11b387, type: 2}
   endlessModeObstacles: []
 --- !u!212 &212674711294004804
 SpriteRenderer:

@@ -15,6 +15,7 @@ public class ObstacleGenerator : MonoBehaviour {
     [SerializeField] List<GameObject> simpleObstacles;
     [SerializeField] List<GameObject> intermediateObstacles;
     [SerializeField] List<GameObject> advancedObstacles;
+    [SerializeField] List<GameObject> eliteObstacles;
     
     [SerializeField] List<GameObject> endlessModeObstacles;
 
@@ -37,6 +38,7 @@ public class ObstacleGenerator : MonoBehaviour {
         endlessModeObstacles.AddRange(simpleObstacles);
         endlessModeObstacles.AddRange(intermediateObstacles);
         endlessModeObstacles.AddRange(advancedObstacles);
+        endlessModeObstacles.AddRange(eliteObstacles);
         // Add more obstacles when there are more tiers
     }
 
@@ -61,6 +63,11 @@ public class ObstacleGenerator : MonoBehaviour {
             {
                 Debug.Log("advanced");
                 SpawningObstacle(advancedObstacles);
+            }
+            else if (currentObstacleCount < obstacleCountToChange * 4)
+            {
+                Debug.Log("elite");
+                SpawningObstacle(eliteObstacles);
             }
             else
             {

@@ -42,18 +42,25 @@ public class GameManager : MonoBehaviour {
     float lastRaisedTime = 0;
     Player myPlayer;
     AudioSource managerAudioSource;
+    static float soundVolume;
 
-    private void Start()
+    private void Awake()
     {
         myPlayer = FindObjectOfType<Player>();
         managerAudioSource = GetComponent<AudioSource>();
 
-        masterMusicPlayer.volume = PlayerPrefsManager.GetMusicVolume();
-        managerAudioSource.volume = PlayerPrefsManager.GetSoundVolume();
         waterSpeedAddition = PlayerPrefsManager.GetRisingWaterAdditionalSpeed();
         scoreMultiplier = PlayerPrefsManager.GetScoreMultiplier();
+        masterMusicPlayer.volume = PlayerPrefsManager.GetMusicVolume();
+        soundVolume = PlayerPrefsManager.GetSoundVolume();
+        managerAudioSource.volume = soundVolume;
 
         scoreText.text = playerScore.ToString();
+    }
+
+    public static float GetSoundVolume()
+    {
+        return soundVolume;
     }
 
     private void Update()
