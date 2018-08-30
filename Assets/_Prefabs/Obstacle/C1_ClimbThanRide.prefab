@@ -538,7 +538,7 @@ GameObject:
   - component: {fileID: 2569400267547680608}
   - component: {fileID: 61014795320902386}
   m_Layer: 16
-  m_Name: 09_ClimbThanRide
+  m_Name: C1_ClimbThanRide
   m_TagString: ObstacleForeground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

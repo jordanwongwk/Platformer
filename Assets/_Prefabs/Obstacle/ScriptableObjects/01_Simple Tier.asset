@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adecb76e86a11a24f8d0504d95c9c182, type: 3}
+  m_Name: 01_Simple Tier
+  m_EditorClassIdentifier: 
+  obstacleList:
+  - {fileID: 1225195384755102, guid: 185a398d9fc1e5c438bc5dc55a8753ed, type: 2}
+  - {fileID: 1100781589082398, guid: 1db1f86496daa934d9a3b7e75fb82bf4, type: 2}
+  - {fileID: 1330608544653020, guid: 0e90ab03dab5d0843a0159579f27fb4a, type: 2}
+  - {fileID: 1051898297307978, guid: 2525e930e71b94146b927c64420f60dc, type: 2}

@@ -388,7 +388,7 @@ GameObject:
   - component: {fileID: 2569400266437500044}
   - component: {fileID: 61921491422037558}
   m_Layer: 16
-  m_Name: 12_FallingCeiling
+  m_Name: D0_FallingCeiling
   m_TagString: ObstacleForeground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

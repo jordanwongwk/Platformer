@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 2569400266850860056}
   - component: {fileID: 61698103611457602}
   m_Layer: 16
-  m_Name: 13_PressurePlate
+  m_Name: D1_PressurePlate
   m_TagString: ObstacleForeground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

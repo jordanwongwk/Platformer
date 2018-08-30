@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 2569400266074472182}
   - component: {fileID: 61268514546640698}
   m_Layer: 16
-  m_Name: 07_SpikeClimb
+  m_Name: B3_SpikeClimb
   m_TagString: ObstacleForeground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

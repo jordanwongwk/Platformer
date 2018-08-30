@@ -458,7 +458,7 @@ GameObject:
   - component: {fileID: 2569400268365609772}
   - component: {fileID: 61763174947815672}
   m_Layer: 16
-  m_Name: 11_MovingHazard
+  m_Name: C3_MovingHazard
   m_TagString: ObstacleForeground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

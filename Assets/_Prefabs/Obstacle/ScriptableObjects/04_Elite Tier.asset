@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adecb76e86a11a24f8d0504d95c9c182, type: 3}
+  m_Name: 04_Elite Tier
+  m_EditorClassIdentifier: 
+  obstacleList:
+  - {fileID: 1416847491940272, guid: 93b431f08366a33409e3847dad883051, type: 2}
+  - {fileID: 1147502291307312, guid: 34178d8cf4344c845b2746ffba5ec392, type: 2}
+  - {fileID: 1824286840056890, guid: d50484df7de84434c904f2281a831cc9, type: 2}
+  - {fileID: 1466678782294574, guid: 9677c8f03d1e01c478f8846a1d11b387, type: 2}
