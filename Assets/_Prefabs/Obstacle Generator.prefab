@@ -102,27 +102,11 @@ MonoBehaviour:
   navigateSpeed: 5
   generationCooldown: 1
   obstacleCountToChange: 4
-  simpleObstacles:
-  - {fileID: 1225195384755102, guid: 185a398d9fc1e5c438bc5dc55a8753ed, type: 2}
-  - {fileID: 1100781589082398, guid: 1db1f86496daa934d9a3b7e75fb82bf4, type: 2}
-  - {fileID: 1330608544653020, guid: 0e90ab03dab5d0843a0159579f27fb4a, type: 2}
-  - {fileID: 1051898297307978, guid: 2525e930e71b94146b927c64420f60dc, type: 2}
-  intermediateObstacles:
-  - {fileID: 1043027094451554, guid: 81957d1cc52486c4aa183eb476ccc8d3, type: 2}
-  - {fileID: 1782155043987320, guid: 58fa40bda23c51c499b4c3e4b47dbcde, type: 2}
-  - {fileID: 1223971572782424, guid: ad8e7b3f0ca13e24696901c7e756b0e4, type: 2}
-  - {fileID: 1544468287476050, guid: 12e0821e9ab897a47a982c077b0c4382, type: 2}
-  advancedObstacles:
-  - {fileID: 1814964611313436, guid: 3a9d1f039e08fe14a9ee5d006110ddcd, type: 2}
-  - {fileID: 1546638105081338, guid: 3102ff862551c2c45880a6cd2e38d2ce, type: 2}
-  - {fileID: 1697653105908196, guid: 1baefd8d384291745af4193997d8148e, type: 2}
-  - {fileID: 1970569361744032, guid: 0a9ed77c8896691489e2d111afe6f638, type: 2}
-  eliteObstacles:
-  - {fileID: 1416847491940272, guid: 93b431f08366a33409e3847dad883051, type: 2}
-  - {fileID: 1147502291307312, guid: 34178d8cf4344c845b2746ffba5ec392, type: 2}
-  - {fileID: 1824286840056890, guid: d50484df7de84434c904f2281a831cc9, type: 2}
-  - {fileID: 1466678782294574, guid: 9677c8f03d1e01c478f8846a1d11b387, type: 2}
-  endlessModeObstacles: []
+  myObstacleTier:
+  - {fileID: 11400000, guid: defbc317f4848e244b1fd8a7afe71bec, type: 2}
+  - {fileID: 11400000, guid: edbce55df67e1d24aa91dcfbd02d7d3c, type: 2}
+  - {fileID: 11400000, guid: a6055bdf86b019c47ac7f6ca9424b12e, type: 2}
+  - {fileID: 11400000, guid: d1d91dd94d9ef804e82e8b83275e8adb, type: 2}
 --- !u!212 &212674711294004804
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -1444,7 +1444,7 @@ Prefab:
     - target: {fileID: 114678699150017090, guid: 9e4bc1b34b0827248a03300bbbc253fc,
         type: 2}
       propertyPath: risingSpeed
-      value: 1
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8195094282809801394, guid: 9e4bc1b34b0827248a03300bbbc253fc,
         type: 2}
@@ -31378,11 +31378,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 110686810}
     m_Modifications:
-    - target: {fileID: 114813162897637946, guid: 14b7ace9bccd9ec4a9f2375b90b4b1ce,
-        type: 2}
-      propertyPath: myObstacleTier.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 4716484571676452, guid: 14b7ace9bccd9ec4a9f2375b90b4b1ce, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -31414,35 +31409,6 @@ Prefab:
     - target: {fileID: 4716484571676452, guid: 14b7ace9bccd9ec4a9f2375b90b4b1ce, type: 2}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114813162897637946, guid: 14b7ace9bccd9ec4a9f2375b90b4b1ce,
-        type: 2}
-      propertyPath: myObstacleTier.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: defbc317f4848e244b1fd8a7afe71bec,
-        type: 2}
-    - target: {fileID: 114813162897637946, guid: 14b7ace9bccd9ec4a9f2375b90b4b1ce,
-        type: 2}
-      propertyPath: myObstacleTier.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: edbce55df67e1d24aa91dcfbd02d7d3c,
-        type: 2}
-    - target: {fileID: 114813162897637946, guid: 14b7ace9bccd9ec4a9f2375b90b4b1ce,
-        type: 2}
-      propertyPath: myObstacleTier.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: a6055bdf86b019c47ac7f6ca9424b12e,
-        type: 2}
-    - target: {fileID: 114813162897637946, guid: 14b7ace9bccd9ec4a9f2375b90b4b1ce,
-        type: 2}
-      propertyPath: myObstacleTier.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: d1d91dd94d9ef804e82e8b83275e8adb,
-        type: 2}
-    - target: {fileID: 114813162897637946, guid: 14b7ace9bccd9ec4a9f2375b90b4b1ce,
-        type: 2}
-      propertyPath: obstacleCountToChange
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14b7ace9bccd9ec4a9f2375b90b4b1ce, type: 2}
@@ -31670,7 +31636,7 @@ Prefab:
     - target: {fileID: 224429477039676970, guid: 2545c8781c502b142b79adc3efcb990f,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.40006256
+      value: 0.40005493
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2545c8781c502b142b79adc3efcb990f, type: 2}

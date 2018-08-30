@@ -14,11 +14,12 @@ public class ObstacleGenerator : MonoBehaviour {
     [Header("Obstacles Array")]
     [SerializeField] List<ObstacleTier> myObstacleTier;
     
-    List<GameObject> endlessModeObstacles;
+    List<GameObject> endlessModeObstacles = new List<GameObject>();
 
     int currentObstacleTier = 0;
     int currentObstacleCount = 0;
-    int lastGeneratedObsInt = 0;
+    int currentGeneratedInt = 0;
+    int lastGeneratedInt = 0;
     bool isSpawningObstacles = false;
     GameObject obstaclesParent;
     BoxCollider2D obsGeneratorCollider;
@@ -52,7 +53,10 @@ public class ObstacleGenerator : MonoBehaviour {
             {
                 if (currentObstacleCount < obstacleCountToChange)
                 {
-                    SpawningObstacle(myObstacleTier[currentObstacleTier]);
+                    int numberToSpawn = GeneratedNumber(myObstacleTier[currentGeneratedInt].GetObstacleCount());
+                    GameObject objectToSpawn = myObstacleTier[currentObstacleTier].GetObstacle(numberToSpawn);
+                    GenerateObstacle (objectToSpawn);
+                    currentObstacleCount++;                        
                 }
                 else
                 {
@@ -62,27 +66,27 @@ public class ObstacleGenerator : MonoBehaviour {
             }
             else
             {
-                SpawningEndlessObstacle();
+                int numberToSpawn = GeneratedNumber(endlessModeObstacles.Count);
+                GameObject endlessObjectToSpawn = endlessModeObstacles[numberToSpawn];
+                GenerateObstacle(endlessObjectToSpawn);
             }
         }
     }
 
-    void SpawningObstacle(ObstacleTier tier)
+    int GeneratedNumber(int maxValue)
     {
-        // RNG for an integer
-        int generatedInt = Random.Range(0, tier.GetObstacleCount());
+        while (currentGeneratedInt == lastGeneratedInt)
+        {
+            currentGeneratedInt = Random.Range(0, maxValue);
+        }
+        lastGeneratedInt = currentGeneratedInt;
+        return currentGeneratedInt;
+    }
 
-        // No repeating tiles immediately
-        if (generatedInt == lastGeneratedObsInt) { return; }
-
-        // Generating tile
-        lastGeneratedObsInt = generatedInt;
-
-        var chosenObstacle = tier.GetObstacle(generatedInt);
-        GameObject newObstacle = Instantiate(chosenObstacle, transform.position, Quaternion.identity);
+    void GenerateObstacle(GameObject obstacleToGenerate)
+    {
+        GameObject newObstacle = Instantiate(obstacleToGenerate, transform.position, Quaternion.identity);
         newObstacle.transform.parent = obstaclesParent.transform;
-
-        currentObstacleCount++;                         // Prevent the return function at repeating value for increasing the count
         StartCoroutine(SpawningCooldown());             // Put this here to prevent being called before this function is called
     }
 
@@ -91,18 +95,5 @@ public class ObstacleGenerator : MonoBehaviour {
         isSpawningObstacles = true;
         yield return new WaitForSeconds(generationCooldown);
         isSpawningObstacles = false;
-    }
-
-    void SpawningEndlessObstacle()
-    {
-        int generatedInt = Random.Range(0, endlessModeObstacles.Count);
-        if (generatedInt == lastGeneratedObsInt) { return; }
-        lastGeneratedObsInt = generatedInt;
-
-        var chosenObstacle = endlessModeObstacles[generatedInt];
-        GameObject newObstacle = Instantiate(chosenObstacle, transform.position, Quaternion.identity);
-        newObstacle.transform.parent = obstaclesParent.transform;
-
-        StartCoroutine(SpawningCooldown());           
     }
 }
