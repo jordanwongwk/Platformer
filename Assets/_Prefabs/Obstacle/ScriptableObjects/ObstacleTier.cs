@@ -11,4 +11,9 @@ public class ObstacleTier : ScriptableObject {
     {
         return obstacleList[number];
     }
+
+    public int GetObstacleCount()
+    {
+        return obstacleList.Count;
+    }
 }
