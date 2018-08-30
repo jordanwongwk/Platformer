@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 149a0b92a069b3a4d899d5b228b3d5ea, type: 3}
+  m_Name: MidGroundTier
+  m_EditorClassIdentifier: 
+  backgroundList:
+  - {fileID: 1636553088717250, guid: c6346dab55aa6b24d94a8ea23141a83a, type: 2}
+  - {fileID: 1583197542704746, guid: 34977076ca0eb4e4892e77e9a5b45d0c, type: 2}
+  - {fileID: 1660739142203242, guid: 08f0931f3654f1b4085d0cf85c3f3044, type: 2}
+  - {fileID: 1369527039639486, guid: c8194edbb7ff1ec4e98b88c29770da58, type: 2}

@@ -11,7 +11,7 @@ public class ObstacleGenerator : MonoBehaviour {
     [Header("Tier Threshold")]
     [SerializeField] int obstacleCountToChange = 15;
 
-    [Header("Obstacles Array")]
+    [Header("Obstacles List")]
     [SerializeField] List<ObstacleTier> myObstacleTier;
     
     List<GameObject> endlessModeObstacles = new List<GameObject>();
