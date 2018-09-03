@@ -11,6 +11,21 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1544468287476050}
   m_IsPrefabAsset: 1
+--- !u!1 &1270336514539732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4094176461219092}
+  m_Layer: 16
+  m_Name: PowerUpSpawnPoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1359455056288326
 GameObject:
   m_ObjectHideFlags: 1
@@ -58,6 +73,21 @@ GameObject:
   - component: {fileID: 66877182432707770}
   m_Layer: 9
   m_Name: ObstacleTile
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1487898184230842
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4170485319199550}
+  m_Layer: 16
+  m_Name: Point (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,6 +155,7 @@ GameObject:
   - component: {fileID: 4688752526601224}
   - component: {fileID: 2569400266074472182}
   - component: {fileID: 61268514546640698}
+  - component: {fileID: 114113022665584560}
   m_Layer: 16
   m_Name: B3_SpikeClimb
   m_TagString: ObstacleForeground
@@ -275,6 +306,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1722840568939710
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4269473216407502}
+  m_Layer: 16
+  m_Name: Point (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1788948190231820
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,7 +400,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4688752526601224}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4061754344979614
 Transform:
@@ -369,6 +415,21 @@ Transform:
   m_Father: {fileID: 4849484914292250}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4094176461219092
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1270336514539732}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4269473216407502}
+  - {fileID: 4170485319199550}
+  m_Father: {fileID: 4688752526601224}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4152219706622634
 Transform:
   m_ObjectHideFlags: 1
@@ -380,6 +441,19 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4688752526601224}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4170485319199550
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1487898184230842}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.5, y: 6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4094176461219092}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4216059949453226
@@ -393,7 +467,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4688752526601224}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4238923419309820
 Transform:
@@ -420,6 +494,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4849484914292250}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4269473216407502
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1722840568939710}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.5, y: 13, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4094176461219092}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4278118539350294
 Transform:
@@ -509,6 +596,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4094176461219092}
   - {fileID: 4745002435501366}
   - {fileID: 4152219706622634}
   - {fileID: 4979479655932514}
@@ -542,7 +630,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4688752526601224}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4763349706874910
 Transform:
@@ -607,7 +695,7 @@ Transform:
   - {fileID: 4061754344979614}
   - {fileID: 4461665383485304}
   m_Father: {fileID: 4688752526601224}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4979479655932514
 Transform:
@@ -620,7 +708,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4688752526601224}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50255775775500634
 Rigidbody2D:
@@ -886,6 +974,14 @@ CompositeCollider2D:
         Y: 120000000
       - X: 60000000
         Y: 120000000
+    - - X: 90000000
+        Y: 70000000
+      - X: 70000000
+        Y: 70000000
+      - X: 70000000
+        Y: 60000000
+      - X: 90000000
+        Y: 60000000
     - - X: 100000000
         Y: 50000000
       - X: 60000000
@@ -906,14 +1002,6 @@ CompositeCollider2D:
         Y: 20000000
       - X: 100000000
         Y: 20000000
-    - - X: 90000000
-        Y: 70000000
-      - X: 70000000
-        Y: 70000000
-      - X: 70000000
-        Y: 60000000
-      - X: 90000000
-        Y: 60000000
     - - X: 70000000
         Y: 10000000
       - X: 50000000
@@ -940,6 +1028,10 @@ CompositeCollider2D:
       - {x: 4, y: 13}
       - {x: 4, y: 12}
       - {x: 6, y: 12}
+    - - {x: 9, y: 7}
+      - {x: 7, y: 7}
+      - {x: 7, y: 6}
+      - {x: 9, y: 6}
     - - {x: 10, y: 5}
       - {x: 6, y: 5}
       - {x: 6, y: 7}
@@ -950,15 +1042,27 @@ CompositeCollider2D:
       - {x: 9, y: 3}
       - {x: 9, y: 2}
       - {x: 10, y: 2}
-    - - {x: 9, y: 7}
-      - {x: 7, y: 7}
-      - {x: 7, y: 6}
-      - {x: 9, y: 6}
     - - {x: 7, y: 1}
       - {x: 5, y: 1}
       - {x: 5, y: 0}
       - {x: 7, y: 0}
   m_VertexDistance: 0.0005
+--- !u!114 &114113022665584560
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1544468287476050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  freezingPowerUp: {fileID: 1754370471172294, guid: b5b0f08fc13363e45a5cdbd6da56f3ba,
+    type: 2}
+  spawnPoint:
+  - {fileID: 1722840568939710}
+  - {fileID: 1487898184230842}
 --- !u!212 &212079851347707106
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -1766,7 +1870,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 544439901
-  m_SortingLayer: 11
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

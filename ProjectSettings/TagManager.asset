@@ -68,11 +68,11 @@ TagManager:
   - name: Player
     uniqueID: 1783416571
     locked: 0
-  - name: ObstacleBG
-    uniqueID: 3694070941
-    locked: 0
   - name: Interactable
     uniqueID: 2356282437
+    locked: 0
+  - name: ObstacleBG
+    uniqueID: 3694070941
     locked: 0
   - name: Sub Foreground
     uniqueID: 738548519

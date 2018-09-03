@@ -17,11 +17,12 @@ public class GameManager : MonoBehaviour {
     [SerializeField] Image[] waterLevelIndicatorImages;
     [SerializeField] float maxSliderLength = 200.0f;
 
-    [Header("Water Caution Mechanism")]
+    [Header("Water Mechanism")]
     [SerializeField] float dangerZone = 50.0f;
     [SerializeField] float cautionZone = 100.0f;
-    [SerializeField] AudioClip waterRisingAlert;
     [SerializeField] Text waterRisingTextAlert;
+    [SerializeField] GameObject waterFrozenBorder;
+    [SerializeField] GameObject waterFrozenAlert;
 
     [Header("Score Handler")]
     [SerializeField] Text scoreText;
@@ -41,19 +42,19 @@ public class GameManager : MonoBehaviour {
     float currentScore;
     float lastRaisedTime = 0;
     Player myPlayer;
-    AudioSource managerAudioSource;
+    RisingTide myRisingTide;
+
     static float soundVolume;
 
     private void Awake()
     {
         myPlayer = FindObjectOfType<Player>();
-        managerAudioSource = GetComponent<AudioSource>();
+        myRisingTide = FindObjectOfType<RisingTide>();
 
         waterSpeedAddition = PlayerPrefsManager.GetRisingWaterAdditionalSpeed();
         scoreMultiplier = PlayerPrefsManager.GetScoreMultiplier();
         masterMusicPlayer.volume = PlayerPrefsManager.GetMusicVolume();
         soundVolume = PlayerPrefsManager.GetSoundVolume();
-        managerAudioSource.volume = soundVolume;
 
         scoreText.text = playerScore.ToString();
     }
@@ -87,10 +88,11 @@ public class GameManager : MonoBehaviour {
 
     void CheckForTimeToRaiseWaterSpeed()
     {
-        if (Time.timeSinceLevelLoad >= timeForRaisingWaterSpeed + lastRaisedTime)
+        bool isWaterFrozen = myRisingTide.GetWaterFrozenStatus();
+        if (!isWaterFrozen && Time.timeSinceLevelLoad >= timeForRaisingWaterSpeed + lastRaisedTime)
         {
             lastRaisedTime = Time.timeSinceLevelLoad;
-            FindObjectOfType<RisingTide>().RisingWaterSpeed(waterSpeedAddition);
+            myRisingTide.RisingWaterSpeed(waterSpeedAddition);
 
             StartCoroutine(WaterRiseWarning());
         }
@@ -98,10 +100,15 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator WaterRiseWarning()
     {
-        managerAudioSource.PlayOneShot(waterRisingAlert);
         waterRisingTextAlert.gameObject.SetActive(true);
         yield return new WaitForSeconds(3.0f);          // TODO set a variable or const?
         waterRisingTextAlert.gameObject.SetActive(false);
+    }
+
+    public void SetWaterFrozenUI(bool status)
+    {
+        waterFrozenBorder.SetActive(status);
+        waterFrozenAlert.SetActive(status);
     }
 
     public void WaterLevelUpdate(float distance)

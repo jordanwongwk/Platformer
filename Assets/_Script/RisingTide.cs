@@ -4,19 +4,30 @@ using UnityEngine;
 
 public class RisingTide : MonoBehaviour {
 
+    [Header("Water Settings")]
     [SerializeField] float risingSpeed = 1.0f;
 
+    [Header("Audio Settings")]
+    [SerializeField] AudioClip risingWaterSFX;
+    [SerializeField] AudioClip frozenWaterSFX;
+
+    float lastWaterSpeed;
+    bool isWaterFrozen = false;
     Player player;
     GameManager gameManager;
+    Coroutine stopWaterCoroutine;
+    AudioSource waterAudioSource;
 
 	// Use this for initialization
 	void Start () {
         player = FindObjectOfType<Player>();
         gameManager = FindObjectOfType<GameManager>();
+        waterAudioSource = GetComponent<AudioSource>();
+        waterAudioSource.volume = GameManager.GetSoundVolume();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         transform.position += new Vector3(0f, risingSpeed * Time.deltaTime, 0f);
         float distanceDiff = player.transform.position.y - transform.position.y;
         gameManager.WaterLevelUpdate(distanceDiff);
@@ -24,6 +35,40 @@ public class RisingTide : MonoBehaviour {
 
     public void RisingWaterSpeed(float addedSpeed)
     {
+        waterAudioSource.PlayOneShot(risingWaterSFX);
         risingSpeed += addedSpeed;
     }
+
+    #region Power Up : Freeze Water
+    public void FreezeWater()
+    {
+        waterAudioSource.PlayOneShot(frozenWaterSFX);
+        if (!isWaterFrozen)
+        {
+            isWaterFrozen = true;
+            lastWaterSpeed = risingSpeed;
+            gameManager.SetWaterFrozenUI(true);
+            stopWaterCoroutine = StartCoroutine(StopWater());
+        }
+        else 
+        {
+            StopCoroutine(stopWaterCoroutine);
+            stopWaterCoroutine = StartCoroutine(StopWater());
+        }
+    }
+
+    IEnumerator StopWater()
+    {
+        risingSpeed = 0f;
+        yield return new WaitForSeconds(5.0f);
+        risingSpeed = lastWaterSpeed;
+        gameManager.SetWaterFrozenUI(false);
+        isWaterFrozen = false;
+    }
+
+    public bool GetWaterFrozenStatus()
+    {
+        return isWaterFrozen;
+    }
+    #endregion
 }

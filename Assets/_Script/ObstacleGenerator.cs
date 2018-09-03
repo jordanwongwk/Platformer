@@ -20,6 +20,7 @@ public class ObstacleGenerator : MonoBehaviour {
     int currentObstacleCount = 0;
     int currentGeneratedInt = 0;
     int lastGeneratedInt = 0;
+    int powerUpGeneratingRNG = 10;
     bool isSpawningObstacles = false;
     GameObject obstaclesParent;
     BoxCollider2D obsGeneratorCollider;
@@ -87,6 +88,19 @@ public class ObstacleGenerator : MonoBehaviour {
     {
         GameObject newObstacle = Instantiate(obstacleToGenerate, transform.position, Quaternion.identity);
         newObstacle.transform.parent = obstaclesParent.transform;
+
+        // Randomly generate power-up
+        int randomRNG = Random.Range(1, 100);
+        if (randomRNG <= powerUpGeneratingRNG)
+        {
+            newObstacle.GetComponent<Obstacle>().SpawnPowerUp();
+            powerUpGeneratingRNG = 10;
+        }
+        else
+        {
+            powerUpGeneratingRNG += 10;
+        }
+
         StartCoroutine(SpawningCooldown());             // Put this here to prevent being called before this function is called
     }
 
