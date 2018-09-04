@@ -24,9 +24,6 @@ public class GameManager : MonoBehaviour {
     [SerializeField] GameObject waterFrozenBorder;
     [SerializeField] GameObject waterFrozenAlert;
 
-    [Header("Score Handler")]
-    [SerializeField] Text scoreText;
-
     [Header("Game Over Panel")]
     [SerializeField] Text timeText;
     [SerializeField] Text hazardHitsText;
@@ -36,27 +33,19 @@ public class GameManager : MonoBehaviour {
     [SerializeField] float timeForRaisingWaterSpeed = 5.0f;     // Fixed for all difficulty
 
     [SerializeField] float waterSpeedAddition = 0f;     // TODO Change for different difficulty
-    [SerializeField] float scoreMultiplier = 0f;
 
-    int playerScore = 0;
-    float currentScore;
     float lastRaisedTime = 0;
-    Player myPlayer;
     RisingTide myRisingTide;
 
     static float soundVolume;
 
     private void Awake()
     {
-        myPlayer = FindObjectOfType<Player>();
         myRisingTide = FindObjectOfType<RisingTide>();
 
         waterSpeedAddition = PlayerPrefsManager.GetRisingWaterAdditionalSpeed();
-        scoreMultiplier = PlayerPrefsManager.GetScoreMultiplier();
         masterMusicPlayer.volume = PlayerPrefsManager.GetMusicVolume();
         soundVolume = PlayerPrefsManager.GetSoundVolume();
-
-        scoreText.text = playerScore.ToString();
     }
 
     public static float GetSoundVolume()
@@ -71,20 +60,9 @@ public class GameManager : MonoBehaviour {
         {
             OpenPausePanel();
         }
-
-        ScoreUpdate();
         CheckForTimeToRaiseWaterSpeed();
     }
 
-    void ScoreUpdate()
-    {
-        currentScore = myPlayer.transform.position.y * 100f * scoreMultiplier;
-
-        if (playerScore >= currentScore) {  return;  }
-
-        playerScore = Mathf.RoundToInt(currentScore);
-        scoreText.text = playerScore.ToString();
-    }
 
     void CheckForTimeToRaiseWaterSpeed()
     {
@@ -158,9 +136,11 @@ public class GameManager : MonoBehaviour {
         timeText.text = minutes.ToString("00") + " : " + seconds.ToString("00");
 
         // Hazard hit counts
-        hazardHitsText.text = myPlayer.GetHazardHits().ToString();
+        hazardHitsText.text = FindObjectOfType<Player>().GetHazardHits().ToString();
 
         // Final score
-        totalScoreText.text = playerScore.ToString();
+        totalScoreText.text = FindObjectOfType<ScoreHandler>().GetFinalScore().ToString();
+
+        // Call the check high score method from score handler
     }
 }

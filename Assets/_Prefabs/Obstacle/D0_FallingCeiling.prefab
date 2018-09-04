@@ -2969,7 +2969,8 @@ MonoBehaviour:
   forcedReturnToInitial: 1
   triggerMoveDelay: 0
   returnInitialDelay: 1
-  dropSound: {fileID: 8300000, guid: 60a6bfb368b9b6c478ae7e6ba9eb9a3e, type: 3}
+  moveToDestinationSound: {fileID: 8300000, guid: 60a6bfb368b9b6c478ae7e6ba9eb9a3e,
+    type: 3}
   triggerSound: {fileID: 0}
 --- !u!114 &114097732967598340
 MonoBehaviour:
@@ -3002,7 +3003,8 @@ MonoBehaviour:
   forcedReturnToInitial: 1
   triggerMoveDelay: 0
   returnInitialDelay: 1
-  dropSound: {fileID: 8300000, guid: 60a6bfb368b9b6c478ae7e6ba9eb9a3e, type: 3}
+  moveToDestinationSound: {fileID: 8300000, guid: 60a6bfb368b9b6c478ae7e6ba9eb9a3e,
+    type: 3}
   triggerSound: {fileID: 0}
 --- !u!114 &114356957217704916
 MonoBehaviour:
@@ -3047,7 +3049,8 @@ MonoBehaviour:
   forcedReturnToInitial: 1
   triggerMoveDelay: 0
   returnInitialDelay: 1
-  dropSound: {fileID: 8300000, guid: 60a6bfb368b9b6c478ae7e6ba9eb9a3e, type: 3}
+  moveToDestinationSound: {fileID: 8300000, guid: 60a6bfb368b9b6c478ae7e6ba9eb9a3e,
+    type: 3}
   triggerSound: {fileID: 0}
 --- !u!114 &114620167130398738
 MonoBehaviour:
@@ -3068,7 +3071,8 @@ MonoBehaviour:
   forcedReturnToInitial: 1
   triggerMoveDelay: 0
   returnInitialDelay: 1
-  dropSound: {fileID: 8300000, guid: 60a6bfb368b9b6c478ae7e6ba9eb9a3e, type: 3}
+  moveToDestinationSound: {fileID: 8300000, guid: 60a6bfb368b9b6c478ae7e6ba9eb9a3e,
+    type: 3}
   triggerSound: {fileID: 0}
 --- !u!114 &114667291183159430
 MonoBehaviour:
@@ -3117,7 +3121,8 @@ MonoBehaviour:
   forcedReturnToInitial: 1
   triggerMoveDelay: 0
   returnInitialDelay: 1
-  dropSound: {fileID: 8300000, guid: 60a6bfb368b9b6c478ae7e6ba9eb9a3e, type: 3}
+  moveToDestinationSound: {fileID: 8300000, guid: 60a6bfb368b9b6c478ae7e6ba9eb9a3e,
+    type: 3}
   triggerSound: {fileID: 0}
 --- !u!114 &114902719469529158
 MonoBehaviour:

@@ -19,7 +19,7 @@ public class AutomatedPlatform : MonoBehaviour {
     [SerializeField] float returnInitialDelay = 1.0f;
 
     [Header("Optional: Sounds")]
-    [SerializeField] AudioClip dropSound;
+    [SerializeField] AudioClip moveToDestinationSound;
     [SerializeField] AudioClip triggerSound;
 
     bool isTriggeredToMove = false;
@@ -49,7 +49,7 @@ public class AutomatedPlatform : MonoBehaviour {
         {
             if (!forcedReturnToInitial)
             {
-                PlayAudioClip(dropSound);             // Consider Removing this?
+                PlayAudioClip(moveToDestinationSound);             // stepping platform midway will fall AND play drop sound
                 isTriggeredToMove = true;
             }
             else if (forcedReturnToInitial && transform.position == pointsList[INITIAL_POINT].transform.position)
@@ -104,7 +104,7 @@ public class AutomatedPlatform : MonoBehaviour {
 
         if (playSound)
         {
-            PlayAudioClip(dropSound);
+            PlayAudioClip(moveToDestinationSound);
         }
 
         isObjectBusy = false;

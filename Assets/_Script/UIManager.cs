@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour {
 
     [Header("Panels Configurations")]
     [SerializeField] GameObject gameModeSelectionPanel;
+    [SerializeField] GameObject leaderboardPanel;
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject creditsPanel;
     [SerializeField] GameObject quitConfirmationPanel;
@@ -31,6 +32,21 @@ public class UIManager : MonoBehaviour {
     {
         Time.timeScale = 1f;
         gameModeSelectionPanel.SetActive(false);
+    }
+    #endregion
+
+    #region Leaderboard Panel
+    public void EnableLeaderboardPanel()
+    {
+        Time.timeScale = 0f;
+        GetComponent<LeaderboardManager>().GetLeaderboardScore();
+        leaderboardPanel.SetActive(true);
+    }
+
+    public void DisableLeaderboardPanel()
+    {
+        Time.timeScale = 1f;
+        leaderboardPanel.SetActive(false);
     }
     #endregion
 

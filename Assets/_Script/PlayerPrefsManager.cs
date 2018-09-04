@@ -8,7 +8,9 @@ public class PlayerPrefsManager : MonoBehaviour {
     const string SOUND_VOLUME = "sound_volume";
     const string RISING_WATER_ADDITIONAL_SPEED = "rising_water_additional_speed";
     const string SCORE_MULTIPLIER = "score_multiplier";
+    const string HIGH_SCORE = "high_score";
 
+    #region Option Settings
     public static void SetMusicVolume(float volume)
     {
         PlayerPrefs.SetFloat(MUSIC_VOLUME, volume);
@@ -28,7 +30,9 @@ public class PlayerPrefsManager : MonoBehaviour {
     {
         return PlayerPrefs.GetFloat(SOUND_VOLUME);
     }
+    #endregion
 
+    #region Difficulty Settings
     public static void SetRisingWaterAdditionalSpeed(float speed)
     {
         PlayerPrefs.SetFloat(RISING_WATER_ADDITIONAL_SPEED, speed);
@@ -48,4 +52,19 @@ public class PlayerPrefsManager : MonoBehaviour {
     {
         return PlayerPrefs.GetFloat(SCORE_MULTIPLIER);
     }
+    #endregion
+
+    #region Scores and Leaderboards
+    public static void SetHighScore(int placing, int score)
+    {
+        string highScoreKey = HIGH_SCORE + placing.ToString();
+        PlayerPrefs.SetInt(highScoreKey, score);
+    }
+
+    public static int GetHighScore(int placing)
+    {
+        string highScoreKey = HIGH_SCORE + placing.ToString();
+        return PlayerPrefs.GetInt(highScoreKey);
+    }
+    #endregion
 }
