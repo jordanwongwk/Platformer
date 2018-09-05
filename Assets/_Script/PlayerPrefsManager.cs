@@ -18,7 +18,7 @@ public class PlayerPrefsManager : MonoBehaviour {
 
     public static float GetMusicVolume()
     {
-        return PlayerPrefs.GetFloat(MUSIC_VOLUME);
+        return PlayerPrefs.GetFloat(MUSIC_VOLUME, 5.0f);
     }
 
     public static void SetSoundVolume(float volume)
@@ -28,7 +28,7 @@ public class PlayerPrefsManager : MonoBehaviour {
 
     public static float GetSoundVolume()
     {
-        return PlayerPrefs.GetFloat(SOUND_VOLUME);
+        return PlayerPrefs.GetFloat(SOUND_VOLUME, 5.0f);
     }
     #endregion
 
@@ -64,7 +64,7 @@ public class PlayerPrefsManager : MonoBehaviour {
     public static int GetHighScore(int placing)
     {
         string highScoreKey = HIGH_SCORE + placing.ToString();
-        return PlayerPrefs.GetInt(highScoreKey);
+        return PlayerPrefs.GetInt(highScoreKey, 0);
     }
     #endregion
 }

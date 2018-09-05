@@ -8,6 +8,7 @@ public class ScoreHandler : MonoBehaviour {
 
     List<int> highScores = new List<int>();
 
+    bool isHighScore = false;
     int playerScore = 0;
     float currentScore;
     float scoreMultiplier = 0f;
@@ -57,12 +58,17 @@ public class ScoreHandler : MonoBehaviour {
         if (highScores[highScores.Count - 1] != playerScore)     
         {
             Debug.Log("High Score!");
-            // TODO Play victory fanfare!1
+            isHighScore = true;
         }
 
         for (int i = 0; i < NUMBER_OF_PLACINGS; i++)                     
         {
             PlayerPrefsManager.SetHighScore(i + 1, highScores[i]);
         }
+    }
+
+    public bool GetHighScoreStatus()
+    {
+        return isHighScore;
     }
 }

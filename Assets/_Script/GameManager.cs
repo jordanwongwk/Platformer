@@ -24,10 +24,13 @@ public class GameManager : MonoBehaviour {
     [SerializeField] GameObject waterFrozenBorder;
     [SerializeField] GameObject waterFrozenAlert;
 
-    [Header("Game Over Panel")]
+    [Header("Game Over")]
     [SerializeField] Text timeText;
     [SerializeField] Text hazardHitsText;
     [SerializeField] Text totalScoreText;
+    [SerializeField] AudioClip NormalGameOver;
+    [SerializeField] AudioClip HighScoreGameOver;
+    [SerializeField] GameObject HighScorePanel;
 
 
     [SerializeField] float timeForRaisingWaterSpeed = 5.0f;     // Fixed for all difficulty
@@ -35,6 +38,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] float waterSpeedAddition = 0f;     // TODO Change for different difficulty
 
     float lastRaisedTime = 0;
+    AudioSource managerAudioSource;
     RisingTide myRisingTide;
 
     static float soundVolume;
@@ -46,6 +50,8 @@ public class GameManager : MonoBehaviour {
         waterSpeedAddition = PlayerPrefsManager.GetRisingWaterAdditionalSpeed();
         masterMusicPlayer.volume = PlayerPrefsManager.GetMusicVolume();
         soundVolume = PlayerPrefsManager.GetSoundVolume();
+        managerAudioSource = GetComponent<AudioSource>();
+        managerAudioSource.volume = soundVolume;
     }
 
     public static float GetSoundVolume()
@@ -114,6 +120,7 @@ public class GameManager : MonoBehaviour {
     public void OpenGameOverPanel()
     {
         gameOverPanel.SetActive(true);
+        PlayGameOverSound();
     }
 
     public void OpenPausePanel()
@@ -140,7 +147,20 @@ public class GameManager : MonoBehaviour {
 
         // Final score
         totalScoreText.text = FindObjectOfType<ScoreHandler>().GetFinalScore().ToString();
+    }
 
-        // Call the check high score method from score handler
+    void PlayGameOverSound()
+    {
+        bool HighScoreStatus = FindObjectOfType<ScoreHandler>().GetHighScoreStatus();
+        if (HighScoreStatus)
+        {
+            HighScorePanel.SetActive(true);
+            managerAudioSource.PlayOneShot(HighScoreGameOver);
+        }
+        else
+        {
+            HighScorePanel.SetActive(false);
+            managerAudioSource.PlayOneShot(NormalGameOver);
+        }
     }
 }

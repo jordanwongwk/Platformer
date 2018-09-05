@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bc4fff5a2cc084643a1afbcf84231645
+guid: ebace6c5886b04b469c341724ec68992
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Action Jackson
+  fontName: Port Credit
   fontNames:
-  - Action Jackson
+  - Port Credit
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

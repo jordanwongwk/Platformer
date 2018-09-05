@@ -11,7 +11,6 @@ public class Player : MonoBehaviour {
     [SerializeField] float deathLaunch = 10.0f;
     [SerializeField] AudioClip jumpSound;
     [SerializeField] AudioClip deathSound;
-    [SerializeField] AudioClip gameOverSound;
 
     Rigidbody2D myRigidBody;
     BoxCollider2D myFeetCollider;
@@ -140,7 +139,6 @@ public class Player : MonoBehaviour {
         PlayerDeathSequence();
         FindObjectOfType<GameManager>().GameOverPanelUpdate();
         yield return new WaitForSeconds(3.0f);
-        myAudioSource.PlayOneShot(gameOverSound);
         Time.timeScale = 0f;
         FindObjectOfType<GameManager>().OpenGameOverPanel();
     }
