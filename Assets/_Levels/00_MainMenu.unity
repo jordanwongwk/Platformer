@@ -3604,6 +3604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLevelManager: {fileID: 0}
+  viewedAds: 0
 --- !u!4 &265929658
 Transform:
   m_ObjectHideFlags: 0

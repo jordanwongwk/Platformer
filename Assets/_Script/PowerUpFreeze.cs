@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PowerUpFreeze : MonoBehaviour {
 
+    [SerializeField] float waterFrozenTime = 10.0f;
     [SerializeField] float moveThreshold = 0.25f;
     [SerializeField] float speed = 0.1f;
 
@@ -33,7 +34,7 @@ public class PowerUpFreeze : MonoBehaviour {
         if (!_isTriggered)
         {
             _isTriggered = true;
-            FindObjectOfType<RisingTide>().FreezeWater();
+            FindObjectOfType<RisingTide>().FreezeWater(waterFrozenTime);
             Destroy(gameObject);
         }
     }

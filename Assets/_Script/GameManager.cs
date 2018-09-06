@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField] float maxSliderLength = 200.0f;
 
     [Header("Water Mechanism")]
+    [SerializeField] float timeForRaisingWaterSpeed = 5.0f;     // Fixed for all difficulty
     [SerializeField] float dangerZone = 50.0f;
     [SerializeField] float cautionZone = 100.0f;
     [SerializeField] Text waterRisingTextAlert;
@@ -32,14 +33,12 @@ public class GameManager : MonoBehaviour {
     [SerializeField] AudioClip HighScoreGameOver;
     [SerializeField] GameObject HighScorePanel;
 
-
-    [SerializeField] float timeForRaisingWaterSpeed = 5.0f;     // Fixed for all difficulty
-
-    [SerializeField] float waterSpeedAddition = 0f;     // TODO Change for different difficulty
-
+    float waterSpeedAddition = 0f;
     float lastRaisedTime = 0;
     AudioSource managerAudioSource;
     RisingTide myRisingTide;
+
+    const float WAIT_TIME = 3.0f;
 
     static float soundVolume;
 
@@ -85,7 +84,7 @@ public class GameManager : MonoBehaviour {
     IEnumerator WaterRiseWarning()
     {
         waterRisingTextAlert.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3.0f);          // TODO set a variable or const?
+        yield return new WaitForSeconds(WAIT_TIME);        
         waterRisingTextAlert.gameObject.SetActive(false);
     }
 
@@ -161,6 +160,18 @@ public class GameManager : MonoBehaviour {
         {
             HighScorePanel.SetActive(false);
             managerAudioSource.PlayOneShot(NormalGameOver);
+        }
+    }
+
+    public void PauseMusic(bool isPausing)
+    {
+        if (isPausing)
+        {
+            masterMusicPlayer.Pause();
+        }
+        else
+        {
+            masterMusicPlayer.UnPause();
         }
     }
 }

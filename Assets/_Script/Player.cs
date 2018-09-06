@@ -25,6 +25,8 @@ public class Player : MonoBehaviour {
     float initialSpriteScale;
     bool isAlive = true;
 
+    const float DEATH_DELAY = 3.0f;
+
     void Start () {
         myRigidBody = GetComponent<Rigidbody2D>();
         myFeetCollider = GetComponent<BoxCollider2D>();
@@ -120,8 +122,7 @@ public class Player : MonoBehaviour {
     {
         PlayerDeathSequence();
         hazardHitCounts++;
-        Debug.Log("Dead");
-        yield return new WaitForSeconds(3.0f);      // TODO Set deathDelay : if have death sound then death sound length
+        yield return new WaitForSeconds(DEATH_DELAY);      
         myAnimator.SetTrigger("isRespawned");
         transform.position = respawnPoint;
         StartCoroutine(ChangeIsAliveStatus());
@@ -138,7 +139,7 @@ public class Player : MonoBehaviour {
     {
         PlayerDeathSequence();
         FindObjectOfType<GameManager>().GameOverPanelUpdate();
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(DEATH_DELAY);
         Time.timeScale = 0f;
         FindObjectOfType<GameManager>().OpenGameOverPanel();
     }
@@ -155,14 +156,10 @@ public class Player : MonoBehaviour {
     // Register the current obstacle the player is on
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isAlive)
+        if (isAlive && collision.gameObject.tag == "ObstacleForeground")
         {
-            if (collision.gameObject.tag == "ObstacleForeground")
-            {
-                // TODO combine if statement
-                GameObject currentObstacle = collision.gameObject;
-                respawnPoint = currentObstacle.transform.Find("RespawnPoint").position;
-            }
+            GameObject currentObstacle = collision.gameObject;
+            respawnPoint = currentObstacle.transform.Find("RespawnPoint").position;
         }
     }
 

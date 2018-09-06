@@ -256,7 +256,7 @@ Transform:
   - {fileID: 2089674899}
   - {fileID: 2097650116}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &116355742
 GameObject:
@@ -1145,7 +1145,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &381535273
 GameObject:
@@ -2025,7 +2025,7 @@ Prefab:
     - target: {fileID: 224433514743008138, guid: 2545c8781c502b142b79adc3efcb990f,
         type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224433514743008138, guid: 2545c8781c502b142b79adc3efcb990f,
         type: 2}
@@ -2097,6 +2097,10 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1147192985}
+    - target: {fileID: 1194190503090076, guid: 2545c8781c502b142b79adc3efcb990f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2545c8781c502b142b79adc3efcb990f, type: 2}
   m_IsPrefabAsset: 0
@@ -5406,6 +5410,7 @@ MonoBehaviour:
   - {fileID: 1613990474}
   - {fileID: 1245748824}
   maxSliderLength: 200
+  timeForRaisingWaterSpeed: 90
   dangerZone: 50
   cautionZone: 100
   waterRisingTextAlert: {fileID: 356236685}
@@ -5417,8 +5422,6 @@ MonoBehaviour:
   NormalGameOver: {fileID: 8300000, guid: a7332e52209dae44883e61d0d3fdf35b, type: 3}
   HighScoreGameOver: {fileID: 8300000, guid: e6d7ea54c70e0c74ba5d3277aece0695, type: 3}
   HighScorePanel: {fileID: 55332450}
-  timeForRaisingWaterSpeed: 90
-  waterSpeedAddition: 0
 --- !u!4 &1147192986
 Transform:
   m_ObjectHideFlags: 0
@@ -5444,6 +5447,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLevelManager: {fileID: 0}
+  viewedAds: 1
 --- !u!114 &1147192988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6160,7 +6164,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4623308169676006, guid: 9e4bc1b34b0827248a03300bbbc253fc, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114678699150017090, guid: 9e4bc1b34b0827248a03300bbbc253fc,
         type: 2}
@@ -6656,6 +6660,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1789254088
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1789254090}
+  - component: {fileID: 1789254089}
+  m_Layer: 0
+  m_Name: AdMobObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1789254089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1789254088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667a60c1655dcb7468df4e2d77b4aa63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1789254090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1789254088}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1796309097
 GameObject:
   m_ObjectHideFlags: 0

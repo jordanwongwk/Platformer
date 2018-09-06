@@ -40,7 +40,7 @@ public class RisingTide : MonoBehaviour {
     }
 
     #region Power Up : Freeze Water
-    public void FreezeWater()
+    public void FreezeWater(float freezeTime)
     {
         waterAudioSource.PlayOneShot(frozenWaterSFX);
         if (!isWaterFrozen)
@@ -48,19 +48,19 @@ public class RisingTide : MonoBehaviour {
             isWaterFrozen = true;
             lastWaterSpeed = risingSpeed;
             gameManager.SetWaterFrozenUI(true);
-            stopWaterCoroutine = StartCoroutine(StopWater());
+            stopWaterCoroutine = StartCoroutine(StopWater(freezeTime));
         }
         else 
         {
             StopCoroutine(stopWaterCoroutine);
-            stopWaterCoroutine = StartCoroutine(StopWater());
+            stopWaterCoroutine = StartCoroutine(StopWater(freezeTime));
         }
     }
 
-    IEnumerator StopWater()
+    IEnumerator StopWater(float stopTime)
     {
         risingSpeed = 0f;
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(stopTime);
         risingSpeed = lastWaterSpeed;
         gameManager.SetWaterFrozenUI(false);
         isWaterFrozen = false;

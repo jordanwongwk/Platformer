@@ -6,6 +6,8 @@ public class LevelHandler : MonoBehaviour {
 
     [SerializeField] LevelManager myLevelManager;       // Serialize just to check
 
+    [SerializeField] bool viewedAds = false;            // TODO Set False on Publish
+
 	// Use this for initialization
 	void Start () {
         myLevelManager = LevelManager.Instance;
@@ -23,7 +25,15 @@ public class LevelHandler : MonoBehaviour {
 
     public void BackToMainMenu()
     {
-        myLevelManager.ExitToMainMenu();
+        if (!viewedAds)
+        {
+            viewedAds = true;
+            FindObjectOfType<AdScript>().showInterstitialAd();
+        }
+        else
+        {
+            myLevelManager.ExitToMainMenu();
+        }
     }
 
 }
