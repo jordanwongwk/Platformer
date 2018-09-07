@@ -27,6 +27,7 @@ public class LevelManager : MonoBehaviour {
     public void StartGame()
     {
         SceneManager.LoadScene(gameLoadingBuildIndex);
+        Time.timeScale = 1.0f;
     }
 
     public void QuitGame()

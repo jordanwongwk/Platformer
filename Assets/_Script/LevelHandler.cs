@@ -23,6 +23,11 @@ public class LevelHandler : MonoBehaviour {
         myLevelManager.QuitGame();
     }
 
+    public void RetryGame()
+    {
+        myLevelManager.StartGame();
+    }
+
     public void BackToMainMenu()
     {
         if (!viewedAds)

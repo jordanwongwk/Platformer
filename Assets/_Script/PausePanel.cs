@@ -4,7 +4,18 @@ using UnityEngine;
 
 public class PausePanel : MonoBehaviour {
 
+    [SerializeField] GameObject retryConfirmationWindow;
     [SerializeField] GameObject quitConfirmationWindow;
+
+    public void OpenUpRetryConfirmation()
+    {
+        retryConfirmationWindow.SetActive(true);
+    }
+
+    public void CloseRetryConfirmation()
+    {
+        retryConfirmationWindow.SetActive(false);
+    }
 
     public void OpenUpConfirmation()
     {

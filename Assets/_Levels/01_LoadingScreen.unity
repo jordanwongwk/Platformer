@@ -6060,7 +6060,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000095367, y: -0.0019045}
+  m_AnchoredPosition: {x: 0, y: -0.0019045}
   m_SizeDelta: {x: -193.54, y: 296.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &830578349
@@ -6666,7 +6666,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0019063053}
+  m_AnchoredPosition: {x: 0, y: -0.0018920898}
   m_SizeDelta: {x: 0, y: 0.0038452148}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1315428380
@@ -7148,7 +7148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0030737}
+  m_AnchoredPosition: {x: 0, y: 0.0030517578}
   m_SizeDelta: {x: 0, y: -0.19385}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1484143115
@@ -7549,7 +7549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSceneBuildIndex: 2
-  loadingText: {fileID: 396459806}
+  loadingPanel: {fileID: 2076016535}
 --- !u!4 &1692926745
 Transform:
   m_ObjectHideFlags: 0
