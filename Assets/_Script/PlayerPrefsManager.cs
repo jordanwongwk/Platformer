@@ -7,6 +7,7 @@ public class PlayerPrefsManager : MonoBehaviour {
     const string MUSIC_VOLUME = "music_volume";
     const string SOUND_VOLUME = "sound_volume";
     const string RISING_WATER_ADDITIONAL_SPEED = "rising_water_additional_speed";
+    const string RISING_WATER_INITIAL_SPEED = "rising_water_initial_speed";
     const string SCORE_MULTIPLIER = "score_multiplier";
     const string HIGH_SCORE = "high_score";
 
@@ -41,6 +42,16 @@ public class PlayerPrefsManager : MonoBehaviour {
     public static float GetRisingWaterAdditionalSpeed()
     {
         return PlayerPrefs.GetFloat(RISING_WATER_ADDITIONAL_SPEED);
+    }
+
+    public static void SetRisingWaterInitialSpeed(float initialSpeed)
+    {
+        PlayerPrefs.SetFloat(RISING_WATER_INITIAL_SPEED, initialSpeed);
+    }
+
+    public static float GetRisingWaterInitialSpeed()
+    {
+        return PlayerPrefs.GetFloat(RISING_WATER_INITIAL_SPEED);
     }
 
     public static void SetScoreMultiplier(float multiplier)

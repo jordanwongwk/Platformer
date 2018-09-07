@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour {
 
     float waterSpeedAddition = 0f;
     float lastRaisedTime = 0;
+    bool isTheGamePausing = false;
     AudioSource managerAudioSource;
     RisingTide myRisingTide;
 
@@ -63,7 +64,14 @@ public class GameManager : MonoBehaviour {
         // Pause Game
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            OpenPausePanel();
+            if (!isTheGamePausing)
+            {
+                OpenPausePanel();
+            }
+            else
+            {
+                ClosePausePanel();
+            }
         }
         CheckForTimeToRaiseWaterSpeed();
     }
@@ -124,13 +132,18 @@ public class GameManager : MonoBehaviour {
 
     public void OpenPausePanel()
     {
-        Time.timeScale = 0f;
-        pausePanel.SetActive(true);
+        if (FindObjectOfType<Player>().GetIsPlayerAlive())
+        {
+            Time.timeScale = 0f;
+            isTheGamePausing = true;
+            pausePanel.SetActive(true);
+        }
     }
 
     public void ClosePausePanel()
     {
         Time.timeScale = 1f;
+        isTheGamePausing = false;
         pausePanel.SetActive(false);
     }
 

@@ -11,8 +11,9 @@ public class GameModeManager : MonoBehaviour {
     [SerializeField] Text normalText;
     [SerializeField] Text hardText;
 
-    [SerializeField] float waterRisingSpeed;
-    [SerializeField] float scoreMultiplier;
+    float waterRisingSpeed;
+    float waterInitialSpeed;
+    float scoreMultiplier;
 
     public void EasyDifficultySelected (bool isSelected)
     {
@@ -21,6 +22,7 @@ public class GameModeManager : MonoBehaviour {
             DisableIntroductionText();
             easyText.gameObject.SetActive(true);
             waterRisingSpeed = 0.5f;
+            waterInitialSpeed = 1.0f;
             scoreMultiplier = 1.0f;
         }
         else
@@ -36,6 +38,7 @@ public class GameModeManager : MonoBehaviour {
             DisableIntroductionText();
             normalText.gameObject.SetActive(true);
             waterRisingSpeed = 0.75f;
+            waterInitialSpeed = 1.5f;
             scoreMultiplier = 2.0f;
         }
         else
@@ -51,6 +54,7 @@ public class GameModeManager : MonoBehaviour {
             DisableIntroductionText();
             hardText.gameObject.SetActive(true);
             waterRisingSpeed = 1.0f;
+            waterInitialSpeed = 2.0f;
             scoreMultiplier = 3.0f;
         }
         else
@@ -70,6 +74,7 @@ public class GameModeManager : MonoBehaviour {
     public void ConfirmGameModeSelection()
     {
         PlayerPrefsManager.SetRisingWaterAdditionalSpeed(waterRisingSpeed);
+        PlayerPrefsManager.SetRisingWaterInitialSpeed(waterInitialSpeed);
         PlayerPrefsManager.SetScoreMultiplier(scoreMultiplier);
         Time.timeScale = 1.0f;
 

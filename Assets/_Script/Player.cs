@@ -182,4 +182,9 @@ public class Player : MonoBehaviour {
     {
         return hazardHitCounts;
     }
+
+    public bool GetIsPlayerAlive()
+    {
+        return isAlive;
+    }
 }

@@ -36,4 +36,9 @@ public class LevelHandler : MonoBehaviour {
         }
     }
 
+    public void BackToMainMenuWithPause()
+    {
+        FindObjectOfType<AdScript>().showInterstitialAd();
+        myLevelManager.ExitToMainMenu();
+    }
 }

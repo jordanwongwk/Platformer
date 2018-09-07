@@ -24,6 +24,8 @@ public class RisingTide : MonoBehaviour {
         gameManager = FindObjectOfType<GameManager>();
         waterAudioSource = GetComponent<AudioSource>();
         waterAudioSource.volume = GameManager.GetSoundVolume();
+
+        risingSpeed = PlayerPrefsManager.GetRisingWaterInitialSpeed();
     }
 
     // Update is called once per frame

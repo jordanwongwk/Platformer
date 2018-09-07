@@ -12,70 +12,89 @@ public class UIManager : MonoBehaviour {
     [SerializeField] GameObject quitConfirmationPanel;
 
     bool isOptionPanelOn = false;
+    bool isAnyPanelOn = false;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            EnableQuitPanel();
+            if (!isAnyPanelOn)
+            {
+                EnableQuitPanel();
+            }
+            else
+            {
+                if (gameModeSelectionPanel.activeInHierarchy)   { DisableGameModeSelectionPanel(); }
+                if (leaderboardPanel.activeInHierarchy) { DisableLeaderboardPanel(); }
+                if (optionsPanel.activeInHierarchy) { CancelOptionChanges(); }
+                if (creditsPanel.activeInHierarchy) { DisableCreditsPanel(); }
+                if (quitConfirmationPanel.activeInHierarchy) { DisableQuitPanel(); }
+            }
         }
+    }
+
+    private void PanelIsTurningOn(GameObject targettedPanel)
+    {
+        Time.timeScale = 0f;
+        isAnyPanelOn = true;
+        targettedPanel.SetActive(true);
+    }
+
+    private void PanelIsTurningOff(GameObject targettedPanel)
+    {
+        Time.timeScale = 1f;
+        isAnyPanelOn = false;
+        targettedPanel.SetActive(false);
     }
 
     #region Game Mode Selection Panel
     public void EnableGameModeSelectionPanel()
     {
-        Time.timeScale = 0f;
-        gameModeSelectionPanel.SetActive(true);
+        PanelIsTurningOn(gameModeSelectionPanel);
     }
 
     public void DisableGameModeSelectionPanel()
     {
-        Time.timeScale = 1f;
-        gameModeSelectionPanel.SetActive(false);
+        PanelIsTurningOff(gameModeSelectionPanel);
     }
     #endregion
 
     #region Leaderboard Panel
     public void EnableLeaderboardPanel()
     {
-        Time.timeScale = 0f;
         GetComponent<LeaderboardManager>().GetLeaderboardScore();
-        leaderboardPanel.SetActive(true);
+        PanelIsTurningOn(leaderboardPanel);
     }
 
     public void DisableLeaderboardPanel()
     {
-        Time.timeScale = 1f;
-        leaderboardPanel.SetActive(false);
+        PanelIsTurningOff(leaderboardPanel);
     }
     #endregion
 
     #region Options Panel
     public void EnableOptionsPanel()
     {
-        Time.timeScale = 0f;
         isOptionPanelOn = true;
-        optionsPanel.SetActive(true);
+        PanelIsTurningOn(optionsPanel);
     }
 
     public void ConfirmOptionChanges()
     {
-        Time.timeScale = 1f;
         float musicVolumeChange = GetComponent<OptionManager>().GetMusicVolumeChange();
         float soundVolumeChange = GetComponent<OptionManager>().GetSoundVolumeChange();
 
         PlayerPrefsManager.SetMusicVolume(musicVolumeChange);
         PlayerPrefsManager.SetSoundVolume(soundVolumeChange);
         isOptionPanelOn = false;
-        optionsPanel.SetActive(false);
+        PanelIsTurningOff(optionsPanel);
     }
 
     public void CancelOptionChanges()
     {
-        Time.timeScale = 1f;
         GetComponent<OptionManager>().DefaultOptions();
         isOptionPanelOn = false;
-        optionsPanel.SetActive(false);
+        PanelIsTurningOff(optionsPanel);
     }
 
     public bool OptionPanelStatus()
@@ -87,28 +106,24 @@ public class UIManager : MonoBehaviour {
     #region Credits Panel
     public void EnableCreditsPanel()
     {
-        Time.timeScale = 0f;
-        creditsPanel.SetActive(true);
+        PanelIsTurningOn(creditsPanel);
     }
 
     public void DisableCreditsPanel()
     {
-        Time.timeScale = 1f;
-        creditsPanel.SetActive(false);
+        PanelIsTurningOff(creditsPanel);
     }
     #endregion
 
     #region Quit Confirmation Panel
     public void EnableQuitPanel()
     {
-        Time.timeScale = 0f;
-        quitConfirmationPanel.SetActive(true);
+        PanelIsTurningOn(quitConfirmationPanel);
     }
 
     public void DisableQuitPanel()
     {
-        Time.timeScale = 1f;
-        quitConfirmationPanel.SetActive(false);
+        PanelIsTurningOff(quitConfirmationPanel);
     }
     #endregion
 }
