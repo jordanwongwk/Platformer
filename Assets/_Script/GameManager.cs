@@ -95,11 +95,11 @@ public class GameManager : MonoBehaviour {
             lastRaisedTime = Time.timeSinceLevelLoad;
             myRisingTide.RisingWaterSpeed(waterSpeedAddition);
 
-            StartCoroutine(WaterRiseWarning());
+            StartCoroutine(TextActiveTime());
         }
     }
 
-    IEnumerator WaterRiseWarning()
+    IEnumerator TextActiveTime()
     {
         waterRisingTextAlert.gameObject.SetActive(true);
         yield return new WaitForSeconds(WAIT_TIME);        

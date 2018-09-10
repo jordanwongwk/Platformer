@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameSettingsManager : MonoBehaviour {
-    
+
+    static int divineOrbCharges;
     static float waterRisingSpeed;
     static float waterInitialSpeed;
     static float scoreMultiplier;
     static string difficultyString;
+
+    public static void SetDivineOrbCharges(int value)
+    {
+        divineOrbCharges = value;
+    }
+
+    public static int GetDivineOrbCharges()
+    {
+        return divineOrbCharges;
+    }
 
     public static void SetWaterRisingSpeed(float setSpeed)
     {

@@ -12,14 +12,18 @@ public class RisingTide : MonoBehaviour {
     [SerializeField] AudioClip frozenWaterSFX;
 
     float lastWaterSpeed;
+    float initialWaterSpeed;
     bool isWaterFrozen = false;
+    bool isWaterGoingDown = false;
+    float movingDownFinalPos;
+    float distanceDiff;
     Player player;
     GameManager gameManager;
     Coroutine stopWaterCoroutine;
     AudioSource waterAudioSource;
 
-	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         player = FindObjectOfType<Player>();
         gameManager = FindObjectOfType<GameManager>();
         waterAudioSource = GetComponent<AudioSource>();
@@ -27,27 +31,58 @@ public class RisingTide : MonoBehaviour {
 
         if (FindObjectOfType<GameSettingsManager>() != null)
         {
-            risingSpeed = GameSettingsManager.GetWaterInitialSpeed();
+            initialWaterSpeed = GameSettingsManager.GetWaterInitialSpeed();
         }
         else
         {
             // Call when play from level straight from editor!
             Debug.Log("No GameSettingsManager script exists. Setting to default diffculty.");
-            risingSpeed = 1.0f;         // Set Default Speed
+            initialWaterSpeed = 1.0f;         // Set Default Speed
         }
+
+        risingSpeed = initialWaterSpeed;
     }
 
-    // Update is called once per frame
-    void Update () {
-        transform.position += new Vector3(0f, risingSpeed * Time.deltaTime, 0f);
-        float distanceDiff = player.transform.position.y - transform.position.y;
+    void Update ()
+    {
+        if (isWaterGoingDown)
+        {
+            // Water going down
+            transform.position -= new Vector3(0f, 25f * Time.deltaTime, 0f);
+
+            if (transform.position.y <= movingDownFinalPos)
+            {
+                isWaterGoingDown = false;
+            }
+        }
+        else
+        {
+            // Water going Up
+            transform.position += new Vector3(0f, risingSpeed * Time.deltaTime, 0f);
+        }
+        distanceDiff = player.transform.position.y - transform.position.y;
         gameManager.WaterLevelUpdate(distanceDiff);
-	}
+    }
 
     public void RisingWaterSpeed(float addedSpeed)
     {
         waterAudioSource.PlayOneShot(risingWaterSFX);
         risingSpeed += addedSpeed;
+    }
+
+    public float GetCurrentWaterSpeed()
+    {
+        return risingSpeed;
+    }
+
+    public float GetInitialWaterSpeed()
+    {
+        return initialWaterSpeed;
+    }
+
+    public float GetDistanceDifference()
+    {
+        return distanceDiff;
     }
 
     #region Power Up : Freeze Water
@@ -82,4 +117,10 @@ public class RisingTide : MonoBehaviour {
         return isWaterFrozen;
     }
     #endregion
+
+    public void ReduceWaterPosition(float amountReduced)
+    {
+        movingDownFinalPos = transform.position.y - amountReduced;
+        isWaterGoingDown = true;
+    }
 }

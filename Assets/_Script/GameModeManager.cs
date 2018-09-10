@@ -11,6 +11,7 @@ public class GameModeManager : MonoBehaviour {
     [SerializeField] Text normalText;
     [SerializeField] Text hardText;
 
+    int divineOrbCharges;
     float waterRisingSpeed;
     float waterInitialSpeed;
     float scoreMultiplier;
@@ -22,6 +23,7 @@ public class GameModeManager : MonoBehaviour {
         {
             DisableIntroductionText();
             easyText.gameObject.SetActive(true);
+            divineOrbCharges = 1;
             waterRisingSpeed = 0.5f;
             waterInitialSpeed = 1.0f;
             scoreMultiplier = 1.0f;
@@ -39,6 +41,7 @@ public class GameModeManager : MonoBehaviour {
         {
             DisableIntroductionText();
             normalText.gameObject.SetActive(true);
+            divineOrbCharges = 1;
             waterRisingSpeed = 0.75f;
             waterInitialSpeed = 1.5f;
             scoreMultiplier = 2.0f;
@@ -56,6 +59,7 @@ public class GameModeManager : MonoBehaviour {
         {
             DisableIntroductionText();
             hardText.gameObject.SetActive(true);
+            divineOrbCharges = 2;
             waterRisingSpeed = 1.0f;
             waterInitialSpeed = 2.0f;
             scoreMultiplier = 3.0f;
@@ -77,6 +81,7 @@ public class GameModeManager : MonoBehaviour {
 
     public void ConfirmGameModeSelection()
     {
+        GameSettingsManager.SetDivineOrbCharges(divineOrbCharges);
         GameSettingsManager.SetWaterRisingSpeed(waterRisingSpeed);
         GameSettingsManager.SetWaterInitialSpeed(waterInitialSpeed);
         GameSettingsManager.SetScoreMultiplier(scoreMultiplier);
