@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+struct HighScoreStat
+{
+    public int score;
+    public string difficulty;
+}
+
 public class ScoreHandler : MonoBehaviour {
     [SerializeField] Text scoreText;
 
-    List<int> highScores = new List<int>();
+    List<HighScoreStat> highScores = new List<HighScoreStat>();
 
     bool isHighScore = false;
+    string playerDifficulty;
     int playerScore = 0;
     float currentScore;
     float scoreMultiplier = 0f;
@@ -20,6 +27,7 @@ public class ScoreHandler : MonoBehaviour {
         myPlayer = FindObjectOfType<Player>();
 
         scoreMultiplier = PlayerPrefsManager.GetScoreMultiplier();
+        playerDifficulty = PlayerPrefsManager.GetDifficultyString();
         scoreText.text = playerScore.ToString();
     }
 	
@@ -39,32 +47,43 @@ public class ScoreHandler : MonoBehaviour {
 
     public int GetFinalScore()
     {
-
         CheckForHighScore();
         return playerScore; 
     }
 
     public void CheckForHighScore()
     {
-        for (int i = 0; i < NUMBER_OF_PLACINGS; i++)                     
+        for (int i = 0; i < NUMBER_OF_PLACINGS; i++)
         {
-            highScores.Add(PlayerPrefsManager.GetHighScore(i + 1));
+            HighScoreStat statTemp = new HighScoreStat();
+            statTemp.score = PlayerPrefsManager.GetHighScore(i + 1);
+            statTemp.difficulty = PlayerPrefsManager.GetHighScoreDifficulty(i + 1);
+            highScores.Add(statTemp);
         }
 
-        highScores.Add(playerScore);                    // Add current score into List
-        highScores.Sort((a,b) => b.CompareTo(a));
+        AddInCurrentScoreStats();
+        highScores.Sort((a, b) => b.score.CompareTo(a.score));
 
         // If score is in List (not the last), play high score music
-        if (highScores[highScores.Count - 1] != playerScore)     
+        if (highScores[highScores.Count - 1].score != playerScore)
         {
             Debug.Log("High Score!");
             isHighScore = true;
         }
 
-        for (int i = 0; i < NUMBER_OF_PLACINGS; i++)                     
+        for (int i = 0; i < NUMBER_OF_PLACINGS; i++)
         {
-            PlayerPrefsManager.SetHighScore(i + 1, highScores[i]);
+            PlayerPrefsManager.SetHighScore(i + 1, highScores[i].score);
+            PlayerPrefsManager.SetHighScoreDifficulty(i + 1, highScores[i].difficulty);
         }
+    }
+
+    private void AddInCurrentScoreStats()
+    {
+        HighScoreStat currentStat = new HighScoreStat();
+        currentStat.score = playerScore;
+        currentStat.difficulty = playerDifficulty;
+        highScores.Add(currentStat);                    // Add current score into List
     }
 
     public bool GetHighScoreStatus()

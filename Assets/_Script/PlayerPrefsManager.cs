@@ -9,7 +9,9 @@ public class PlayerPrefsManager : MonoBehaviour {
     const string RISING_WATER_ADDITIONAL_SPEED = "rising_water_additional_speed";
     const string RISING_WATER_INITIAL_SPEED = "rising_water_initial_speed";
     const string SCORE_MULTIPLIER = "score_multiplier";
+    const string DIFFICULTY_STRING = "difficulty_string";
     const string HIGH_SCORE = "high_score";
+    const string HIGH_SCORE_DIFF = "high_score_difficulty";
 
     #region Option Settings
     public static void SetMusicVolume(float volume)
@@ -63,6 +65,16 @@ public class PlayerPrefsManager : MonoBehaviour {
     {
         return PlayerPrefs.GetFloat(SCORE_MULTIPLIER);
     }
+
+    public static void SetDifficultyString(string difficulty)
+    {
+        PlayerPrefs.SetString(DIFFICULTY_STRING, difficulty);
+    }
+
+    public static string GetDifficultyString()
+    {
+        return PlayerPrefs.GetString(DIFFICULTY_STRING);
+    }
     #endregion
 
     #region Scores and Leaderboards
@@ -76,6 +88,18 @@ public class PlayerPrefsManager : MonoBehaviour {
     {
         string highScoreKey = HIGH_SCORE + placing.ToString();
         return PlayerPrefs.GetInt(highScoreKey, 0);
+    }
+
+    public static void SetHighScoreDifficulty(int placing, string difficulty)
+    {
+        string highScoreDiffKey = HIGH_SCORE_DIFF + placing.ToString();
+        PlayerPrefs.SetString(highScoreDiffKey, difficulty);
+    }
+
+    public static string GetHighScoreDifficulty(int placing)
+    {
+        string highScoreDiffKey = HIGH_SCORE_DIFF + placing.ToString();
+        return PlayerPrefs.GetString(highScoreDiffKey, "N/A");
     }
     #endregion
 }

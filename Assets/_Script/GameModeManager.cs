@@ -14,6 +14,7 @@ public class GameModeManager : MonoBehaviour {
     float waterRisingSpeed;
     float waterInitialSpeed;
     float scoreMultiplier;
+    string difficultyString;
 
     public void EasyDifficultySelected (bool isSelected)
     {
@@ -24,6 +25,7 @@ public class GameModeManager : MonoBehaviour {
             waterRisingSpeed = 0.5f;
             waterInitialSpeed = 1.0f;
             scoreMultiplier = 1.0f;
+            difficultyString = "Easy";
         }
         else
         {
@@ -40,6 +42,7 @@ public class GameModeManager : MonoBehaviour {
             waterRisingSpeed = 0.75f;
             waterInitialSpeed = 1.5f;
             scoreMultiplier = 2.0f;
+            difficultyString = "Normal";
         }
         else
         {
@@ -56,6 +59,7 @@ public class GameModeManager : MonoBehaviour {
             waterRisingSpeed = 1.0f;
             waterInitialSpeed = 2.0f;
             scoreMultiplier = 3.0f;
+            difficultyString = "Hard";
         }
         else
         {
@@ -76,6 +80,7 @@ public class GameModeManager : MonoBehaviour {
         PlayerPrefsManager.SetRisingWaterAdditionalSpeed(waterRisingSpeed);
         PlayerPrefsManager.SetRisingWaterInitialSpeed(waterInitialSpeed);
         PlayerPrefsManager.SetScoreMultiplier(scoreMultiplier);
+        PlayerPrefsManager.SetDifficultyString(difficultyString);
         Time.timeScale = 1.0f;
 
         FindObjectOfType<LevelHandler>().StartGameHandler();

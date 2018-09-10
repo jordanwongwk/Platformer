@@ -126,4 +126,10 @@ public class UIManager : MonoBehaviour {
         PanelIsTurningOff(quitConfirmationPanel);
     }
     #endregion
+
+    //TODO Delete this on launch
+    public void ClearPlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }
