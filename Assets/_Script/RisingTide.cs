@@ -25,7 +25,16 @@ public class RisingTide : MonoBehaviour {
         waterAudioSource = GetComponent<AudioSource>();
         waterAudioSource.volume = GameManager.GetSoundVolume();
 
-        risingSpeed = PlayerPrefsManager.GetRisingWaterInitialSpeed();
+        if (FindObjectOfType<GameSettingsManager>() != null)
+        {
+            risingSpeed = GameSettingsManager.GetWaterInitialSpeed();
+        }
+        else
+        {
+            // Call when play from level straight from editor!
+            Debug.Log("No GameSettingsManager script exists. Setting to default diffculty.");
+            risingSpeed = 1.0f;         // Set Default Speed
+        }
     }
 
     // Update is called once per frame

@@ -35,48 +35,6 @@ public class PlayerPrefsManager : MonoBehaviour {
     }
     #endregion
 
-    #region Difficulty Settings
-    public static void SetRisingWaterAdditionalSpeed(float speed)
-    {
-        PlayerPrefs.SetFloat(RISING_WATER_ADDITIONAL_SPEED, speed);
-    }
-
-    public static float GetRisingWaterAdditionalSpeed()
-    {
-        return PlayerPrefs.GetFloat(RISING_WATER_ADDITIONAL_SPEED);
-    }
-
-    public static void SetRisingWaterInitialSpeed(float initialSpeed)
-    {
-        PlayerPrefs.SetFloat(RISING_WATER_INITIAL_SPEED, initialSpeed);
-    }
-
-    public static float GetRisingWaterInitialSpeed()
-    {
-        return PlayerPrefs.GetFloat(RISING_WATER_INITIAL_SPEED);
-    }
-
-    public static void SetScoreMultiplier(float multiplier)
-    {
-        PlayerPrefs.SetFloat(SCORE_MULTIPLIER, multiplier);
-    }
-
-    public static float GetScoreMultiplier()
-    {
-        return PlayerPrefs.GetFloat(SCORE_MULTIPLIER);
-    }
-
-    public static void SetDifficultyString(string difficulty)
-    {
-        PlayerPrefs.SetString(DIFFICULTY_STRING, difficulty);
-    }
-
-    public static string GetDifficultyString()
-    {
-        return PlayerPrefs.GetString(DIFFICULTY_STRING);
-    }
-    #endregion
-
     #region Scores and Leaderboards
     public static void SetHighScore(int placing, int score)
     {

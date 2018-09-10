@@ -77,10 +77,11 @@ public class GameModeManager : MonoBehaviour {
 
     public void ConfirmGameModeSelection()
     {
-        PlayerPrefsManager.SetRisingWaterAdditionalSpeed(waterRisingSpeed);
-        PlayerPrefsManager.SetRisingWaterInitialSpeed(waterInitialSpeed);
-        PlayerPrefsManager.SetScoreMultiplier(scoreMultiplier);
-        PlayerPrefsManager.SetDifficultyString(difficultyString);
+        GameSettingsManager.SetWaterRisingSpeed(waterRisingSpeed);
+        GameSettingsManager.SetWaterInitialSpeed(waterInitialSpeed);
+        GameSettingsManager.SetScoreMultiplier(scoreMultiplier);
+        GameSettingsManager.SetDifficultyString(difficultyString);
+
         Time.timeScale = 1.0f;
 
         FindObjectOfType<LevelHandler>().StartGameHandler();

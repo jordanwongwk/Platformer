@@ -23,15 +23,28 @@ public class ScoreHandler : MonoBehaviour {
 
     const int NUMBER_OF_PLACINGS = 3;
 
-    void Start () {
+    void Start ()
+    {
         myPlayer = FindObjectOfType<Player>();
 
-        scoreMultiplier = PlayerPrefsManager.GetScoreMultiplier();
-        playerDifficulty = PlayerPrefsManager.GetDifficultyString();
+        if (FindObjectOfType<GameSettingsManager>() != null)
+        {
+            scoreMultiplier = GameSettingsManager.GetScoreMultiplier();
+            playerDifficulty = GameSettingsManager.GetDifficultyString();
+        }
+        else
+        {
+            // Call when play from level straight from editor!
+            Debug.Log("No GameSettingsManager script exists. Setting to default diffculty.");
+            scoreMultiplier = 1.0f;
+            playerDifficulty = "Default";
+        }
+
         scoreText.text = playerScore.ToString();
     }
 	
-	void Update () {
+	void Update ()
+    {
         ScoreUpdate();
     }
 
@@ -83,7 +96,7 @@ public class ScoreHandler : MonoBehaviour {
         HighScoreStat currentStat = new HighScoreStat();
         currentStat.score = playerScore;
         currentStat.difficulty = playerDifficulty;
-        highScores.Add(currentStat);                    // Add current score into List
+        highScores.Add(currentStat);                    
     }
 
     public bool GetHighScoreStatus()

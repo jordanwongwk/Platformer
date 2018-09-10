@@ -47,7 +47,17 @@ public class GameManager : MonoBehaviour {
     {
         myRisingTide = FindObjectOfType<RisingTide>();
 
-        waterSpeedAddition = PlayerPrefsManager.GetRisingWaterAdditionalSpeed();
+        if (FindObjectOfType<GameSettingsManager>() != null)
+        {
+            waterSpeedAddition = GameSettingsManager.GetWaterRisingSpeed();
+        }
+        else
+        {
+            // Call when play from level straight from editor!
+            Debug.Log("No GameSettingsManager script exists. Setting to default diffculty.");
+            waterSpeedAddition = 1.0f;
+        }
+
         masterMusicPlayer.volume = PlayerPrefsManager.GetMusicVolume();
         soundVolume = PlayerPrefsManager.GetSoundVolume();
         managerAudioSource = GetComponent<AudioSource>();
