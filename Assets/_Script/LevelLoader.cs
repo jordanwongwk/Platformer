@@ -9,6 +9,8 @@ public class LevelLoader : MonoBehaviour {
     [SerializeField] int gameSceneBuildIndex = 2;
     [SerializeField] GameObject loadingPanel;
 
+    bool isReady = false;
+    AsyncOperation async;
     Image loadingPanelImage;
     Text loadingPanelText;
 
@@ -26,24 +28,27 @@ public class LevelLoader : MonoBehaviour {
     IEnumerator LoadingGame()
     {
         yield return null;
-        AsyncOperation async = SceneManager.LoadSceneAsync(gameSceneBuildIndex);
+        async = SceneManager.LoadSceneAsync(gameSceneBuildIndex);
         async.allowSceneActivation = false;
 
         while (!async.isDone)
         {
             if (async.progress >= 0.9f)
             {
-                loadingPanelText.text = "Get ready! Tap the screen to begin climbing!";
+                loadingPanelText.text = "Your game is ready. Tap HERE to START.";
                 loadingPanelImage.color = Color.white;
-
-                if (Input.GetMouseButtonDown(0))
-                {
-                    async.allowSceneActivation = true;
-                }
+                isReady = true;
             }
 
             yield return null;
         }
+    }
 
+    public void OnClickStartGame()
+    {
+        if (isReady)
+        {
+            async.allowSceneActivation = true;
+        }
     }
 }

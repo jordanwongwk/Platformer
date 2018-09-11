@@ -5,23 +5,42 @@ using UnityEngine.UI;
 
 public class GameModeManager : MonoBehaviour {
 
+    [SerializeField] Text multiplierText;
+
     [Header("Difficulty Description")]
+    [SerializeField] GameObject warningNoGameMode;
     [SerializeField] Text introductionText;
     [SerializeField] Text easyText;
     [SerializeField] Text normalText;
     [SerializeField] Text hardText;
 
+    [Header("Handicap Mode")]
+    [SerializeField] Text introductionHandicapText;
+    [SerializeField] GameObject noIndicatorText;
+    [SerializeField] GameObject limitedLifeText;
+    [SerializeField] GameObject zeroLifeText;
+    [SerializeField] GameObject zeroDivineText;
+
+    bool gameModeIsChosen = false;
     int divineOrbCharges;
     float waterRisingSpeed;
     float waterInitialSpeed;
     float scoreMultiplier;
     string difficultyString;
 
+    bool handicapNoIndicator = false;
+    bool handicapLimitedLife = false;
+    bool handicapZeroLife = false;
+    bool handicapZeroDivine = false;
+    float handicapMultiplier;
+
+    #region Game Modes
     public void EasyDifficultySelected (bool isSelected)
     {
         if (isSelected)
         {
-            DisableIntroductionText();
+            gameModeIsChosen = true;
+            DisableIntroductionText(introductionText);
             easyText.gameObject.SetActive(true);
             divineOrbCharges = 1;
             waterRisingSpeed = 0.5f;
@@ -39,7 +58,8 @@ public class GameModeManager : MonoBehaviour {
     {
         if (isSelected)
         {
-            DisableIntroductionText();
+            gameModeIsChosen = true;
+            DisableIntroductionText(introductionText);
             normalText.gameObject.SetActive(true);
             divineOrbCharges = 1;
             waterRisingSpeed = 0.75f;
@@ -57,7 +77,8 @@ public class GameModeManager : MonoBehaviour {
     {
         if (isSelected)
         {
-            DisableIntroductionText();
+            gameModeIsChosen = true;
+            DisableIntroductionText(introductionText);
             hardText.gameObject.SetActive(true);
             divineOrbCharges = 2;
             waterRisingSpeed = 1.0f;
@@ -71,24 +92,106 @@ public class GameModeManager : MonoBehaviour {
         }
     }
 
-    private void DisableIntroductionText()
+    public void ConfirmGameMode()
     {
-        if (introductionText.IsActive())
+        if (gameModeIsChosen)
         {
-            introductionText.gameObject.SetActive(false);
+            GetComponent<UIManager>().EnableHandicapPanel();
+        }
+        else
+        {
+            warningNoGameMode.SetActive(true);
         }
     }
 
-    public void ConfirmGameModeSelection()
+    public void CloseWarningNoGameMode()
     {
+        warningNoGameMode.SetActive(false);
+    }
+    #endregion
+
+    public void NoIndicatorSelected(bool isSelected)
+    {
+        DisableIntroductionText(introductionHandicapText);
+        DisableAllTextInHandicap();
+        noIndicatorText.SetActive(isSelected);
+        handicapNoIndicator = isSelected;
+
+        if (isSelected) { handicapMultiplier += 1.50f; }
+        else { handicapMultiplier -= 1.50f; }
+    }
+
+    public void LimitedLifeSelected(bool isSelected)
+    {
+        DisableIntroductionText(introductionHandicapText);
+        DisableAllTextInHandicap();
+        limitedLifeText.SetActive(isSelected);
+        handicapLimitedLife = isSelected;
+
+        if (isSelected) { handicapMultiplier += 1.75f; }
+        else { handicapMultiplier -= 1.75f; }
+    }
+
+    public void ZeroLifeSelected(bool isSelected)
+    {
+        DisableIntroductionText(introductionHandicapText);
+        DisableAllTextInHandicap();
+        zeroLifeText.SetActive(isSelected);
+        handicapZeroLife = isSelected;
+
+        if (isSelected) { handicapMultiplier += 2.50f; }
+        else { handicapMultiplier -= 2.50f; }
+    }
+
+    public void ZeroDivineSelected(bool isSelected)
+    {
+        DisableIntroductionText(introductionHandicapText);
+        DisableAllTextInHandicap();
+        zeroDivineText.SetActive(isSelected);
+        handicapZeroDivine = isSelected;
+
+        if (isSelected) { handicapMultiplier += 1.50f; }
+        else { handicapMultiplier -= 1.50f; }
+    }
+
+    void DisableAllTextInHandicap()
+    {
+        //TODO Refactor
+        noIndicatorText.SetActive(false);
+        limitedLifeText.SetActive(false);
+        zeroLifeText.SetActive(false);
+        zeroDivineText.SetActive(false);
+    }
+
+
+    private void DisableIntroductionText(Text intro)
+    {
+        if (intro.IsActive())
+        {
+            intro.gameObject.SetActive(false);
+        }
+    }
+
+    public void ConfirmGameSettingsSelection()
+    {
+        // float finalMultiplier = scoreMultiplier + handicapMultiplier;
+
         GameSettingsManager.SetDivineOrbCharges(divineOrbCharges);
         GameSettingsManager.SetWaterRisingSpeed(waterRisingSpeed);
         GameSettingsManager.SetWaterInitialSpeed(waterInitialSpeed);
         GameSettingsManager.SetScoreMultiplier(scoreMultiplier);
         GameSettingsManager.SetDifficultyString(difficultyString);
 
+        // Confirm Handicaps
+
         Time.timeScale = 1.0f;
 
         FindObjectOfType<LevelHandler>().StartGameHandler();
+    }
+
+
+    private void Update()
+    {
+        multiplierText.text = "x " + (scoreMultiplier + handicapMultiplier).ToString("F2");
     }
 }

@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour {
 
     [Header("Panels Configurations")]
     [SerializeField] GameObject gameModeSelectionPanel;
+    [SerializeField] GameObject handicapPanel;
     [SerializeField] GameObject leaderboardPanel;
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject creditsPanel;
@@ -56,6 +57,18 @@ public class UIManager : MonoBehaviour {
     public void DisableGameModeSelectionPanel()
     {
         PanelIsTurningOff(gameModeSelectionPanel);
+    }
+
+    public void EnableHandicapPanel()
+    {
+        // A Panel is already ON
+        handicapPanel.SetActive(true);
+    }
+
+    public void DisableHandicapPanel()
+    {
+        // Go back to Game Mode
+        handicapPanel.SetActive(false);
     }
     #endregion
 

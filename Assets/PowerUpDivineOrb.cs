@@ -25,7 +25,7 @@ public class PowerUpDivineOrb : MonoBehaviour {
     RisingTide myRisingTide;
 
     const float FULL_FILL_AMOUNT = 1.0f;
-    const float WAIT_TIME = 3.0f;
+    const float WAIT_TIME = 5.0f;
 
     void Start()
     {
