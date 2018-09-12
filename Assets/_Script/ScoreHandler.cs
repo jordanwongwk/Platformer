@@ -7,6 +7,10 @@ struct HighScoreStat
 {
     public int score;
     public string difficulty;
+    public bool handicapNoIndicator;
+    public bool handicapLimitedLives;
+    public bool handicapOneLife;
+    public bool handicapZeroDivine;
 }
 
 public class ScoreHandler : MonoBehaviour {
@@ -71,6 +75,10 @@ public class ScoreHandler : MonoBehaviour {
             HighScoreStat statTemp = new HighScoreStat();
             statTemp.score = PlayerPrefsManager.GetHighScore(i + 1);
             statTemp.difficulty = PlayerPrefsManager.GetHighScoreDifficulty(i + 1);
+            statTemp.handicapNoIndicator = PlayerPrefsManager.GetHandicapNoIndicator(i + 1);
+            statTemp.handicapLimitedLives = PlayerPrefsManager.GetHandicapLimitedLives(i + 1);
+            statTemp.handicapOneLife = PlayerPrefsManager.GetHandicapOneLife(i + 1);
+            statTemp.handicapZeroDivine = PlayerPrefsManager.GetHandicapZeroDivine(i + 1);
             highScores.Add(statTemp);
         }
 
@@ -88,6 +96,10 @@ public class ScoreHandler : MonoBehaviour {
         {
             PlayerPrefsManager.SetHighScore(i + 1, highScores[i].score);
             PlayerPrefsManager.SetHighScoreDifficulty(i + 1, highScores[i].difficulty);
+            PlayerPrefsManager.SetHandicapNoIndicator(i + 1, highScores[i].handicapNoIndicator);
+            PlayerPrefsManager.SetHandicapLimitedLives(i + 1, highScores[i].handicapLimitedLives);
+            PlayerPrefsManager.SetHandicapOneLife(i + 1, highScores[i].handicapOneLife);
+            PlayerPrefsManager.SetHandicapZeroDivine(i + 1, highScores[i].handicapZeroDivine);
         }
     }
 
@@ -96,6 +108,10 @@ public class ScoreHandler : MonoBehaviour {
         HighScoreStat currentStat = new HighScoreStat();
         currentStat.score = playerScore;
         currentStat.difficulty = playerDifficulty;
+        currentStat.handicapNoIndicator = GameSettingsManager.GetHandicapNoIndicator();
+        currentStat.handicapLimitedLives = GameSettingsManager.GetHandicapLimitedLives();
+        currentStat.handicapOneLife = GameSettingsManager.GetHandicapOneLife();
+        currentStat.handicapZeroDivine = GameSettingsManager.GetHandicapZeroDivine();
         highScores.Add(currentStat);                    
     }
 

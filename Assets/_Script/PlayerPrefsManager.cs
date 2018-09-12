@@ -10,8 +10,13 @@ public class PlayerPrefsManager : MonoBehaviour {
     const string RISING_WATER_INITIAL_SPEED = "rising_water_initial_speed";
     const string SCORE_MULTIPLIER = "score_multiplier";
     const string DIFFICULTY_STRING = "difficulty_string";
+
     const string HIGH_SCORE = "high_score";
     const string HIGH_SCORE_DIFF = "high_score_difficulty";
+    const string HANDICAP_NO_INDICATOR = "handicap_no_indicator";
+    const string HANDICAP_LIMITED_LIVES = "Handicap_limited_life";
+    const string HANDICAP_ONE_LIFE = "handicap_one_life";
+    const string HANDICAP_ZERO_DIVINE = "handicap_zero_divine";
 
     #region Option Settings
     public static void SetMusicVolume(float volume)
@@ -58,6 +63,79 @@ public class PlayerPrefsManager : MonoBehaviour {
     {
         string highScoreDiffKey = HIGH_SCORE_DIFF + placing.ToString();
         return PlayerPrefs.GetString(highScoreDiffKey, "N/A");
+    }
+
+    // Handicaps
+    public static void SetHandicapNoIndicator(int placing, bool status)
+    {
+        string handicapNoIndicatorKey = HANDICAP_NO_INDICATOR + placing.ToString();
+
+        int statusInInt = 0;
+        if (status) { statusInInt = 1; }
+
+        PlayerPrefs.SetInt(handicapNoIndicatorKey, statusInInt);
+    }
+
+    public static bool GetHandicapNoIndicator(int placing)
+    {
+        string handicapNoIndicatorKey = HANDICAP_NO_INDICATOR + placing.ToString();
+        int statusInInt = PlayerPrefs.GetInt(handicapNoIndicatorKey, 0);
+        bool status = (statusInInt == 1);
+        return status;
+    }
+
+    public static void SetHandicapLimitedLives(int placing, bool status)
+    {
+        string handicapLimitedLivesKey = HANDICAP_LIMITED_LIVES + placing.ToString();
+
+        int statusInInt = 0;
+        if (status) { statusInInt = 1; }
+
+        PlayerPrefs.SetInt(handicapLimitedLivesKey, statusInInt);
+    }
+
+    public static bool GetHandicapLimitedLives(int placing)
+    {
+        string handicapLimitedLivesKey = HANDICAP_LIMITED_LIVES + placing.ToString();
+        int statusInInt = PlayerPrefs.GetInt(handicapLimitedLivesKey, 0);
+        bool status = (statusInInt == 1);
+        return status;
+    }
+
+    public static void SetHandicapOneLife(int placing, bool status)
+    {
+        string handicapOneLife = HANDICAP_ONE_LIFE + placing.ToString();
+
+        int statusInInt = 0;
+        if (status) { statusInInt = 1; }
+
+        PlayerPrefs.SetInt(handicapOneLife, statusInInt);
+    }
+
+    public static bool GetHandicapOneLife(int placing)
+    {
+        string handicapOneLife = HANDICAP_ONE_LIFE + placing.ToString();
+        int statusInInt = PlayerPrefs.GetInt(handicapOneLife, 0);
+        bool status = (statusInInt == 1);
+        return status;
+    }
+
+    public static void SetHandicapZeroDivine(int placing, bool status)
+    {
+        string handicapZeroDivine = HANDICAP_ZERO_DIVINE + placing.ToString();
+
+        int statusInInt = 0;
+        if (status) { statusInInt = 1; }
+
+        PlayerPrefs.SetInt(handicapZeroDivine, statusInInt);
+    }
+
+    public static bool GetHandicapZeroDivine(int placing)
+    {
+        string handicapZeroDivine = HANDICAP_ZERO_DIVINE + placing.ToString();
+        int statusInInt = PlayerPrefs.GetInt(handicapZeroDivine, 0);
+        bool status = (statusInInt == 1);
+        return status;
     }
     #endregion
 }

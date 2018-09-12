@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour {
 
@@ -25,6 +26,11 @@ public class GameManager : MonoBehaviour {
     [SerializeField] GameObject waterFrozenBorder;
     [SerializeField] GameObject waterFrozenAlert;
 
+    [Header("Handicaps")]
+    [SerializeField] GameObject waterLevelIndicatorObject;
+    [SerializeField] GameObject lifePanel;
+    [SerializeField] Text lifeText;
+
     [Header("Game Over")]
     [SerializeField] Text timeText;
     [SerializeField] Text hazardHitsText;
@@ -32,11 +38,16 @@ public class GameManager : MonoBehaviour {
     [SerializeField] AudioClip NormalGameOver;
     [SerializeField] AudioClip HighScoreGameOver;
     [SerializeField] GameObject HighScorePanel;
+    [SerializeField] GameObject DrownedDeath;
+    [SerializeField] GameObject HazardDeath;
 
     float waterSpeedAddition = 0f;
     float lastRaisedTime = 0;
+    float distanceDiff;
     bool isTheGamePausing = false;
+    bool noIndicatorHandicap = false;
     AudioSource managerAudioSource;
+    Player myPlayer;
     RisingTide myRisingTide;
 
     const float WAIT_TIME = 3.0f;
@@ -45,18 +56,8 @@ public class GameManager : MonoBehaviour {
 
     private void Awake()
     {
+        myPlayer = FindObjectOfType<Player>();
         myRisingTide = FindObjectOfType<RisingTide>();
-
-        if (FindObjectOfType<GameSettingsManager>() != null)
-        {
-            waterSpeedAddition = GameSettingsManager.GetWaterRisingSpeed();
-        }
-        else
-        {
-            // Call when play from level straight from editor!
-            Debug.Log("No GameSettingsManager script exists. Setting to default diffculty.");
-            waterSpeedAddition = 1.0f;
-        }
 
         masterMusicPlayer.volume = PlayerPrefsManager.GetMusicVolume();
         soundVolume = PlayerPrefsManager.GetSoundVolume();
@@ -64,9 +65,50 @@ public class GameManager : MonoBehaviour {
         managerAudioSource.volume = soundVolume;
     }
 
+    private void Start()
+    {
+        if (FindObjectOfType<GameSettingsManager>() != null)
+        {
+            waterSpeedAddition = GameSettingsManager.GetWaterRisingSpeed();
+
+            if (GameSettingsManager.GetHandicapNoIndicator())
+            {
+                noIndicatorHandicap = true;
+                waterLevelIndicatorObject.SetActive(false);
+            }
+
+            if (GameSettingsManager.GetHandicapLimitedLives() || GameSettingsManager.GetHandicapOneLife())
+            {
+                lifePanel.SetActive(true);
+                UpdateLifeCount();
+            }
+            else
+            {
+                lifePanel.SetActive(false);
+            }
+        }
+        else
+        {
+            // Call when play from level straight from editor!
+            Debug.Log("No GameSettingsManager script exists. Setting to default diffculty.");
+            waterSpeedAddition = 1.0f;
+        }
+    }
+
+    public void UpdateLifeCount()
+    {
+        int limitedLifeValue = myPlayer.GetLifeCount();
+        lifeText.text = limitedLifeValue.ToString();
+    }
+
     public static float GetSoundVolume()
     {
         return soundVolume;
+    }
+
+    public float GetDistanceDifference()
+    {
+        return distanceDiff;
     }
 
     private void Update()
@@ -84,8 +126,14 @@ public class GameManager : MonoBehaviour {
             }
         }
         CheckForTimeToRaiseWaterSpeed();
+        CalculateDistanceDifference();
     }
 
+    private void CalculateDistanceDifference()
+    {
+        distanceDiff = myPlayer.transform.position.y - myRisingTide.transform.position.y;
+        WaterLevelUpdate(distanceDiff);
+    }
 
     void CheckForTimeToRaiseWaterSpeed()
     {
@@ -142,7 +190,7 @@ public class GameManager : MonoBehaviour {
 
     public void OpenPausePanel()
     {
-        if (FindObjectOfType<Player>().GetIsPlayerAlive())
+        if (myPlayer.GetIsPlayerAlive())
         {
             Time.timeScale = 0f;
             isTheGamePausing = true;
@@ -157,15 +205,19 @@ public class GameManager : MonoBehaviour {
         pausePanel.SetActive(false);
     }
 
-    public void GameOverPanelUpdate()
+    public void GameOverPanelUpdate(bool isDrowningDeath)
     {
+        // Choosing death image
+        if (isDrowningDeath) { DrownedDeath.SetActive(true); }
+        else { HazardDeath.SetActive(true); }
+
         // Play time
         float minutes = Mathf.Floor(Time.timeSinceLevelLoad / 60f);
         float seconds = Time.timeSinceLevelLoad % 60f;
         timeText.text = minutes.ToString("00") + " : " + seconds.ToString("00");
 
         // Hazard hit counts
-        hazardHitsText.text = FindObjectOfType<Player>().GetHazardHits().ToString();
+        hazardHitsText.text = myPlayer.GetHazardHits().ToString();
 
         // Final score
         totalScoreText.text = FindObjectOfType<ScoreHandler>().GetFinalScore().ToString();

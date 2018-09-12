@@ -20,14 +20,19 @@ public class Player : MonoBehaviour {
 
     Vector3 respawnPoint;
 
+    int limitedLifeValue;
     int hazardHitCounts = 0;
     float initialGravityScale;
     float initialSpriteScale;
     bool isAlive = true;
+    bool isMortal = false;
+    bool deathByDrowning;
 
     const float DEATH_DELAY = 3.0f;
+    const int LIMITED_LIFE_AMOUNT = 5;
 
-    void Start () {
+    void Start ()
+    {
         myRigidBody = GetComponent<Rigidbody2D>();
         myFeetCollider = GetComponent<BoxCollider2D>();
         myBodyCollider = GetComponent<CapsuleCollider2D>();
@@ -37,9 +42,21 @@ public class Player : MonoBehaviour {
         initialGravityScale = myRigidBody.gravityScale;
         initialSpriteScale = transform.localScale.x;
         myAudioSource.volume = GameManager.GetSoundVolume();
+
+        if (GameSettingsManager.GetHandicapLimitedLives())
+        {
+            isMortal = true;
+            limitedLifeValue = LIMITED_LIFE_AMOUNT;
+        }
+        else if (GameSettingsManager.GetHandicapOneLife())
+        {
+            isMortal = true;
+            limitedLifeValue = 1;
+        }
 	}
 	
-	void Update () {
+	void Update ()
+    {
         if (isAlive)
         {
             Walking();
@@ -110,10 +127,31 @@ public class Player : MonoBehaviour {
     {
         if (myRigidBody.IsTouchingLayers(LayerMask.GetMask("Hazard")))
         {
-            StartCoroutine(ProcessPlayerDeath());
+            if (!isMortal)
+            {
+                StartCoroutine(ProcessPlayerDeath());
+                Debug.Log("Immortal");
+            }
+            else 
+            {
+                limitedLifeValue--;
+                FindObjectOfType<GameManager>().UpdateLifeCount();
+
+                if (limitedLifeValue <= 0)
+                {
+                    hazardHitCounts++;
+                    deathByDrowning = false;
+                    StartCoroutine(ProcessPlayerPermenantDeath());
+                }
+                else
+                {
+                    StartCoroutine(ProcessPlayerDeath());
+                }
+            }
         }
         else if (myRigidBody.IsTouchingLayers(LayerMask.GetMask("RisingTide")))
         {
+            deathByDrowning = true;
             StartCoroutine(ProcessPlayerPermenantDeath());
         }
     }
@@ -138,7 +176,7 @@ public class Player : MonoBehaviour {
     IEnumerator ProcessPlayerPermenantDeath()
     {
         PlayerDeathSequence();
-        FindObjectOfType<GameManager>().GameOverPanelUpdate();
+        FindObjectOfType<GameManager>().GameOverPanelUpdate(deathByDrowning);
         yield return new WaitForSeconds(DEATH_DELAY);
         Time.timeScale = 0f;
         FindObjectOfType<GameManager>().OpenGameOverPanel();
@@ -181,6 +219,11 @@ public class Player : MonoBehaviour {
     public int GetHazardHits()
     {
         return hazardHitCounts;
+    }
+
+    public int GetLifeCount()
+    {
+        return limitedLifeValue;
     }
 
     public bool GetIsPlayerAlive()

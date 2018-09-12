@@ -11,7 +11,7 @@ public class LoadingUIManager : MonoBehaviour {
 
     int currentPage = 0;
 
-    private void Start()
+    private void Awake()
     {
         CheckButtonsAvailability();
     }

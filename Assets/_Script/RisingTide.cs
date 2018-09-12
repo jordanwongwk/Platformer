@@ -16,15 +16,12 @@ public class RisingTide : MonoBehaviour {
     bool isWaterFrozen = false;
     bool isWaterGoingDown = false;
     float movingDownFinalPos;
-    float distanceDiff;
-    Player player;
     GameManager gameManager;
     Coroutine stopWaterCoroutine;
     AudioSource waterAudioSource;
 
 	void Start ()
     {
-        player = FindObjectOfType<Player>();
         gameManager = FindObjectOfType<GameManager>();
         waterAudioSource = GetComponent<AudioSource>();
         waterAudioSource.volume = GameManager.GetSoundVolume();
@@ -60,8 +57,6 @@ public class RisingTide : MonoBehaviour {
             // Water going Up
             transform.position += new Vector3(0f, risingSpeed * Time.deltaTime, 0f);
         }
-        distanceDiff = player.transform.position.y - transform.position.y;
-        gameManager.WaterLevelUpdate(distanceDiff);
     }
 
     public void RisingWaterSpeed(float addedSpeed)
@@ -78,11 +73,6 @@ public class RisingTide : MonoBehaviour {
     public float GetInitialWaterSpeed()
     {
         return initialWaterSpeed;
-    }
-
-    public float GetDistanceDifference()
-    {
-        return distanceDiff;
     }
 
     #region Power Up : Freeze Water

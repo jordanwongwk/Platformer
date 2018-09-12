@@ -10,6 +10,12 @@ public class GameSettingsManager : MonoBehaviour {
     static float scoreMultiplier;
     static string difficultyString;
 
+    static bool handicapNoIndicator;
+    static bool handicapLimitedLives;
+    static bool handicapOneLife;
+    static bool handicapZeroDivine;
+
+
     public static void SetDivineOrbCharges(int value)
     {
         divineOrbCharges = value;
@@ -58,5 +64,43 @@ public class GameSettingsManager : MonoBehaviour {
     public static string GetDifficultyString()
     {
         return difficultyString;
+    }
+
+
+
+    public static void SetHandicapNoIndicator(bool status)
+    {
+        handicapNoIndicator = status;
+    }
+
+    public static bool GetHandicapNoIndicator()
+    {
+        return handicapNoIndicator;
+    }
+
+    public static void SetHandicapLife(bool limitedLife, bool oneLife)
+    {
+        handicapLimitedLives = limitedLife;
+        handicapOneLife = oneLife;
+    }
+
+    public static bool GetHandicapLimitedLives()
+    {
+        return handicapLimitedLives;
+    }
+
+    public static bool GetHandicapOneLife()
+    {
+        return handicapOneLife;
+    }
+
+    public static void SetHandicapZeroDivine(bool status)
+    {
+        handicapZeroDivine = status;
+    }
+
+    public static bool GetHandicapZeroDivine()
+    {
+        return handicapZeroDivine;
     }
 }

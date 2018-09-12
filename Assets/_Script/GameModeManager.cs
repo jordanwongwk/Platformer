@@ -18,7 +18,7 @@ public class GameModeManager : MonoBehaviour {
     [SerializeField] Text introductionHandicapText;
     [SerializeField] GameObject noIndicatorText;
     [SerializeField] GameObject limitedLifeText;
-    [SerializeField] GameObject zeroLifeText;
+    [SerializeField] GameObject oneLifeText;
     [SerializeField] GameObject zeroDivineText;
 
     bool gameModeIsChosen = false;
@@ -30,7 +30,7 @@ public class GameModeManager : MonoBehaviour {
 
     bool handicapNoIndicator = false;
     bool handicapLimitedLife = false;
-    bool handicapZeroLife = false;
+    bool handicapOneLife = false;
     bool handicapZeroDivine = false;
     float handicapMultiplier;
 
@@ -114,7 +114,7 @@ public class GameModeManager : MonoBehaviour {
     {
         DisableIntroductionText(introductionHandicapText);
         DisableAllTextInHandicap();
-        noIndicatorText.SetActive(isSelected);
+        noIndicatorText.SetActive(true);
         handicapNoIndicator = isSelected;
 
         if (isSelected) { handicapMultiplier += 1.50f; }
@@ -125,19 +125,19 @@ public class GameModeManager : MonoBehaviour {
     {
         DisableIntroductionText(introductionHandicapText);
         DisableAllTextInHandicap();
-        limitedLifeText.SetActive(isSelected);
+        limitedLifeText.SetActive(true);
         handicapLimitedLife = isSelected;
 
         if (isSelected) { handicapMultiplier += 1.75f; }
         else { handicapMultiplier -= 1.75f; }
     }
 
-    public void ZeroLifeSelected(bool isSelected)
+    public void OneLifeSelected(bool isSelected)
     {
         DisableIntroductionText(introductionHandicapText);
         DisableAllTextInHandicap();
-        zeroLifeText.SetActive(isSelected);
-        handicapZeroLife = isSelected;
+        oneLifeText.SetActive(true);
+        handicapOneLife = isSelected;
 
         if (isSelected) { handicapMultiplier += 2.50f; }
         else { handicapMultiplier -= 2.50f; }
@@ -147,7 +147,7 @@ public class GameModeManager : MonoBehaviour {
     {
         DisableIntroductionText(introductionHandicapText);
         DisableAllTextInHandicap();
-        zeroDivineText.SetActive(isSelected);
+        zeroDivineText.SetActive(true);
         handicapZeroDivine = isSelected;
 
         if (isSelected) { handicapMultiplier += 1.50f; }
@@ -159,7 +159,7 @@ public class GameModeManager : MonoBehaviour {
         //TODO Refactor
         noIndicatorText.SetActive(false);
         limitedLifeText.SetActive(false);
-        zeroLifeText.SetActive(false);
+        oneLifeText.SetActive(false);
         zeroDivineText.SetActive(false);
     }
 
@@ -174,15 +174,19 @@ public class GameModeManager : MonoBehaviour {
 
     public void ConfirmGameSettingsSelection()
     {
-        // float finalMultiplier = scoreMultiplier + handicapMultiplier;
+        float finalMultiplier = scoreMultiplier + handicapMultiplier;
+
+        if (handicapZeroDivine) { divineOrbCharges = 0; }
 
         GameSettingsManager.SetDivineOrbCharges(divineOrbCharges);
         GameSettingsManager.SetWaterRisingSpeed(waterRisingSpeed);
         GameSettingsManager.SetWaterInitialSpeed(waterInitialSpeed);
-        GameSettingsManager.SetScoreMultiplier(scoreMultiplier);
+        GameSettingsManager.SetScoreMultiplier(finalMultiplier);
         GameSettingsManager.SetDifficultyString(difficultyString);
 
-        // Confirm Handicaps
+        GameSettingsManager.SetHandicapNoIndicator(handicapNoIndicator);
+        GameSettingsManager.SetHandicapLife(handicapLimitedLife, handicapOneLife);
+        GameSettingsManager.SetHandicapZeroDivine(handicapZeroDivine);
 
         Time.timeScale = 1.0f;
 

@@ -98,7 +98,7 @@ public class PowerUpDivineOrb : MonoBehaviour {
         }
 
         // Set Water Drop
-        float distanceDifference = myRisingTide.GetDistanceDifference();
+        float distanceDifference = FindObjectOfType<GameManager>().GetDistanceDifference();
         if (distanceDifference <= 25.0f)
         {
             myRisingTide.ReduceWaterPosition(100f);
