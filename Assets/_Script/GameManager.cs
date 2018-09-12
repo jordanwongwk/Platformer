@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour {
     float lastRaisedTime = 0;
     float distanceDiff;
     bool isTheGamePausing = false;
-    bool noIndicatorHandicap = false;
     AudioSource managerAudioSource;
     Player myPlayer;
     RisingTide myRisingTide;
@@ -73,7 +72,6 @@ public class GameManager : MonoBehaviour {
 
             if (GameSettingsManager.GetHandicapNoIndicator())
             {
-                noIndicatorHandicap = true;
                 waterLevelIndicatorObject.SetActive(false);
             }
 
@@ -212,8 +210,8 @@ public class GameManager : MonoBehaviour {
         else { HazardDeath.SetActive(true); }
 
         // Play time
-        float minutes = Mathf.Floor(Time.timeSinceLevelLoad / 60f);
-        float seconds = Time.timeSinceLevelLoad % 60f;
+        int minutes = Mathf.FloorToInt(Time.timeSinceLevelLoad / 60f);
+        int seconds = Mathf.FloorToInt(Time.timeSinceLevelLoad % 60f);
         timeText.text = minutes.ToString("00") + " : " + seconds.ToString("00");
 
         // Hazard hit counts

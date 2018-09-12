@@ -666,7 +666,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1431518637341558
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
@@ -680,7 +680,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1432339395638742
 GameObject:
   m_ObjectHideFlags: 1
@@ -761,7 +761,7 @@ GameObject:
   - component: {fileID: 222997857848596572}
   - component: {fileID: 114374590936202454}
   m_Layer: 5
-  m_Name: WaterFrozenAlert
+  m_Name: DivineOrbAlert
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1044,6 +1044,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1629692522635432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224249940532679632}
+  - component: {fileID: 222152892510049804}
+  - component: {fileID: 114979807612459514}
+  m_Layer: 5
+  m_Name: WaterFrozenAlert
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!1 &1644539534118944
 GameObject:
   m_ObjectHideFlags: 0
@@ -2506,14 +2523,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.7288609, b: 0.7924528, a: 0.7764706}
+  m_Color: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 0.49411765}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 2fd6ca16abbfd2942a6c4e31d0c475a9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ff8f3e05598250f4dbb87679de2c4468, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3231,7 +3248,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The water seems to be rising faster!
+  m_Text: The orb is not reacting to the frozen water. Try again later when its melted.
 --- !u!114 &114504749785974682
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3888,7 +3905,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldownFill: {fileID: 114936087588356990}
   chargesLeftText: {fileID: 114702406470861008}
-  warningText: {fileID: 114499983858791592}
+  warningTextPanel: {fileID: 1443512166274622}
   playerBuffingObject: {fileID: 0}
   divineOrbBuffSound: {fileID: 8300000, guid: 54956b8ee214eee41a397084c621edb6, type: 3}
   cooldownTime: 5
@@ -5093,6 +5110,33 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114979807612459514
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1629692522635432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0.7288609, b: 0.7924528, a: 0.7764706}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 2fd6ca16abbfd2942a6c4e31d0c475a9, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &114985700958111422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5261,6 +5305,13 @@ CanvasRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1763070291980500}
+  m_CullTransparentMesh: 0
+--- !u!222 &222152892510049804
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1629692522635432}
   m_CullTransparentMesh: 0
 --- !u!222 &222160300237827682
 CanvasRenderer:
@@ -6070,6 +6121,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.76249}
   m_SizeDelta: {x: 323.67, y: 137.74}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224249940532679632
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1629692522635432}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 224362271041398042}
+  m_Father: {fileID: 224433514743008138}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.000013351, y: 140.74}
+  m_SizeDelta: {x: 226.84, y: 36.15}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224257046848812066
 RectTransform:
   m_ObjectHideFlags: 1
@@ -6363,7 +6433,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
-  m_Father: {fileID: 224760373072526488}
+  m_Father: {fileID: 224249940532679632}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -6535,8 +6605,8 @@ RectTransform:
   - {fileID: 224404769827987542}
   - {fileID: 224997370563380458}
   - {fileID: 224328641093947728}
-  - {fileID: 224616396144093824}
   - {fileID: 224760373072526488}
+  - {fileID: 224249940532679632}
   - {fileID: 224322778361265642}
   - {fileID: 224846239436173442}
   - {fileID: 224506505362147076}
@@ -6822,15 +6892,15 @@ RectTransform:
   m_GameObject: {fileID: 1431518637341558}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.19999999, y: 0.19999999, z: 0.19999999}
+  m_LocalScale: {x: 0.19999997, y: 0.19999997, z: 0.19999997}
   m_Children: []
-  m_Father: {fileID: 224433514743008138}
-  m_RootOrder: 3
+  m_Father: {fileID: 224760373072526488}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 129.05005}
-  m_SizeDelta: {x: 913.1, y: 258.1}
+  m_AnchoredPosition: {x: -0.28, y: -0.000011578}
+  m_SizeDelta: {x: 1134.47, y: 343.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224620762201450908
 RectTransform:
@@ -7092,14 +7162,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 224362271041398042}
+  - {fileID: 224616396144093824}
   m_Father: {fileID: 224433514743008138}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000013351, y: 140.74}
-  m_SizeDelta: {x: 226.84, y: 36.15}
+  m_AnchoredPosition: {x: 0.0000085831, y: 81.3}
+  m_SizeDelta: {x: 243.98, y: 68.62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224763900064813576
 RectTransform:
@@ -7257,7 +7327,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.075, y: 0.6683703}
   m_AnchorMax: {x: 0.2425, y: 0.8242219}
-  m_AnchoredPosition: {x: -0.28997803, y: 0.2579956}
+  m_AnchoredPosition: {x: -0.289917, y: 0.2579956}
   m_SizeDelta: {x: -0.7199993, y: -0.6399994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224850771301275638

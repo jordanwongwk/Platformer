@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,17 +10,10 @@ public class GameModeManager : MonoBehaviour {
 
     [Header("Difficulty Description")]
     [SerializeField] GameObject warningNoGameMode;
-    [SerializeField] Text introductionText;
-    [SerializeField] Text easyText;
-    [SerializeField] Text normalText;
-    [SerializeField] Text hardText;
+    [SerializeField] GameObject gameModeTextParent;
 
     [Header("Handicap Mode")]
-    [SerializeField] Text introductionHandicapText;
-    [SerializeField] GameObject noIndicatorText;
-    [SerializeField] GameObject limitedLifeText;
-    [SerializeField] GameObject oneLifeText;
-    [SerializeField] GameObject zeroDivineText;
+    [SerializeField] GameObject handicapTextParent;
 
     bool gameModeIsChosen = false;
     int divineOrbCharges;
@@ -27,30 +21,51 @@ public class GameModeManager : MonoBehaviour {
     float waterInitialSpeed;
     float scoreMultiplier;
     string difficultyString;
+    Text introductionGameModeText;
+    List<GameObject> gameModeTextObject = new List<GameObject>();
 
     bool handicapNoIndicator = false;
     bool handicapLimitedLife = false;
     bool handicapOneLife = false;
     bool handicapZeroDivine = false;
     float handicapMultiplier;
+    Text introductionHandicapText;
+    List<GameObject> handicapTextObject = new List<GameObject>();
+
+    private void Start()
+    {
+        for (int i = 0; i < gameModeTextParent.transform.childCount; i++)
+        {
+            gameModeTextObject.Add(gameModeTextParent.transform.GetChild(i).gameObject);
+        }
+
+        for (int i = 0; i < handicapTextParent.transform.childCount; i++)
+        {
+            handicapTextObject.Add(handicapTextParent.transform.GetChild(i).gameObject);
+        }
+
+        introductionGameModeText = gameModeTextObject[0].GetComponent<Text>();
+        introductionHandicapText = handicapTextObject[0].GetComponent<Text>();
+    }
+
+    private void Update()
+    {
+        multiplierText.text = "x " + (scoreMultiplier + handicapMultiplier).ToString("F2");
+    }
 
     #region Game Modes
     public void EasyDifficultySelected (bool isSelected)
     {
         if (isSelected)
         {
-            gameModeIsChosen = true;
-            DisableIntroductionText(introductionText);
-            easyText.gameObject.SetActive(true);
+            InitializeGameModeText();
+            gameModeTextObject[1].SetActive(true);
+
             divineOrbCharges = 1;
             waterRisingSpeed = 0.5f;
             waterInitialSpeed = 1.0f;
             scoreMultiplier = 1.0f;
             difficultyString = "Easy";
-        }
-        else
-        {
-            easyText.gameObject.SetActive(false);
         }
     }
 
@@ -58,18 +73,14 @@ public class GameModeManager : MonoBehaviour {
     {
         if (isSelected)
         {
-            gameModeIsChosen = true;
-            DisableIntroductionText(introductionText);
-            normalText.gameObject.SetActive(true);
+            InitializeGameModeText();
+            gameModeTextObject[2].SetActive(true);
+
             divineOrbCharges = 1;
             waterRisingSpeed = 0.75f;
             waterInitialSpeed = 1.5f;
             scoreMultiplier = 2.0f;
             difficultyString = "Normal";
-        }
-        else
-        {
-            normalText.gameObject.SetActive(false);
         }
     }
 
@@ -77,18 +88,29 @@ public class GameModeManager : MonoBehaviour {
     {
         if (isSelected)
         {
-            gameModeIsChosen = true;
-            DisableIntroductionText(introductionText);
-            hardText.gameObject.SetActive(true);
+            InitializeGameModeText();
+            gameModeTextObject[3].SetActive(true);
+
             divineOrbCharges = 2;
             waterRisingSpeed = 1.0f;
             waterInitialSpeed = 2.0f;
             scoreMultiplier = 3.0f;
             difficultyString = "Hard";
         }
-        else
+    }
+
+    private void InitializeGameModeText()
+    {
+        gameModeIsChosen = true;
+        DisableIntroductionText(introductionGameModeText);
+        DisableAllTextInGameMode();
+    }
+
+    private void DisableAllTextInGameMode()
+    {
+        foreach (GameObject gameModeText in gameModeTextObject)
         {
-            hardText.gameObject.SetActive(false); 
+            gameModeText.SetActive(false);
         }
     }
 
@@ -110,11 +132,12 @@ public class GameModeManager : MonoBehaviour {
     }
     #endregion
 
+    #region Handicap Mode
     public void NoIndicatorSelected(bool isSelected)
     {
         DisableIntroductionText(introductionHandicapText);
         DisableAllTextInHandicap();
-        noIndicatorText.SetActive(true);
+        handicapTextObject[1].SetActive(true);
         handicapNoIndicator = isSelected;
 
         if (isSelected) { handicapMultiplier += 1.50f; }
@@ -125,7 +148,7 @@ public class GameModeManager : MonoBehaviour {
     {
         DisableIntroductionText(introductionHandicapText);
         DisableAllTextInHandicap();
-        limitedLifeText.SetActive(true);
+        handicapTextObject[2].SetActive(true);
         handicapLimitedLife = isSelected;
 
         if (isSelected) { handicapMultiplier += 1.75f; }
@@ -136,7 +159,7 @@ public class GameModeManager : MonoBehaviour {
     {
         DisableIntroductionText(introductionHandicapText);
         DisableAllTextInHandicap();
-        oneLifeText.SetActive(true);
+        handicapTextObject[3].SetActive(true);
         handicapOneLife = isSelected;
 
         if (isSelected) { handicapMultiplier += 2.50f; }
@@ -147,7 +170,7 @@ public class GameModeManager : MonoBehaviour {
     {
         DisableIntroductionText(introductionHandicapText);
         DisableAllTextInHandicap();
-        zeroDivineText.SetActive(true);
+        handicapTextObject[4].SetActive(true);
         handicapZeroDivine = isSelected;
 
         if (isSelected) { handicapMultiplier += 1.50f; }
@@ -156,13 +179,11 @@ public class GameModeManager : MonoBehaviour {
 
     void DisableAllTextInHandicap()
     {
-        //TODO Refactor
-        noIndicatorText.SetActive(false);
-        limitedLifeText.SetActive(false);
-        oneLifeText.SetActive(false);
-        zeroDivineText.SetActive(false);
+        foreach (GameObject handicapText in handicapTextObject)
+        {
+            handicapText.SetActive(false);
+        }
     }
-
 
     private void DisableIntroductionText(Text intro)
     {
@@ -171,6 +192,7 @@ public class GameModeManager : MonoBehaviour {
             intro.gameObject.SetActive(false);
         }
     }
+    #endregion
 
     public void ConfirmGameSettingsSelection()
     {
@@ -191,11 +213,5 @@ public class GameModeManager : MonoBehaviour {
         Time.timeScale = 1.0f;
 
         FindObjectOfType<LevelHandler>().StartGameHandler();
-    }
-
-
-    private void Update()
-    {
-        multiplierText.text = "x " + (scoreMultiplier + handicapMultiplier).ToString("F2");
     }
 }

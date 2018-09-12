@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 222848469303370752}
   - component: {fileID: 114407177844128170}
   m_Layer: 5
-  m_Name: DescriptionPanel
+  m_Name: GameModeDescriptionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1751,7 +1751,7 @@ GameObject:
   - component: {fileID: 222740837861535674}
   - component: {fileID: 114873947406288578}
   m_Layer: 5
-  m_Name: DescriptionPanel
+  m_Name: HandicapDescriptionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4602,15 +4602,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   multiplierText: {fileID: 114889940476049488}
   warningNoGameMode: {fileID: 1081131069541696}
-  introductionText: {fileID: 114218043505723326}
-  easyText: {fileID: 114151301563064362}
-  normalText: {fileID: 114389634678853162}
-  hardText: {fileID: 114840092261716148}
-  introductionHandicapText: {fileID: 114098755948041006}
-  noIndicatorText: {fileID: 1518110498676018}
-  limitedLifeText: {fileID: 1348005058386362}
-  oneLifeText: {fileID: 1423733100664404}
-  zeroDivineText: {fileID: 1494175479580820}
+  gameModeTextParent: {fileID: 1114485643107734}
+  handicapTextParent: {fileID: 1464763224896864}
 --- !u!114 &114086130189647594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14567,10 +14560,10 @@ RectTransform:
   m_Father: {fileID: 224046507074700346}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.26000002, y: 0.30849028}
-  m_AnchorMax: {x: 0.74100006, y: 0.54300004}
-  m_AnchoredPosition: {x: 0.19995117, y: -6.2099915}
-  m_SizeDelta: {x: -2.7, y: 11.49}
+  m_AnchorMin: {x: 0.26200002, y: 0.294849}
+  m_AnchorMax: {x: 0.739, y: 0.545}
+  m_AnchoredPosition: {x: -0.38562012, y: 0.51999664}
+  m_SizeDelta: {x: 1.3, y: 2.8000002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224441013209621764
 RectTransform:
@@ -15948,8 +15941,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000015258789}
-  m_SizeDelta: {x: 1346.2, y: 332.66}
+  m_AnchoredPosition: {x: 0, y: 0.33998108}
+  m_SizeDelta: {x: 1195.1, y: 332.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224742086118944622
 RectTransform:

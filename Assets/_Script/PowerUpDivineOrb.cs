@@ -9,7 +9,7 @@ public class PowerUpDivineOrb : MonoBehaviour {
     [Header("Presentation Setup")]
     [SerializeField] Image cooldownFill;
     [SerializeField] Text chargesLeftText;
-    [SerializeField] Text warningText;
+    [SerializeField] GameObject warningTextPanel;
     [SerializeField] GameObject playerBuffingObject;
     [SerializeField] AudioClip divineOrbBuffSound;
 
@@ -21,6 +21,7 @@ public class PowerUpDivineOrb : MonoBehaviour {
     float cooldownTimeLeft;
     Coroutine TextActiveCoroutine;
     Animator buffingAnimator;
+    Text warningText;
     AudioSource buffingAudioSource;
     RisingTide myRisingTide;
 
@@ -39,6 +40,7 @@ public class PowerUpDivineOrb : MonoBehaviour {
         }
         chargesLeftText.text = charges.ToString();
 
+        warningText = warningTextPanel.GetComponentInChildren<Text>();
         buffingAnimator = playerBuffingObject.GetComponent<Animator>();
         buffingAudioSource = playerBuffingObject.GetComponent<AudioSource>();
         myRisingTide = FindObjectOfType<RisingTide>();
@@ -61,21 +63,33 @@ public class PowerUpDivineOrb : MonoBehaviour {
     public void OnPressTrigger()
     {
         bool isPlayerAlive = FindObjectOfType<Player>().GetIsPlayerAlive();
-        if (isPlayerAlive && !isOnCooldown)
+        bool isWaterFrozen = myRisingTide.GetWaterFrozenStatus();
+
+        if (isPlayerAlive)
         {
-            if (charges > 0)
+            if (!isOnCooldown)
             {
-                UseDivineOrb();
-                StartCooldownMechanism();
+                if (charges > 0)
+                {
+                    if (!isWaterFrozen)
+                    {
+                        UseDivineOrb();
+                        StartCooldownMechanism();
+                    }
+                    else
+                    {
+                        ShowWarningText("The orb is not reacting to the frozen water. Try again later when its melted.");
+                    }
+                }
+                else
+                {
+                    ShowWarningText("You do not have any divine orb left!");
+                }
             }
             else
             {
-                ShowWarningText("You do not have any divine orb left!");
+                ShowWarningText("Skill is cooling down!");
             }
-        }
-        else
-        {
-            ShowWarningText("Skill is cooling down!");
         }
     }
 
@@ -110,7 +124,7 @@ public class PowerUpDivineOrb : MonoBehaviour {
         else
         {
             myRisingTide.ReduceWaterPosition(25f);
-        }        
+        }
     }
 
     private void StartCooldownMechanism()
@@ -137,8 +151,8 @@ public class PowerUpDivineOrb : MonoBehaviour {
 
     IEnumerator TextActiveTime()
     {
-        warningText.gameObject.SetActive(true);
+        warningTextPanel.SetActive(true);
         yield return new WaitForSeconds(WAIT_TIME);
-        warningText.gameObject.SetActive(false);
+        warningTextPanel.SetActive(false);
     }
 }
