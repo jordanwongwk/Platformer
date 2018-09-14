@@ -827,9 +827,9 @@ CompositeCollider2D:
       - X: 33000000
         Y: 140000000
       - X: 33000000
-        Y: 20000000
+        Y: 10000000
       - X: 37000000
-        Y: 20000000
+        Y: 10000000
   m_CompositePaths:
     m_Paths:
     - - {x: 9.7, y: 19}
@@ -838,8 +838,8 @@ CompositeCollider2D:
       - {x: 9.7, y: 7}
     - - {x: 3.7, y: 14}
       - {x: 3.3, y: 14}
-      - {x: 3.3, y: 2}
-      - {x: 3.7, y: 2}
+      - {x: 3.3, y: 1}
+      - {x: 3.7, y: 1}
   m_VertexDistance: 0.0005
 --- !u!66 &66425367907666516
 CompositeCollider2D:
@@ -1786,7 +1786,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -600896355
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -1870,7 +1870,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 544439901
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -2420,6 +2420,15 @@ Tilemap:
   m_GameObject: {fileID: 1788948190231820}
   m_Enabled: 1
   m_Tiles:
+  - first: {x: 3, y: 1, z: 0}
+    second:
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_ObjectToInstantiate: {fileID: 0}
+      m_TileFlags: 1
+      m_ColliderType: 1
   - first: {x: 3, y: 2, z: 0}
     second:
       m_TileIndex: 2
@@ -2644,7 +2653,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: b8c11ffcb57bc8b41a1cd60ab35d53d9, type: 2}
   - m_RefCount: 21
     m_Data: {fileID: 11400000, guid: 37bd5671bf235db469c8709c82b3d00a, type: 2}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: db592b62a667b2f46a6855d8bd8a0649, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
@@ -2653,10 +2662,10 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 9f97ab87ac933bf4ebef403c69904ad0, type: 3}
   - m_RefCount: 21
     m_Data: {fileID: 21300000, guid: 93d0b79a570fa944c845586da7a4c25e, type: 3}
-  - m_RefCount: 1
+  - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 2efabeaf14e2a644b8f8a503ca605355, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 24
+  - m_RefCount: 25
     m_Data:
       e00: 1
       e01: 0
@@ -2675,7 +2684,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 24
+  - m_RefCount: 25
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}

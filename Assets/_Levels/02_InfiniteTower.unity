@@ -5488,7 +5488,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myLevelManager: {fileID: 0}
-  viewedAds: 0
 --- !u!114 &1147192988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34613,6 +34612,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 884961706}
     m_Modifications:
+    - target: {fileID: 66708208789337934, guid: 5133d51c073ed63439bf3d538e0d7c01,
+        type: 2}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4165776320894470, guid: 5133d51c073ed63439bf3d538e0d7c01, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -34644,6 +34648,10 @@ Prefab:
     - target: {fileID: 4165776320894470, guid: 5133d51c073ed63439bf3d538e0d7c01, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976845471810878, guid: 5133d51c073ed63439bf3d538e0d7c01, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5133d51c073ed63439bf3d538e0d7c01, type: 2}
