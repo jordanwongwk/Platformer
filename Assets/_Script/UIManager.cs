@@ -25,11 +25,12 @@ public class UIManager : MonoBehaviour {
             }
             else
             {
-                if (gameModeSelectionPanel.activeInHierarchy)   { DisableGameModeSelectionPanel(); }
-                if (leaderboardPanel.activeInHierarchy) { DisableLeaderboardPanel(); }
-                if (optionsPanel.activeInHierarchy) { CancelOptionChanges(); }
-                if (creditsPanel.activeInHierarchy) { DisableCreditsPanel(); }
-                if (quitConfirmationPanel.activeInHierarchy) { DisableQuitPanel(); }
+                if (handicapPanel.activeInHierarchy) { DisableHandicapPanel(); }
+                else if (gameModeSelectionPanel.activeInHierarchy) { DisableGameModeSelectionPanel(); }
+                else if (leaderboardPanel.activeInHierarchy) { DisableLeaderboardPanel(); }
+                else if (optionsPanel.activeInHierarchy) { CancelOptionChanges(); }
+                else if (creditsPanel.activeInHierarchy) { DisableCreditsPanel(); }
+                else if (quitConfirmationPanel.activeInHierarchy) { DisableQuitPanel(); }
             }
         }
     }

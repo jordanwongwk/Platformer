@@ -230,7 +230,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1078897454542230
 GameObject:
   m_ObjectHideFlags: 1
@@ -5130,7 +5130,7 @@ MonoBehaviour:
 
     Water rising speed = slow
 
-    Divine Orb granted = 1 (one)
+    Divine Orb granted = 2 (two)
 
 
     suitable for players who are new and want to get around the game.'
@@ -6756,7 +6756,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'score multiplier = x2.0
+  m_Text: 'score multiplier = x4.0
 
     Water rising speed = moderate
 
@@ -10040,11 +10040,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'score multiplier = x3.0
+  m_Text: 'score multiplier = x8.0
 
     Water rising speed = fast
 
-    Divine Orb Granted = 2 (Two)
+    Divine Orb Granted = 1 (One)
 
 
     for experts who likes the adrenaline rush as they try to escape the water that
@@ -10767,7 +10767,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "You will be granted with zero divine orb. \n(This rule overwrites what
-    was shown in respective game mode's description)\nMultiplier: x 1.5"
+    was shown in respective game mode's description)\nMultiplier: x 1.75"
 --- !u!114 &114918490397661214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -14562,7 +14562,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.26200002, y: 0.294849}
   m_AnchorMax: {x: 0.739, y: 0.545}
-  m_AnchoredPosition: {x: -0.38562012, y: 0.51999664}
+  m_AnchoredPosition: {x: -0.38562012, y: 0.5200043}
   m_SizeDelta: {x: 1.3, y: 2.8000002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224441013209621764

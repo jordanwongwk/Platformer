@@ -6,8 +6,6 @@ public class LevelHandler : MonoBehaviour {
 
     [SerializeField] LevelManager myLevelManager;       // Serialize just to check
 
-    [SerializeField] bool viewedAds = false;            // TODO Set False on Publish
-
 	// Use this for initialization
 	void Start () {
         myLevelManager = LevelManager.Instance;
@@ -28,22 +26,15 @@ public class LevelHandler : MonoBehaviour {
         myLevelManager.StartGame();
     }
 
-    public void BackToMainMenu()
-    {
-        if (!viewedAds)
-        {
-            viewedAds = true;
-            FindObjectOfType<AdScript>().showInterstitialAd();
-        }
-        else
-        {
-            myLevelManager.ExitToMainMenu();
-        }
-    }
-
-    public void BackToMainMenuWithPause()
+    public void BackToMainMenuDirectly()
     {
         FindObjectOfType<AdScript>().showInterstitialAd();
+        StartCoroutine(ReturnToMainMenu());
+    }
+
+    IEnumerator ReturnToMainMenu()
+    {
+        yield return new WaitForSecondsRealtime(1.0f);
         myLevelManager.ExitToMainMenu();
     }
 }

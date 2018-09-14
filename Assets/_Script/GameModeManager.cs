@@ -61,7 +61,7 @@ public class GameModeManager : MonoBehaviour {
             InitializeGameModeText();
             gameModeTextObject[1].SetActive(true);
 
-            divineOrbCharges = 1;
+            divineOrbCharges = 2;
             waterRisingSpeed = 0.5f;
             waterInitialSpeed = 1.0f;
             scoreMultiplier = 1.0f;
@@ -79,7 +79,7 @@ public class GameModeManager : MonoBehaviour {
             divineOrbCharges = 1;
             waterRisingSpeed = 0.75f;
             waterInitialSpeed = 1.5f;
-            scoreMultiplier = 2.0f;
+            scoreMultiplier = 4.0f;
             difficultyString = "Normal";
         }
     }
@@ -91,10 +91,10 @@ public class GameModeManager : MonoBehaviour {
             InitializeGameModeText();
             gameModeTextObject[3].SetActive(true);
 
-            divineOrbCharges = 2;
+            divineOrbCharges = 1;
             waterRisingSpeed = 1.0f;
             waterInitialSpeed = 2.0f;
-            scoreMultiplier = 3.0f;
+            scoreMultiplier = 8.0f;
             difficultyString = "Hard";
         }
     }
@@ -173,8 +173,8 @@ public class GameModeManager : MonoBehaviour {
         handicapTextObject[4].SetActive(true);
         handicapZeroDivine = isSelected;
 
-        if (isSelected) { handicapMultiplier += 1.50f; }
-        else { handicapMultiplier -= 1.50f; }
+        if (isSelected) { handicapMultiplier += 1.75f; }
+        else { handicapMultiplier -= 1.75f; }
     }
 
     void DisableAllTextInHandicap()
