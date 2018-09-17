@@ -34,7 +34,7 @@ public class LevelHandler : MonoBehaviour {
 
     IEnumerator ReturnToMainMenu()
     {
-        yield return new WaitForSecondsRealtime(1.0f);
+        yield return new WaitForSecondsRealtime(2.0f);
         myLevelManager.ExitToMainMenu();
     }
 }

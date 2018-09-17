@@ -380,9 +380,68 @@ Prefab:
       propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 1586341028536056, guid: 2545c8781c502b142b79adc3efcb990f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114604828540442912, guid: 2545c8781c502b142b79adc3efcb990f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1147192985}
+    - target: {fileID: 114604828540442912, guid: 2545c8781c502b142b79adc3efcb990f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseConfirmation
+      objectReference: {fileID: 0}
+    - target: {fileID: 114265606768789098, guid: 2545c8781c502b142b79adc3efcb990f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1147192985}
+    - target: {fileID: 114265606768789098, guid: 2545c8781c502b142b79adc3efcb990f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseConfirmation
+      objectReference: {fileID: 0}
+    - target: {fileID: 114988957900018732, guid: 2545c8781c502b142b79adc3efcb990f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1147192985}
+    - target: {fileID: 114988957900018732, guid: 2545c8781c502b142b79adc3efcb990f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenUpRetryConfirmation
+      objectReference: {fileID: 0}
+    - target: {fileID: 114463113879463732, guid: 2545c8781c502b142b79adc3efcb990f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1147192985}
+    - target: {fileID: 114463113879463732, guid: 2545c8781c502b142b79adc3efcb990f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenUpQuitConfirmation
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974863903993232, guid: 2545c8781c502b142b79adc3efcb990f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114656073734435706, guid: 2545c8781c502b142b79adc3efcb990f, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 2545c8781c502b142b79adc3efcb990f, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &48095381 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1571917162398678, guid: 2545c8781c502b142b79adc3efcb990f,
+    type: 2}
+  m_PrefabInternal: {fileID: 48095380}
+--- !u!1 &48095382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1974863903993232, guid: 2545c8781c502b142b79adc3efcb990f,
+    type: 2}
+  m_PrefabInternal: {fileID: 48095380}
 --- !u!1 &55332450 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1203588643050900, guid: 2545c8781c502b142b79adc3efcb990f,
@@ -5455,6 +5514,8 @@ MonoBehaviour:
   waterLevelIndicatorObject: {fileID: 1529997990}
   lifePanel: {fileID: 1529997989}
   lifeText: {fileID: 1529997988}
+  retryConfirmationWindow: {fileID: 48095382}
+  quitConfirmationWindow: {fileID: 48095381}
   timeText: {fileID: 824207323}
   hazardHitsText: {fileID: 831626027}
   totalScoreText: {fileID: 815068460}

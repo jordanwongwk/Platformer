@@ -31,6 +31,10 @@ public class GameManager : MonoBehaviour {
     [SerializeField] GameObject lifePanel;
     [SerializeField] Text lifeText;
 
+    [Header("Pause")]
+    [SerializeField] GameObject retryConfirmationWindow;
+    [SerializeField] GameObject quitConfirmationWindow;
+
     [Header("Game Over")]
     [SerializeField] Text timeText;
     [SerializeField] Text hazardHitsText;
@@ -45,6 +49,7 @@ public class GameManager : MonoBehaviour {
     float lastRaisedTime = 0;
     float distanceDiff;
     bool isTheGamePausing = false;
+    GameObject currentActiveWindow;
     AudioSource managerAudioSource;
     Player myPlayer;
     RisingTide myRisingTide;
@@ -118,6 +123,10 @@ public class GameManager : MonoBehaviour {
             {
                 OpenPausePanel();
             }
+            else if (isTheGamePausing && currentActiveWindow != pausePanel)
+            {
+                CloseConfirmation();
+            }
             else
             {
                 ClosePausePanel();
@@ -180,17 +189,14 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void OpenGameOverPanel()
-    {
-        gameOverPanel.SetActive(true);
-        PlayGameOverSound();
-    }
 
+    #region Pause Part
     public void OpenPausePanel()
     {
         if (myPlayer.GetIsPlayerAlive())
         {
             Time.timeScale = 0f;
+            currentActiveWindow = pausePanel;
             isTheGamePausing = true;
             pausePanel.SetActive(true);
         }
@@ -201,6 +207,32 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 1f;
         isTheGamePausing = false;
         pausePanel.SetActive(false);
+    }
+
+    public void OpenUpRetryConfirmation()
+    {
+        currentActiveWindow = retryConfirmationWindow;
+        retryConfirmationWindow.SetActive(true);
+    }
+
+    public void OpenUpQuitConfirmation()
+    {
+        currentActiveWindow = quitConfirmationWindow;
+        quitConfirmationWindow.SetActive(true);
+    }
+
+    public void CloseConfirmation()
+    {
+        currentActiveWindow.SetActive(false);
+        currentActiveWindow = pausePanel;
+    }
+    #endregion
+
+    #region Game Over Part
+    public void OpenGameOverPanel()
+    {
+        gameOverPanel.SetActive(true);
+        PlayGameOverSound();
     }
 
     public void GameOverPanelUpdate(bool isDrowningDeath)
@@ -247,4 +279,5 @@ public class GameManager : MonoBehaviour {
             masterMusicPlayer.UnPause();
         }
     }
+    #endregion
 }
