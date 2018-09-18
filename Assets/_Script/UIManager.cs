@@ -10,8 +10,13 @@ public class UIManager : MonoBehaviour {
     [SerializeField] GameObject leaderboardPanel;
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject creditsPanel;
+
+    [Header("Error and Confirmation")]
+    [SerializeField] GameObject warningNoGameMode;
     [SerializeField] GameObject quitConfirmationPanel;
 
+    List<GameObject> currentlyActivePanels = new List<GameObject>();
+    
     bool isOptionPanelOn = false;
     bool isAnyPanelOn = false;
 
@@ -25,28 +30,36 @@ public class UIManager : MonoBehaviour {
             }
             else
             {
-                if (handicapPanel.activeInHierarchy) { DisableHandicapPanel(); }
-                else if (gameModeSelectionPanel.activeInHierarchy) { DisableGameModeSelectionPanel(); }
-                else if (leaderboardPanel.activeInHierarchy) { DisableLeaderboardPanel(); }
-                else if (optionsPanel.activeInHierarchy) { CancelOptionChanges(); }
-                else if (creditsPanel.activeInHierarchy) { DisableCreditsPanel(); }
-                else if (quitConfirmationPanel.activeInHierarchy) { DisableQuitPanel(); }
+                if (isOptionPanelOn)
+                {
+                    CancelOptionChanges();
+                }
+                else
+                {
+                    PanelIsTurningOff(currentlyActivePanels[currentlyActivePanels.Count - 1]);
+                }
             }
         }
     }
 
     private void PanelIsTurningOn(GameObject targettedPanel)
     {
-        Time.timeScale = 0f;
-        isAnyPanelOn = true;
+        currentlyActivePanels.Add(targettedPanel);
         targettedPanel.SetActive(true);
+        Time.timeScale = 0;
+        isAnyPanelOn = true;
     }
 
     private void PanelIsTurningOff(GameObject targettedPanel)
     {
-        Time.timeScale = 1f;
-        isAnyPanelOn = false;
+        currentlyActivePanels.Remove(targettedPanel);
         targettedPanel.SetActive(false);
+
+        if (currentlyActivePanels.Count == 0)
+        {
+            Time.timeScale = 1;
+            isAnyPanelOn = false;
+        }
     }
 
     #region Game Mode Selection Panel
@@ -62,14 +75,22 @@ public class UIManager : MonoBehaviour {
 
     public void EnableHandicapPanel()
     {
-        // A Panel is already ON
-        handicapPanel.SetActive(true);
+        PanelIsTurningOn(handicapPanel);
     }
 
     public void DisableHandicapPanel()
     {
-        // Go back to Game Mode
-        handicapPanel.SetActive(false);
+        PanelIsTurningOff(handicapPanel);
+    }
+
+    public void EnableNoGameModeError()
+    {
+        PanelIsTurningOn(warningNoGameMode);
+    }
+
+    public void DisableNoGameModeError()
+    {
+        PanelIsTurningOff(warningNoGameMode);
     }
     #endregion
 
@@ -140,10 +161,4 @@ public class UIManager : MonoBehaviour {
         PanelIsTurningOff(quitConfirmationPanel);
     }
     #endregion
-
-    //TODO Delete this on launch
-    public void ClearPlayerPrefs()
-    {
-        PlayerPrefs.DeleteAll();
-    }
 }

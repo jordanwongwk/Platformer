@@ -29,27 +29,44 @@ public class AdScript : MonoBehaviour {
     InterstitialAd interstitial;
     private void RequestInterstitialAds()
     {
-        string adID = "ca-app-pub-3940256099942544/1033173712";
+        // ***Test***
 
-#if UNITY_ANDROID
-        string adUnitId = adID;
-#elif UNITY_IOS
-        string adUnitId = adID;
-#else
-        string adUnitId = adID;
-#endif
+        // string adID = "ca-app-pub-3940256099942544/1033173712"; 
+
+        #if UNITY_ANDROID
+                // string adUnitId = adID;
+        #elif UNITY_IOS
+                // string adUnitId = adID;
+        #else
+                // string adUnitId = adID;
+        #endif
 
         // Initialize an InterstitialAd.
-        interstitial = new InterstitialAd(adUnitId);
+        // interstitial = new InterstitialAd(adUnitId);
 
-        //***Test***
-        AdRequest request = new AdRequest.Builder()
-       .AddTestDevice(AdRequest.TestDeviceSimulator)       // Simulator.
-       .AddTestDevice("2077ef9a63d2b398840261c8221a0c9b")  // My test device.
-       .Build();
+        // AdRequest request = new AdRequest.Builder()
+        // .AddTestDevice(AdRequest.TestDeviceSimulator)       // Simulator.
+        // .AddTestDevice("2077ef9a63d2b398840261c8221a0c9b")  // My test device.
+        // .Build();
+
+        //***End Test***
 
         //***Production***
-        //AdRequest request = new AdRequest.Builder().Build();
+
+        #if UNITY_ANDROID
+            string appID = "ca-app-pub-7050819570050866~4842209208";
+        #else
+            string appID = "unexpected platform";
+        #endif
+
+        MobileAds.Initialize(appID);
+
+        string adUnitID = "ca-app-pub-7050819570050866/9328249121";
+
+        interstitial = new InterstitialAd(adUnitID);
+        AdRequest request = new AdRequest.Builder().Build();
+
+        //***End Production
 
         //Register Ad Close Event
         interstitial.OnAdClosed += Interstitial_OnAdClosed;
@@ -58,7 +75,6 @@ public class AdScript : MonoBehaviour {
         interstitial.LoadAd(request);
 
         Debug.Log("AD LOADED XXX");
-
     }
 
     //Ad Close Event

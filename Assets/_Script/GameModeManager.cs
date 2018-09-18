@@ -9,7 +9,6 @@ public class GameModeManager : MonoBehaviour {
     [SerializeField] Text multiplierText;
 
     [Header("Difficulty Description")]
-    [SerializeField] GameObject warningNoGameMode;
     [SerializeField] GameObject gameModeTextParent;
 
     [Header("Handicap Mode")]
@@ -122,13 +121,8 @@ public class GameModeManager : MonoBehaviour {
         }
         else
         {
-            warningNoGameMode.SetActive(true);
+            GetComponent<UIManager>().EnableNoGameModeError();
         }
-    }
-
-    public void CloseWarningNoGameMode()
-    {
-        warningNoGameMode.SetActive(false);
     }
     #endregion
 
