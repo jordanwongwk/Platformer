@@ -31,23 +31,22 @@ public class AdScript : MonoBehaviour {
     {
         // ***Test***
 
-        // string adID = "ca-app-pub-3940256099942544/1033173712"; 
+        //string adID = "ca-app-pub-3940256099942544/1033173712"; 
 
         #if UNITY_ANDROID
-                // string adUnitId = adID;
+                //string adUnitId = adID;
         #elif UNITY_IOS
-                // string adUnitId = adID;
+                //string adUnitId = adID;
         #else
-                // string adUnitId = adID;
+                //string adUnitId = adID;
         #endif
 
-        // Initialize an InterstitialAd.
-        // interstitial = new InterstitialAd(adUnitId);
+        //interstitial = new InterstitialAd(adUnitId);
 
-        // AdRequest request = new AdRequest.Builder()
-        // .AddTestDevice(AdRequest.TestDeviceSimulator)       // Simulator.
-        // .AddTestDevice("2077ef9a63d2b398840261c8221a0c9b")  // My test device.
-        // .Build();
+        //AdRequest request = new AdRequest.Builder()
+        //.AddTestDevice(AdRequest.TestDeviceSimulator)       // Simulator.
+        //.AddTestDevice("2077ef9a63d2b398840261c8221a0c9b")  // My test device.
+        //.Build();
 
         //***End Test***
 

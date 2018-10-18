@@ -14,5 +14,5 @@ MonoBehaviour:
   obstacleList:
   - {fileID: 1814964611313436, guid: 3a9d1f039e08fe14a9ee5d006110ddcd, type: 2}
   - {fileID: 1546638105081338, guid: 3102ff862551c2c45880a6cd2e38d2ce, type: 2}
-  - {fileID: 1697653105908196, guid: 1baefd8d384291745af4193997d8148e, type: 2}
+  - {fileID: 1701797077000038, guid: a4377a81164659648bd2923ee35e310f, type: 2}
   - {fileID: 1970569361744032, guid: 0a9ed77c8896691489e2d111afe6f638, type: 2}

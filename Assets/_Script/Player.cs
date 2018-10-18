@@ -31,6 +31,20 @@ public class Player : MonoBehaviour {
     const float DEATH_DELAY = 3.0f;
     const int LIMITED_LIFE_AMOUNT = 5;
 
+    private void Awake()
+    {
+        if (GameSettingsManager.GetHandicapLimitedLives())
+        {
+            isMortal = true;
+            limitedLifeValue = LIMITED_LIFE_AMOUNT;
+        }
+        else if (GameSettingsManager.GetHandicapOneLife())
+        {
+            isMortal = true;
+            limitedLifeValue = 1;
+        }
+    }
+
     void Start ()
     {
         myRigidBody = GetComponent<Rigidbody2D>();
@@ -42,17 +56,6 @@ public class Player : MonoBehaviour {
         initialGravityScale = myRigidBody.gravityScale;
         initialSpriteScale = transform.localScale.x;
         myAudioSource.volume = GameManager.GetSoundVolume();
-
-        if (GameSettingsManager.GetHandicapLimitedLives())
-        {
-            isMortal = true;
-            limitedLifeValue = LIMITED_LIFE_AMOUNT;
-        }
-        else if (GameSettingsManager.GetHandicapOneLife())
-        {
-            isMortal = true;
-            limitedLifeValue = 1;
-        }
 	}
 	
 	void Update ()

@@ -299,7 +299,10 @@ GameObject:
   - component: {fileID: 4152219706622634}
   - component: {fileID: 8195094280340887992}
   - component: {fileID: 3664157344409500370}
-  m_Layer: 0
+  - component: {fileID: 50910816514972774}
+  - component: {fileID: 2113883504654418726}
+  - component: {fileID: 114022821707136268}
+  m_Layer: 19
   m_Name: ObstacleBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -770,6 +773,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!50 &50910816514972774
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1695230454112494}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &61268514546640698
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -1047,6 +1070,17 @@ CompositeCollider2D:
       - {x: 5, y: 0}
       - {x: 7, y: 0}
   m_VertexDistance: 0.0005
+--- !u!114 &114022821707136268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1695230454112494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 818acfb79dfedfe45846137635a3fdac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114113022665584560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1661,6 +1695,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!19719996 &2113883504654418726
+TilemapCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1695230454112494}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
 --- !u!19719996 &2113883504920113196
 TilemapCollider2D:
   m_ObjectHideFlags: 1

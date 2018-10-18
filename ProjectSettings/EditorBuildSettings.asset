@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Levels/02_InfiniteTower.unity
     guid: 299431e0ad37b91438e02b30f87ef188
+  - enabled: 1
+    path: Assets/_Levels/03_MultiplayerLobby.unity
+    guid: e6d57cb6f12793d4e98786fbf6df30ec
+  - enabled: 1
+    path: Assets/_Levels/04_MultiplayerGameScene.unity
+    guid: caf71918b29140c4da922ca24a66cda9
   m_configObjects: {}

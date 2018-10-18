@@ -445,7 +445,7 @@ GameObject:
   - component: {fileID: 61878536567981590}
   - component: {fileID: 114162865898292800}
   m_Layer: 16
-  m_Name: C2_TriHardElevator
+  m_Name: DISCON_TriHardElevator
   m_TagString: ObstacleForeground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
