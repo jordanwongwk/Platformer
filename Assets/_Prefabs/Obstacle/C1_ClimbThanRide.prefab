@@ -3108,8 +3108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freezingPowerUp: {fileID: 1754370471172294, guid: b5b0f08fc13363e45a5cdbd6da56f3ba,
-    type: 2}
+  powerUp: {fileID: 1754370471172294, guid: b5b0f08fc13363e45a5cdbd6da56f3ba, type: 2}
   spawnPoint:
   - {fileID: 1774307837841910}
   - {fileID: 1812136571536888}

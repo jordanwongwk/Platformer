@@ -617,8 +617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freezingPowerUp: {fileID: 1754370471172294, guid: b5b0f08fc13363e45a5cdbd6da56f3ba,
-    type: 2}
+  powerUp: {fileID: 1754370471172294, guid: b5b0f08fc13363e45a5cdbd6da56f3ba, type: 2}
   spawnPoint:
   - {fileID: 1383349435984646}
   - {fileID: 1657534387831212}
@@ -1001,7 +1000,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 544439901
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

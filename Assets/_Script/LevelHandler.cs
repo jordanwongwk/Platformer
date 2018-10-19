@@ -11,6 +11,11 @@ public class LevelHandler : MonoBehaviour {
         myLevelManager = LevelManager.Instance;
 	}
 
+    public void MultiplayerLobbyHandler()
+    {
+        myLevelManager.StartMultiplayerLobby();
+    }
+
     public void StartGameHandler()
     {
         myLevelManager.StartGame();

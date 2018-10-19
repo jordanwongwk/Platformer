@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour {
     [Header("Build Index Configurations")]
     [SerializeField] int mainMenuIndex;
     [SerializeField] int gameLoadingBuildIndex;
+    [SerializeField] int multiplayerIndex;
 
     public static LevelManager Instance { get; private set; }
 
@@ -27,6 +28,12 @@ public class LevelManager : MonoBehaviour {
     public void StartGame()
     {
         SceneManager.LoadScene(gameLoadingBuildIndex);
+        Time.timeScale = 1.0f;
+    }
+
+    public void StartMultiplayerLobby()
+    {
+        SceneManager.LoadScene(multiplayerIndex);
         Time.timeScale = 1.0f;
     }
 

@@ -2461,11 +2461,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 110686810}
     m_Modifications:
-    - target: {fileID: 114754134296875286, guid: 28ecf174f5f6b9d4ebf22a6f6d31f8a1,
-        type: 2}
-      propertyPath: myBackgroundTier.Array.size
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4061618121522192, guid: 28ecf174f5f6b9d4ebf22a6f6d31f8a1, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2501,29 +2496,6 @@ Prefab:
     - target: {fileID: 1245132276025282, guid: 28ecf174f5f6b9d4ebf22a6f6d31f8a1, type: 2}
       propertyPath: m_Name
       value: TileBG Generator
-      objectReference: {fileID: 0}
-    - target: {fileID: 114754134296875286, guid: 28ecf174f5f6b9d4ebf22a6f6d31f8a1,
-        type: 2}
-      propertyPath: myBackgroundTier.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: ebd32bc004a57aa489b8acbefbfc4370,
-        type: 2}
-    - target: {fileID: 114754134296875286, guid: 28ecf174f5f6b9d4ebf22a6f6d31f8a1,
-        type: 2}
-      propertyPath: myBackgroundTier.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 1007832e42062cd4c94c051bcf3517e4,
-        type: 2}
-    - target: {fileID: 114754134296875286, guid: 28ecf174f5f6b9d4ebf22a6f6d31f8a1,
-        type: 2}
-      propertyPath: myBackgroundTier.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 93f900a937183f94680f1747c8fb13e9,
-        type: 2}
-    - target: {fileID: 114754134296875286, guid: 28ecf174f5f6b9d4ebf22a6f6d31f8a1,
-        type: 2}
-      propertyPath: backgroundCountToChange
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28ecf174f5f6b9d4ebf22a6f6d31f8a1, type: 2}
