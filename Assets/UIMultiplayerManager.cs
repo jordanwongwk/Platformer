@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIMultiplayerManager : MonoBehaviour {
 
     [SerializeField] GameObject multiplayerRoomPanel;
+    [SerializeField] GameObject tutorialPanel;
     [SerializeField] Button joinRoomButton;
 
     public void OpenMultiplayerRoomPanel(bool status)
@@ -24,5 +25,20 @@ public class UIMultiplayerManager : MonoBehaviour {
         joinRoomButton.interactable = false;
         yield return new WaitForSecondsRealtime(2.0f);
         joinRoomButton.interactable = true;
+    }
+
+    public void OnClickShowTutorial()
+    {
+        tutorialPanel.SetActive(true);
+    }
+
+    public void OnClickHideTutorial()
+    {
+        tutorialPanel.SetActive(false);
+    }
+
+    public void OnClickBackToMainMenu()
+    {
+        LevelManager.Instance.ExitToMainMenu();
     }
 }

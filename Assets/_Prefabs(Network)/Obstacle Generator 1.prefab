@@ -104,10 +104,10 @@ MonoBehaviour:
   generationCooldown: 1
   obstacleCountToChange: 4
   myObstacleTier:
-  - {fileID: 11400000, guid: defbc317f4848e244b1fd8a7afe71bec, type: 2}
-  - {fileID: 11400000, guid: edbce55df67e1d24aa91dcfbd02d7d3c, type: 2}
-  - {fileID: 11400000, guid: a6055bdf86b019c47ac7f6ca9424b12e, type: 2}
-  - {fileID: 11400000, guid: d1d91dd94d9ef804e82e8b83275e8adb, type: 2}
+  - {fileID: 11400000, guid: b77d43f8fda97fd4faa47d4c6984672e, type: 2}
+  - {fileID: 11400000, guid: 61c2712d32c75be4f86f5ae891863290, type: 2}
+  - {fileID: 11400000, guid: 255abb2f77c0bc04d8d90b232017f6c4, type: 2}
+  - {fileID: 11400000, guid: 4e592511f00533144af4c4b500279a6c, type: 2}
 --- !u!114 &114890213548076328
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -136,9 +136,9 @@ MonoBehaviour:
   generationCooldown: 1
   backgroundCountToChange: 5
   myBackgroundTier:
-  - {fileID: 11400000, guid: ebd32bc004a57aa489b8acbefbfc4370, type: 2}
-  - {fileID: 11400000, guid: 1007832e42062cd4c94c051bcf3517e4, type: 2}
-  - {fileID: 11400000, guid: 93f900a937183f94680f1747c8fb13e9, type: 2}
+  - {fileID: 11400000, guid: b88e2e8363c34b345865e6bc351a6d4e, type: 2}
+  - {fileID: 11400000, guid: f4019184959186440a9f98357be3154e, type: 2}
+  - {fileID: 11400000, guid: dbf0c43d4eb666340bcf456a33a3e7d9, type: 2}
 --- !u!212 &212369298905391458
 SpriteRenderer:
   m_ObjectHideFlags: 1

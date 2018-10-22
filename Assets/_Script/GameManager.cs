@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System;
 
 public class GameManager : MonoBehaviour {
@@ -10,7 +9,6 @@ public class GameManager : MonoBehaviour {
     [Header("Setup")]
     [SerializeField] GameObject gameOverPanel;
     [SerializeField] GameObject pausePanel;
-    [SerializeField] AudioSource masterMusicPlayer;
 
     [Header("Water Slider Options")]
     [SerializeField] Slider waterLevelIndicatorSlider;
@@ -50,6 +48,7 @@ public class GameManager : MonoBehaviour {
     float distanceDiff;
     bool isTheGamePausing = false;
     GameObject currentActiveWindow;
+    AudioSource masterMusicPlayer;
     AudioSource managerAudioSource;
     Player myPlayer;
     RisingTide myRisingTide;
@@ -63,7 +62,7 @@ public class GameManager : MonoBehaviour {
         myPlayer = FindObjectOfType<Player>();
         myRisingTide = FindObjectOfType<RisingTide>();
 
-        masterMusicPlayer.volume = PlayerPrefsManager.GetMusicVolume();
+        masterMusicPlayer = FindObjectOfType<MasterMusicPlayer>().GetComponent<AudioSource>();
         soundVolume = PlayerPrefsManager.GetSoundVolume();
         managerAudioSource = GetComponent<AudioSource>();
         managerAudioSource.volume = soundVolume;

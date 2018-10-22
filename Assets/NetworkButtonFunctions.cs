@@ -107,6 +107,7 @@ public class NetworkButtonFunctions : NetworkBehaviour
 
         if (readyPlayerCount >= minimumPlayersToStart)
         {
+            FindObjectOfType<MultiplayerAudioManager>().ReadyToStartClip();
             startGameButton.interactable = true;
         }
         else

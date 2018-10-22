@@ -7,7 +7,12 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
 
     public override void OnLobbyServerConnect(NetworkConnection conn)
     {
-        Debug.Log("Welcome.");
+        FindObjectOfType<MultiplayerAudioManager>().PlayerEnterLeaveRoom();
+    }
+
+    public override void OnLobbyServerDisconnect(NetworkConnection conn)
+    {
+        FindObjectOfType<MultiplayerAudioManager>().PlayerEnterLeaveRoom();
     }
 
     public override void OnLobbyServerPlayersReady()
@@ -29,8 +34,7 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
         var players = FindObjectsOfType<LobbyPlayerScript>();
         foreach (var joinedPlayer in players)
         {
-            // TODO NETWORK : Scene change disable UI 
-            //joinedPlayer.SceneChangeUIButtonsUpdate();
+            joinedPlayer.SceneChangeUIButtonsUpdate();
         }
     }
 
