@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 2569400267254695628}
   - component: {fileID: 61906852996358556}
   - component: {fileID: 114214877551791420}
-  - component: {fileID: 114301302414212098}
+  - component: {fileID: 114444146530254110}
   m_Layer: 16
   m_Name: NA0_NormalSteps
   m_TagString: ObstacleForeground
@@ -639,7 +639,7 @@ MonoBehaviour:
     i15: 67
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114301302414212098
+--- !u!114 &114444146530254110
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -647,11 +647,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1225195384755102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
+  m_Script: {fileID: 11500000, guid: 47bb73ba1791be442a0c5710f9da8e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUp: {fileID: 0}
-  spawnPoint:
+  powerUpSpawnPoints:
   - {fileID: 1383349435984646}
   - {fileID: 1657534387831212}
 --- !u!212 &212155927975156242

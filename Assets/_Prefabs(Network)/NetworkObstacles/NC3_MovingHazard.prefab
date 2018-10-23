@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 2569400268365609772}
   - component: {fileID: 61763174947815672}
   - component: {fileID: 114240172175479258}
-  - component: {fileID: 114556004255834650}
+  - component: {fileID: 114650542534711396}
   m_Layer: 16
   m_Name: NC3_MovingHazard
   m_TagString: ObstacleForeground
@@ -1626,7 +1626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineWidth: 0.05
---- !u!114 &114556004255834650
+--- !u!114 &114650542534711396
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1634,11 +1634,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1970569361744032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
+  m_Script: {fileID: 11500000, guid: 47bb73ba1791be442a0c5710f9da8e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUp: {fileID: 0}
-  spawnPoint:
+  powerUpSpawnPoints:
   - {fileID: 1144662500774508}
   - {fileID: 1882128763208508}
 --- !u!114 &114997385779804090

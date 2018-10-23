@@ -45,7 +45,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1019016633330358
 GameObject:
   m_ObjectHideFlags: 1
@@ -89,6 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224158578538823914}
   - component: {fileID: 114367368396596132}
+  - component: {fileID: 114737768038217478}
   m_Layer: 5
   m_Name: DistanceSlider
   m_TagString: Untagged
@@ -106,7 +107,6 @@ GameObject:
   - component: {fileID: 224850281850869864}
   - component: {fileID: 222378527645138818}
   - component: {fileID: 114670541646457132}
-  - component: {fileID: 114450799098161020}
   m_Layer: 5
   m_Name: PlayerDistanceSlider
   m_TagString: Untagged
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 222196783456578920}
   - component: {fileID: 114517242085192142}
   m_Layer: 0
-  m_Name: Text (1)
+  m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -852,7 +852,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1460778935011008
 GameObject:
   m_ObjectHideFlags: 1
@@ -2276,9 +2276,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerID: 0
-  playerUnitPrefab: {fileID: 0}
-  forfeitConfirmationWindow: {fileID: 0}
-  disconnectionWindow: {fileID: 0}
+  playerUnitPrefab: {fileID: 1427294901491756, guid: 7a7a7796c22cbf84faf7a4e509b34c5d,
+    type: 2}
+  forfeitConfirmationWindow: {fileID: 1038877436783274}
+  disconnectionWindow: {fileID: 1179108892830436}
 --- !u!114 &114167691764881030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2916,7 +2917,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114784224837635508}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114155283918171936}
+        m_MethodName: OnClickReturnToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114264295450661942
@@ -3024,8 +3036,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: CloseDisconnectWindow
+      - m_Target: {fileID: 114155283918171936}
+        m_MethodName: OnClickReturnToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3465,7 +3477,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114335623885682148}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114155283918171936}
+        m_MethodName: OnClickReturnToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114435250704221276
@@ -3522,17 +3545,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114450799098161020
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1049539093753216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bba507653515664c889dc1af57b602e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114465777157131626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4229,7 +4241,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114590188508794920}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114155283918171936}
+        m_MethodName: OnClickConfirmForfeit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114571122213364098
@@ -4332,7 +4355,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114775511605364992}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114155283918171936}
+        m_MethodName: OnClickForfeitConfirmationWindow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114590188508794920
@@ -4522,7 +4556,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114550147893631472}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114155283918171936}
+        m_MethodName: OnClickReturnToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114623044441587662
@@ -4617,7 +4662,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114465777157131626}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114155283918171936}
+        m_MethodName: OnClickCancelForfeit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114638432360700644
@@ -4829,6 +4885,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114737768038217478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1048515714038588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bba507653515664c889dc1af57b602e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114758046836287916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5137,8 +5204,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Oops! \nIT seems like your opponent has bested you. \nBetter luck next
-    time..."
+  m_Text: "Oops! \nIT seems like your opponent has best you. \nBetter luck next time..."
 --- !u!114 &114820651313408056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5634,7 +5700,7 @@ MonoBehaviour:
   - {fileID: 1210213402296910}
   - {fileID: 1980371188308596}
   - {fileID: 1327644379023914}
-  timeText: {fileID: 114906561744788014}
+  timeText: {fileID: 114517242085192142}
 --- !u!114 &114975901874657168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6358,7 +6424,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &224032572131268998
 RectTransform:
@@ -6678,7 +6744,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3001719, y: 0.071}
   m_AnchorMax: {x: 0.69982815, y: 0.86354417}
-  m_AnchoredPosition: {x: -0.000061035156, y: 6.746521}
+  m_AnchoredPosition: {x: -0.000061035156, y: 6.74646}
   m_SizeDelta: {x: -0.27996826, y: 10.622009}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224172968619387234
@@ -7194,7 +7260,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.06250001, y: 0.45110735}
   m_AnchorMax: {x: 0.25125, y: 0.60966945}
-  m_AnchoredPosition: {x: 0, y: 0.0000076293945}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -0.5, y: 0.000015259}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224419541058763284
@@ -7385,7 +7451,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 313.5, y: 141.76}
+  m_AnchoredPosition: {x: 313.5, y: 145}
   m_SizeDelta: {x: 99.98, y: 40.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224493692250304170
@@ -7767,7 +7833,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.177}
   m_AnchorMin: {x: 0.02375, y: 0.24688423}
   m_AnchorMax: {x: 0.14875, y: 0.43544635}
-  m_AnchoredPosition: {x: 0.19995117, y: 0}
+  m_AnchoredPosition: {x: 0.19970703, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224772278345299542
@@ -8106,7 +8172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 313.5, y: 36.565}
+  m_AnchoredPosition: {x: 313.5, y: 30}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224939624083119360

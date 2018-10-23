@@ -712,7 +712,7 @@ GameObject:
   - component: {fileID: 2569400265316717926}
   - component: {fileID: 61803031461712320}
   - component: {fileID: 114073375734229864}
-  - component: {fileID: 114088079909084162}
+  - component: {fileID: 114838171124389484}
   m_Layer: 16
   m_Name: ND2_SacredPassageDoor
   m_TagString: ObstacleForeground
@@ -2295,9 +2295,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 40
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -2305,23 +2305,68 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.02
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: Infinity
+      outSlope: Infinity
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.04
+      value: 1
+      inSlope: -12.50498
+      outSlope: -12.50498
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.08
+      value: 1
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.16981903
+      value: 1
+      inSlope: -0.8210107
+      outSlope: -0.8210107
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33786237
+    - serializedVersion: 3
+      time: 0.37244445
+      value: 0.50066376
+      inSlope: -2.6422696
+      outSlope: -2.6422696
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.12646164
+    - serializedVersion: 3
+      time: 0.6940466
+      value: 0.043304443
+      inSlope: -0.4524064
+      outSlope: -0.4524064
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.2605753
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 0.0007128902
+      inSlope: -0.106884375
+      outSlope: -0.106884375
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.2718286
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -2330,7 +2375,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2390,9 +2435,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 40
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -2400,23 +2445,68 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.02
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: Infinity
+      outSlope: Infinity
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.04
+      value: 1
+      inSlope: -12.50498
+      outSlope: -12.50498
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.08
+      value: 1
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.16981903
+      value: 1
+      inSlope: -0.8210107
+      outSlope: -0.8210107
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33786237
+    - serializedVersion: 3
+      time: 0.37244445
+      value: 0.50066376
+      inSlope: -2.6422696
+      outSlope: -2.6422696
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.12646164
+    - serializedVersion: 3
+      time: 0.6940466
+      value: 0.043304443
+      inSlope: -0.4524064
+      outSlope: -0.4524064
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.2605753
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 0.0007128902
+      inSlope: -0.106884375
+      outSlope: -0.106884375
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.2718286
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -2425,7 +2515,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2485,9 +2575,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 40
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -2495,23 +2585,68 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.02
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: Infinity
+      outSlope: Infinity
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.04
+      value: 1
+      inSlope: -12.50498
+      outSlope: -12.50498
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.08
+      value: 1
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.16981903
+      value: 1
+      inSlope: -0.8210107
+      outSlope: -0.8210107
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33786237
+    - serializedVersion: 3
+      time: 0.37244445
+      value: 0.50066376
+      inSlope: -2.6422696
+      outSlope: -2.6422696
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.12646164
+    - serializedVersion: 3
+      time: 0.6940466
+      value: 0.043304443
+      inSlope: -0.4524064
+      outSlope: -0.4524064
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.2605753
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 0.0007128902
+      inSlope: -0.106884375
+      outSlope: -0.106884375
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.2718286
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -2520,7 +2655,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2592,20 +2727,6 @@ MonoBehaviour:
     i15: 42
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114088079909084162
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1824286840056890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerUp: {fileID: 0}
-  spawnPoint:
-  - {fileID: 1769569752179482}
 --- !u!114 &114204888996203854
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2673,6 +2794,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineWidth: 0.05
+--- !u!114 &114838171124389484
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1824286840056890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47bb73ba1791be442a0c5710f9da8e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpSpawnPoints:
+  - {fileID: 1769569752179482}
 --- !u!114 &114911492729971468
 MonoBehaviour:
   m_ObjectHideFlags: 1

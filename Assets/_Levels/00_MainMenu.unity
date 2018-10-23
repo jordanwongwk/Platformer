@@ -326,7 +326,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 814478595
-  m_SortingLayer: 13
+  m_SortingLayer: 14
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -3970,7 +3970,7 @@ MonoBehaviour:
     type: 3}
   multiplayerLobbyClip: {fileID: 8300000, guid: 7ae2d92c55498a94aa4fb18da49ea185,
     type: 3}
-  multiplayerGameClip: {fileID: 8300000, guid: ad7e024081dc46744ac48c0600a0bbfb, type: 3}
+  multiplayerGameClip: {fileID: 8300000, guid: 383b72b4b8b33494f98b4952a19ad09a, type: 3}
 --- !u!1 &395212328
 GameObject:
   m_ObjectHideFlags: 0

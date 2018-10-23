@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 2569400267547680608}
   - component: {fileID: 61014795320902386}
   - component: {fileID: 114128350886612180}
-  - component: {fileID: 114755516455979572}
+  - component: {fileID: 114557476149812062}
   m_Layer: 16
   m_Name: NC1_ClimbThanRide
   m_TagString: ObstacleForeground
@@ -3060,6 +3060,20 @@ MonoBehaviour:
   isMovingPositiveDirection: 1
   movePattern: 0
   nextDestination: 0
+--- !u!114 &114557476149812062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1546638105081338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47bb73ba1791be442a0c5710f9da8e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpSpawnPoints:
+  - {fileID: 1774307837841910}
+  - {fileID: 1812136571536888}
 --- !u!114 &114593428024984288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3130,21 +3144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineWidth: 0.1
---- !u!114 &114755516455979572
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1546638105081338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerUp: {fileID: 0}
-  spawnPoint:
-  - {fileID: 1774307837841910}
-  - {fileID: 1812136571536888}
 --- !u!114 &114972307000147464
 MonoBehaviour:
   m_ObjectHideFlags: 1

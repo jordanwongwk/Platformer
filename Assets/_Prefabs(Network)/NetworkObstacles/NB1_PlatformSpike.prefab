@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 2569400267301496702}
   - component: {fileID: 61174210734360096}
   - component: {fileID: 114292399329888316}
-  - component: {fileID: 114580811759115756}
+  - component: {fileID: 114078545881649822}
   m_Layer: 16
   m_Name: NB1_PlatformSpike
   m_TagString: ObstacleForeground
@@ -827,6 +827,20 @@ CompositeCollider2D:
       - {x: 4, y: 7}
       - {x: 10, y: 7}
   m_VertexDistance: 0.0005
+--- !u!114 &114078545881649822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1782155043987320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47bb73ba1791be442a0c5710f9da8e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpSpawnPoints:
+  - {fileID: 1305554379332272}
+  - {fileID: 1326905223229530}
 --- !u!114 &114292399329888316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -859,21 +873,6 @@ MonoBehaviour:
     i15: 42
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114580811759115756
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1782155043987320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerUp: {fileID: 0}
-  spawnPoint:
-  - {fileID: 1305554379332272}
-  - {fileID: 1326905223229530}
 --- !u!212 &212081888934730398
 SpriteRenderer:
   m_ObjectHideFlags: 1

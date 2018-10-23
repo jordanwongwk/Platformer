@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 2569400267870536594}
   - component: {fileID: 114120950345390462}
   - component: {fileID: 61405225763751110}
-  - component: {fileID: 114084261123970670}
+  - component: {fileID: 114831351786727074}
   m_Layer: 16
   m_Name: NA3_ChakraSteppe
   m_TagString: ObstacleForeground
@@ -745,21 +745,6 @@ CompositeCollider2D:
       - {x: 5, y: 0}
       - {x: 7, y: 0}
   m_VertexDistance: 0.0005
---- !u!114 &114084261123970670
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1051898297307978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerUp: {fileID: 0}
-  spawnPoint:
-  - {fileID: 1783075049965958}
-  - {fileID: 1826465108939622}
 --- !u!114 &114120950345390462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -792,6 +777,20 @@ MonoBehaviour:
     i15: 42
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114831351786727074
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1051898297307978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47bb73ba1791be442a0c5710f9da8e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpSpawnPoints:
+  - {fileID: 1783075049965958}
+  - {fileID: 1826465108939622}
 --- !u!212 &212193682852202696
 SpriteRenderer:
   m_ObjectHideFlags: 1

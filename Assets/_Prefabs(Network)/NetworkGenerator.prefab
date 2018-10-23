@@ -102,6 +102,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navigateSpeed: 5
   generationCooldown: 1
+  powerUpRNGIncrease: 25
+  powerUpPrefab: {fileID: 1344535523388878, guid: 1642a152bbd6985419d6a7362f1ff519,
+    type: 2}
   obstaclesCountToChangeTier: 5
   obstacleTierLists:
   - {fileID: 11400000, guid: b77d43f8fda97fd4faa47d4c6984672e, type: 2}

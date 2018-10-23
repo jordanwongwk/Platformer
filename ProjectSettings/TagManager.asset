@@ -83,6 +83,9 @@ TagManager:
   - name: Foreground Front
     uniqueID: 3638728889
     locked: 0
+  - name: PlayerEffects
+    uniqueID: 3146428707
+    locked: 0
   - name: RisingTide
     uniqueID: 814478595
     locked: 0

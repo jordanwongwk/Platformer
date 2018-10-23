@@ -70,7 +70,7 @@ public class MultiplayerDistanceSlider : MonoBehaviour
 
         // If value is -ve means this player is leading (as currentPlayer's position will be higher)
         // TODO Please adjust the position based on need! (X or Y)
-        float distanceBetweenPlayer = opponentPlayer.transform.position.x - currentPlayer.transform.position.x;
+        float distanceBetweenPlayer = opponentPlayer.transform.position.y - currentPlayer.transform.position.y;
         if (distanceBetweenPlayer <= 0)
         {
             UpdateDistanceSlider(0);
@@ -89,8 +89,8 @@ public class MultiplayerDistanceSlider : MonoBehaviour
     // DO NOTE THAT Only the Server will get the Match Winner, that is why the hard coded return of int is such. 
     public int GetMatchWinner()
     {
-        if (currentPlayer.transform.position.x > opponentPlayer.transform.position.x) { return 1; }         // Server Wins
-        else if (opponentPlayer.transform.position.x > currentPlayer.transform.position.x) { return 2; }    // Client Wins
+        if (currentPlayer.transform.position.y > opponentPlayer.transform.position.y) { return 1; }         // Server Wins
+        else if (opponentPlayer.transform.position.y > currentPlayer.transform.position.y) { return 2; }    // Client Wins
         else { return 0; }      // Draw
     }
 }

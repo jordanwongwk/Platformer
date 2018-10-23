@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class NetworkGeneratorScript : MonoBehaviour {
+public class NetworkGeneratorScript : NetworkBehaviour {
 
     [Header("General Configurations")]
     [SerializeField] float navigateSpeed = 2.0f;
     [SerializeField] float generationCooldown = 2.0f;
+    [SerializeField] int powerUpRNGIncrease = 25;
+    [SerializeField] GameObject powerUpPrefab;
 
     [Header("Obstacles Configurations")]
     [SerializeField] int obstaclesCountToChangeTier = 15;
@@ -21,6 +24,8 @@ public class NetworkGeneratorScript : MonoBehaviour {
     List<GameObject> endlessModeBackgrounds = new List<GameObject>();
 
     // Private var for General
+    bool isReadyToBegin = false;
+    GameObject playerWithAuthority;
     BoxCollider2D generatorCol;
 
     // Private var for Obstacles
@@ -40,6 +45,10 @@ public class NetworkGeneratorScript : MonoBehaviour {
     bool isSpawningBackground = false;
     GameObject backgroundParent;
 
+    public void SetServerAsPlayer(GameObject server)
+    {
+        playerWithAuthority = server;
+    }
 
     // Use this for initialization
     void Start ()
@@ -48,6 +57,7 @@ public class NetworkGeneratorScript : MonoBehaviour {
         obstaclesParent = GameObject.FindGameObjectWithTag("Obstacles");
         generatorCol = GetComponent<BoxCollider2D>();
         RegisterEndlessMode();
+        StartCoroutine(InitialDelay());
     }
 
     void RegisterEndlessMode()
@@ -70,10 +80,24 @@ public class NetworkGeneratorScript : MonoBehaviour {
             }
         }
     }
+
+    IEnumerator InitialDelay()
+    {
+        yield return new WaitForSecondsRealtime(1.0f);
+        isReadyToBegin = true;
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if (!NetworkServer.active)
+        {
+            this.gameObject.SetActive(false);
+            return;
+        }
+
+        if (!isReadyToBegin) { return; }
+
         Vector3 currentTrans = transform.position;
         transform.position = new Vector3(currentTrans.x, currentTrans.y + (navigateSpeed * Time.deltaTime), currentTrans.z);
 
@@ -150,14 +174,20 @@ public class NetworkGeneratorScript : MonoBehaviour {
         int randomRNG = Random.Range(1, 100);
         if (randomRNG <= powerUpGeneratingRNG)
         {
-            newObstacle.GetComponent<Obstacle>().SpawnPowerUp();
-            powerUpGeneratingRNG = 10;
+            Vector3 powerUpSpawnPos = newObstacle.GetComponent<NetworkPowerUpSpawn>().GetPowerUpSpawnPoint();
+
+            GameObject powerUpInstance = Instantiate(powerUpPrefab, powerUpSpawnPos, Quaternion.identity);
+            powerUpInstance.transform.parent = newObstacle.transform;
+
+            CmdSpawnPowerUpObject(powerUpInstance);
+            powerUpGeneratingRNG = powerUpRNGIncrease;
         }
         else
         {
-            powerUpGeneratingRNG += 10;
+            powerUpGeneratingRNG += powerUpRNGIncrease;
         }
 
+        CmdSpawnObstacleObject(newObstacle);
         StartCoroutine(SpawningObstacleCooldown());             // Put this here to prevent being called before this function is called
     }
 
@@ -184,6 +214,8 @@ public class NetworkGeneratorScript : MonoBehaviour {
     {
         GameObject generatedBG = Instantiate(chosenBG, transform.position, Quaternion.identity);
         generatedBG.transform.parent = backgroundParent.transform;
+
+        CmdSpawnBackgroundObject(generatedBG);
         StartCoroutine(SpawningBackgroundCooldown());
     }
 
@@ -194,4 +226,22 @@ public class NetworkGeneratorScript : MonoBehaviour {
         isSpawningBackground = false;
     }
     #endregion
+
+    [Command]
+    void CmdSpawnObstacleObject(GameObject spawnObject)
+    {
+        NetworkServer.SpawnWithClientAuthority(spawnObject, playerWithAuthority);
+    }
+
+    [Command]
+    void CmdSpawnPowerUpObject(GameObject powerUpObject)
+    {
+        NetworkServer.SpawnWithClientAuthority(powerUpObject, playerWithAuthority);
+    }
+
+    [Command]
+    void CmdSpawnBackgroundObject(GameObject spawnBGObject)
+    {
+        NetworkServer.SpawnWithClientAuthority(spawnBGObject, playerWithAuthority);
+    }
 }

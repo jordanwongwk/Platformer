@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 2569400265283890718}
   - component: {fileID: 61965510635732930}
   - component: {fileID: 114735898832576104}
-  - component: {fileID: 114612616839557904}
+  - component: {fileID: 114692651659272596}
   m_Layer: 16
   m_Name: NC0_BasicMovingPlatform
   m_TagString: ObstacleForeground
@@ -1670,7 +1670,7 @@ MonoBehaviour:
   isMovingPositiveDirection: 0
   movePattern: 0
   nextDestination: 1
---- !u!114 &114612616839557904
+--- !u!114 &114692651659272596
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1678,11 +1678,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1814964611313436}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
+  m_Script: {fileID: 11500000, guid: 47bb73ba1791be442a0c5710f9da8e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUp: {fileID: 0}
-  spawnPoint:
+  powerUpSpawnPoints:
   - {fileID: 1636469922019788}
   - {fileID: 1628606170808744}
 --- !u!114 &114735898832576104

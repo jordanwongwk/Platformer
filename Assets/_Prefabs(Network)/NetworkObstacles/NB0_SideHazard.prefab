@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 2569400268205827882}
   - component: {fileID: 61355189616928104}
   - component: {fileID: 114663152602129388}
-  - component: {fileID: 114129849061876580}
+  - component: {fileID: 114320459631442896}
   m_Layer: 16
   m_Name: NB0_SideHazard
   m_TagString: ObstacleForeground
@@ -914,7 +914,7 @@ CompositeCollider2D:
       - {x: 5, y: 4}
       - {x: 7, y: 4}
   m_VertexDistance: 0.0005
---- !u!114 &114129849061876580
+--- !u!114 &114320459631442896
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -922,11 +922,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1043027094451554}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
+  m_Script: {fileID: 11500000, guid: 47bb73ba1791be442a0c5710f9da8e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUp: {fileID: 0}
-  spawnPoint:
+  powerUpSpawnPoints:
   - {fileID: 1495526780004160}
   - {fileID: 1723560044962666}
 --- !u!114 &114663152602129388

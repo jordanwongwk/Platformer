@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 2569400267626872092}
   - component: {fileID: 61178418589840432}
   - component: {fileID: 114487820103771932}
-  - component: {fileID: 114094448513569712}
+  - component: {fileID: 114562053667458888}
   m_Layer: 16
   m_Name: NA2_SteppingPlatform
   m_TagString: ObstacleForeground
@@ -799,21 +799,6 @@ CompositeCollider2D:
       - {x: 5, y: 0}
       - {x: 7, y: 0}
   m_VertexDistance: 0.0005
---- !u!114 &114094448513569712
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1330608544653020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerUp: {fileID: 0}
-  spawnPoint:
-  - {fileID: 1610661146311436}
-  - {fileID: 1886163008021584}
 --- !u!114 &114487820103771932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -846,6 +831,20 @@ MonoBehaviour:
     i15: 213
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114562053667458888
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1330608544653020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47bb73ba1791be442a0c5710f9da8e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpSpawnPoints:
+  - {fileID: 1610661146311436}
+  - {fileID: 1886163008021584}
 --- !u!212 &212015955020865538
 SpriteRenderer:
   m_ObjectHideFlags: 1

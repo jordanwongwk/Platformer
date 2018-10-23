@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 2569400268178025718}
   - component: {fileID: 61489933113469192}
   - component: {fileID: 114696545877094038}
-  - component: {fileID: 114881338112219826}
+  - component: {fileID: 114954259300106316}
   m_Layer: 16
   m_Name: NB2_HangingLadder
   m_TagString: ObstacleForeground
@@ -996,7 +996,7 @@ MonoBehaviour:
     i15: 125
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
---- !u!114 &114881338112219826
+--- !u!114 &114954259300106316
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1004,11 +1004,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1223971572782424}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
+  m_Script: {fileID: 11500000, guid: 47bb73ba1791be442a0c5710f9da8e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUp: {fileID: 0}
-  spawnPoint:
+  powerUpSpawnPoints:
   - {fileID: 1300610495348400}
   - {fileID: 1489458519041512}
   - {fileID: 1143331770369584}

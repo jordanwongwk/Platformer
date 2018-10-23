@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 2569400266074472182}
   - component: {fileID: 61268514546640698}
   - component: {fileID: 114556414787613140}
-  - component: {fileID: 114113022665584560}
+  - component: {fileID: 114850003334386464}
   m_Layer: 16
   m_Name: NB3_SpikeClimb
   m_TagString: ObstacleForeground
@@ -1082,21 +1082,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 818acfb79dfedfe45846137635a3fdac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114113022665584560
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1544468287476050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b060d209d694620419d8ee3294b82e50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerUp: {fileID: 0}
-  spawnPoint:
-  - {fileID: 1722840568939710}
-  - {fileID: 1487898184230842}
 --- !u!114 &114556414787613140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1129,6 +1114,20 @@ MonoBehaviour:
     i15: 52
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114850003334386464
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1544468287476050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47bb73ba1791be442a0c5710f9da8e1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpSpawnPoints:
+  - {fileID: 1722840568939710}
+  - {fileID: 1487898184230842}
 --- !u!212 &212079851347707106
 SpriteRenderer:
   m_ObjectHideFlags: 1

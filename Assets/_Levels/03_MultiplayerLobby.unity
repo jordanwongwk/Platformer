@@ -7025,7 +7025,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 814478595
-  m_SortingLayer: 13
+  m_SortingLayer: 14
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -10305,7 +10305,37 @@ MonoBehaviour:
   m_PlayerSpawnMethod: 0
   m_OfflineScene: 03_MultiplayerLobby
   m_OnlineScene: 
-  m_SpawnPrefabs: []
+  m_SpawnPrefabs:
+  - {fileID: 1427294901491756, guid: 7a7a7796c22cbf84faf7a4e509b34c5d, type: 2}
+  - {fileID: 1344535523388878, guid: 1642a152bbd6985419d6a7362f1ff519, type: 2}
+  - {fileID: 1225195384755102, guid: 74e077902cfecdb4a99f8f424d6afb43, type: 2}
+  - {fileID: 1100781589082398, guid: 9d4ee9b6b6c81054cb472a0329c7e38f, type: 2}
+  - {fileID: 1330608544653020, guid: 030b568dcce6fa84785232909f0d23d5, type: 2}
+  - {fileID: 1051898297307978, guid: 495d9107afcf03e4abe03c1e21f88a2a, type: 2}
+  - {fileID: 1043027094451554, guid: b06cecea67cf5544c8e9c22d2b0715f4, type: 2}
+  - {fileID: 1782155043987320, guid: 35db410126e84d64d9cc6b46ede1002a, type: 2}
+  - {fileID: 1223971572782424, guid: 3e7b9dc5f57c578489702843986e057d, type: 2}
+  - {fileID: 1544468287476050, guid: c61d540519e0f3142971f17945eac034, type: 2}
+  - {fileID: 1814964611313436, guid: 0e9d01b40a0c1cb479e7624955c09083, type: 2}
+  - {fileID: 1546638105081338, guid: d98de37ca1531f846822edd36f58399a, type: 2}
+  - {fileID: 1701797077000038, guid: 0d306af7d5f8d3142b7bc40752766771, type: 2}
+  - {fileID: 1970569361744032, guid: 5dd6a76fd2698c04b981405a1b168d45, type: 2}
+  - {fileID: 1416847491940272, guid: cb60211d1198e7d4291883811df8d0d2, type: 2}
+  - {fileID: 1147502291307312, guid: c25e76d6206dcf1439b476d6958a247e, type: 2}
+  - {fileID: 1824286840056890, guid: 2eace948b9554bb47a3f913f2ac90a2a, type: 2}
+  - {fileID: 1466678782294574, guid: 60708e85c9720a746921c2f4bff1fd73, type: 2}
+  - {fileID: 1287444676376380, guid: ba1872f7fe0234b4ab0575906094b2ec, type: 2}
+  - {fileID: 1203553400033268, guid: f996340eafb31274ca79f7b6e8fcc586, type: 2}
+  - {fileID: 1637553086091768, guid: d9ece2b181965f44f8db928d66697a9e, type: 2}
+  - {fileID: 1181456633156064, guid: cec06ab37b374fc478fbc4e87cf2e696, type: 2}
+  - {fileID: 1636553088717250, guid: 6a925bb7a85a26e4682a81382d950bc9, type: 2}
+  - {fileID: 1583197542704746, guid: fca577a15d172c44985908b16eab2628, type: 2}
+  - {fileID: 1660739142203242, guid: 63dc880ccb8e5014f8726b26dff07389, type: 2}
+  - {fileID: 1369527039639486, guid: e115a9578e937cb4b86ae1f6dfc4ee82, type: 2}
+  - {fileID: 1190920644019810, guid: f6021fa2dd8441a4c87332e0459d6df8, type: 2}
+  - {fileID: 1936030142391862, guid: 00e90703a830ee14bb71b8ee2cb6eabb, type: 2}
+  - {fileID: 1307506118194966, guid: 2cfd90bd8429e334d935dbe765851ba8, type: 2}
+  - {fileID: 1504170291149172, guid: d82b25b68f2eee046ab2fc039142c21e, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -10364,10 +10394,10 @@ MonoBehaviour:
   m_ShowLobbyGUI: 0
   m_MaxPlayers: 4
   m_MaxPlayersPerConnection: 1
-  m_MinPlayers: 2
+  m_MinPlayers: 1
   m_LobbyPlayerPrefab: {fileID: 114214567227774144, guid: a1bb6edc2eec7a74ca388364646a4529,
     type: 2}
-  m_GamePlayerPrefab: {fileID: 1427294901491756, guid: 7a7a7796c22cbf84faf7a4e509b34c5d,
+  m_GamePlayerPrefab: {fileID: 1863887115596614, guid: 2e75b4edb0d77ff43a5496f26ff7ca1a,
     type: 2}
   m_LobbyScene: 03_MultiplayerLobby
   m_PlayScene: 04_MultiplayerGameScene

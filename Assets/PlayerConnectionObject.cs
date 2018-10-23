@@ -86,15 +86,14 @@ public class PlayerConnectionObject : NetworkBehaviour
         // Set the player in SpawnScript
         if (isServer)
         {
-            // TODO SpawnScript
-            /*if (FindObjectOfType<SpawnScript>() != null)
+            if (FindObjectOfType<NetworkGeneratorScript>() != null)
             {
-                FindObjectOfType<SpawnScript>().SetServerAsPlayer(gameObject);
+                FindObjectOfType<NetworkGeneratorScript>().SetServerAsPlayer(gameObject);
             }
             else
             {
                 StartCoroutine(DelaySpawn());
-            }*/
+            }
         }
     }
 
@@ -114,16 +113,15 @@ public class PlayerConnectionObject : NetworkBehaviour
             return;
         }
 
-        // TODO PlayerTest
-        /*var players = FindObjectsOfType<PlayerTest>();
-        foreach (PlayerTest player in players)
+        var players = FindObjectsOfType<NetworkPlayer>();
+        foreach (NetworkPlayer player in players)
         {
             if (player.gameObject != thisPlayerGameObject)
             {
                 opponentPlayerGameObject = player.gameObject;
                 break;
             }
-        }*/
+        }
     }
 
     IEnumerator WaitUntilCurrentPlayerIsRegistered()
@@ -200,8 +198,7 @@ public class PlayerConnectionObject : NetworkBehaviour
     [Command]
     void CmdPlayerIsForfeiting(int id)
     {
-        // TODO GameServerManager
-        //mainGameServerManager.ForfeitingGame(id);
+        mainGameServerManager.ForfeitingGame(id);
     }
 
     [Command]
@@ -229,7 +226,7 @@ public class PlayerConnectionObject : NetworkBehaviour
     private void SpawnUnit()
     {
         thisPlayerGameObject = Instantiate(playerUnitPrefab);
-        thisPlayerGameObject.transform.position = new Vector3(-5, 5, 0);            // Position to Spawn Players
+        thisPlayerGameObject.transform.position = new Vector3(6, 3, 0);            // Position to Spawn Players
         NetworkServer.SpawnWithClientAuthority(thisPlayerGameObject, connectionToClient);
         TargetSettingUpPlayerAfterSpawn(connectionToClient, thisPlayerGameObject);
     }
@@ -239,10 +236,9 @@ public class PlayerConnectionObject : NetworkBehaviour
     [TargetRpc]
     void TargetSettingUpPlayerAfterSpawn(NetworkConnection conn, GameObject player)
     {
-        // TODO PlayerTest
-        /*thisPlayerGameObject = player;
-        thisPlayerGameObject.GetComponent<PlayerTest>().SetPlayerID(playerID);        // Giving Player an ID
-        FindObjectOfType<CinemachineSetupScript>().SetFollowCameraTarget(player);*/
+        thisPlayerGameObject = player;
+        thisPlayerGameObject.GetComponent<NetworkPlayer>().SetPlayerID(playerID);        // Giving Player an ID
+        FindObjectOfType<CinemachineSetupScript>().SetFollowCameraTarget(player);
     }
     #endregion
 }
