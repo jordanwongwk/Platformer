@@ -17,6 +17,12 @@ public class GameServerManager : NetworkBehaviour
 
     [Header("Setting up text field")]
     [SerializeField] Text timeText;
+    [SerializeField] List<Text> panelDistanceTravelledTexts;
+
+    [Header("Result SFX")]
+    [SerializeField] AudioClip timesUpAudio;
+    [SerializeField] AudioClip winnerAudio;
+    [SerializeField] AudioClip loserDrawAudio;
 
     [SyncVar] bool isThisTimeKeeper = false;
     [SyncVar] bool playerForfeits = false;
@@ -24,6 +30,9 @@ public class GameServerManager : NetworkBehaviour
 
     bool isTheGameOver = false;
     float currentTime;
+    [SyncVar] int distanceTravelledByServerPlayer = -10;
+    [SyncVar] int distanceTravelledByClientPlayer = -10;
+    public AudioSource myAudioSource;
     MultiplayerDistanceSlider distanceSliderScript; 
 
     const int SERVER_PLAYER_ID = 1;
@@ -46,6 +55,9 @@ public class GameServerManager : NetworkBehaviour
         {
             currentTime = timeLimit;
             generalCanvasObject.SetActive(true);
+
+            myAudioSource = GetComponent<AudioSource>();
+            myAudioSource.volume = PlayerPrefsManager.GetSoundVolume();
         }
     }
 
@@ -96,16 +108,14 @@ public class GameServerManager : NetworkBehaviour
         if (currentTime <= 0f)
         {
             isTheGameOver = true;
-            DisplayingEndGameUI();
+            CalculateTotalDistanceTravelled();
+            DisplayingEndGameUI();          
 
             if (!playerForfeits)
             {
                 TallyMatchResult();         // 1st End Game : Calculating who is the furtherest when time ends
             }
-            else
-            {
-                DisplayingResults();        // 2nd End Game : Player who forfeits automatically lose the game
-            }
+            // 2nd End Game : Player who forfeits automatically lose the game
         }
     }
 
@@ -113,7 +123,7 @@ public class GameServerManager : NetworkBehaviour
     private void DisplayingEndGameUI()
     {
         timesUpTextImage.SetActive(true);
-        // TODO Whistle sound?
+        myAudioSource.PlayOneShot(timesUpAudio);
         StartCoroutine(EndingGame());
     }
 
@@ -154,12 +164,67 @@ public class GameServerManager : NetworkBehaviour
         else { ResultDisplayingPanel(CLIENT_PLAYER_ID, SERVER_PLAYER_ID); }
     }
 
+
+    // TODO (For 26th Oct) Solve this distance issue
+    // Show the distance travelled on result panel.
+    void CalculateTotalDistanceTravelled()
+    {
+        // Get the distance travelled value from SERVER
+        if (isServer) { CmdSettingDistanceTravelled(); }
+
+        // Assign the distance travelled value to respective player
+        if (isServer)
+        {
+            DisplayDistanceTravelledText(distanceTravelledByServerPlayer);
+        }
+        else
+        {
+            if (distanceTravelledByClientPlayer >= -5)
+            {
+                DisplayDistanceTravelledText(distanceTravelledByClientPlayer);
+            }
+            else
+            {
+                StartCoroutine(GetDistanceTravelledAgain());
+            }
+        }
+    }
+
+    IEnumerator GetDistanceTravelledAgain()
+    {
+        yield return new WaitForEndOfFrame();
+        CalculateTotalDistanceTravelled();
+    }
+
+    private void DisplayDistanceTravelledText(int distanceTravelledInt)
+    {
+        // Just in case there's negative
+        if (distanceTravelledInt <= 0) { distanceTravelledInt = 0; }
+
+        foreach (Text distanceText in panelDistanceTravelledTexts)
+        {
+            distanceText.text = distanceTravelledInt.ToString() + " m";
+        }
+    }
+
     // Generalized Panel Display method
     private void ResultDisplayingPanel(int playerID, int opponentID)
     {
-        if (winnerPlayerID == playerID) { resultPanels[0].SetActive(true); }
-        else if (winnerPlayerID == opponentID) { resultPanels[1].SetActive(true); }
-        else { resultPanels[2].SetActive(true); }
+        if (winnerPlayerID == playerID)                 // Win
+        {
+            resultPanels[0].SetActive(true);
+            myAudioSource.PlayOneShot(winnerAudio);
+        }
+        else if (winnerPlayerID == opponentID)          // Lose
+        {
+            resultPanels[1].SetActive(true);
+            myAudioSource.PlayOneShot(loserDrawAudio);
+        }
+        else                                            // Draw
+        {
+            resultPanels[2].SetActive(true);
+            myAudioSource.PlayOneShot(loserDrawAudio);
+        }
     }
 
     // 2nd Victory Condition by opponent surrendering
@@ -170,6 +235,13 @@ public class GameServerManager : NetworkBehaviour
         // If Player 1 forfeits, Player 2 wins, vice versa
         if (forfeitPlayerID == SERVER_PLAYER_ID) { winnerPlayerID = CLIENT_PLAYER_ID; }
         else if (forfeitPlayerID == CLIENT_PLAYER_ID) { winnerPlayerID = SERVER_PLAYER_ID; }
+    }
+
+    [Command]
+    void CmdSettingDistanceTravelled()
+    {
+        distanceTravelledByServerPlayer = distanceSliderScript.GetServerPlayerDistanceTravelled();
+        distanceTravelledByClientPlayer = distanceSliderScript.GetClientPlayerDistanceTravelled();
     }
 
     [ClientRpc]

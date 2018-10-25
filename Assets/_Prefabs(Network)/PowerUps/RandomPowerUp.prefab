@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4239078777904588}
   - component: {fileID: 58434068346886514}
   - component: {fileID: 114271030464903710}
+  - component: {fileID: 114898235463772634}
   m_Layer: 14
   m_Name: RandomPowerUp
   m_TagString: Untagged
@@ -180,6 +181,17 @@ MonoBehaviour:
     i15: 25
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114898235463772634
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1344535523388878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6316528886e1a438312eaadba9c521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198837444353228332
 ParticleSystem:
   m_ObjectHideFlags: 1

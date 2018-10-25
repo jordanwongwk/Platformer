@@ -18,6 +18,7 @@ public class NetworkPlayer : NetworkBehaviour {
     [SerializeField] GameObject playerIndicator;
     [SerializeField] GameObject confusionEffect;
     [SerializeField] GameObject shieldEffect;
+    [SerializeField] GameObject weakenEffect;
 
     [Header("Opponent Config")]
     [SerializeField] float opponentVisibility = 0.5f;
@@ -43,20 +44,22 @@ public class NetworkPlayer : NetworkBehaviour {
 
     // Network Configurations
     int playerID;
+    float initialWalkSpeed;
+    float initialJumpSpeed;
+    
     NetworkPowerUpUI myPowerUpUI;
-
-    [SyncVar(hook = "OnFreezing")] bool isFrozen = false;
-    [SyncVar(hook = "OnConfusing")] bool isConfused = false;
-    [SyncVar(hook = "OnShielding")] bool isShielded = false;
+    PowerUpScript myPowerUpScript;
+    [SyncVar] Color indicatorColor;
+    [SyncVar] bool isThisPlayerReady = false;
+    [SyncVar] bool isFrozen = false;
+    [SyncVar] bool isConfused = false;
+    [SyncVar] bool isShielded = false;
+    [SyncVar] bool isWeaken = false;
 
     Coroutine frozenCoroutine;
     Coroutine confusedCoroutine;
     Coroutine shieldedCoroutine;
-
-    // Hooks
-    public void OnFreezing(bool value) { isFrozen = value; }
-    public void OnConfusing(bool value) { isConfused = value; }
-    public void OnShielding(bool value) { isShielded = value; }
+    Coroutine weakenCoroutine;
 
     // Constants
     const float DEATH_DELAY = 3.0f;
@@ -84,9 +87,14 @@ public class NetworkPlayer : NetworkBehaviour {
         myBodyCollider = GetComponent<CapsuleCollider2D>();
         myAnimator = GetComponent<Animator>();
         myAudioSource = GetComponent<AudioSource>();
+        myPowerUpScript = GetComponent<PowerUpScript>();
 
         initialGravityScale = myRigidBody.gravityScale;
         initialSpriteScale = transform.localScale.x;
+        initialWalkSpeed = walkSpeed;
+        initialJumpSpeed = jumpSpeed;
+
+        SettingUpPlayerIndicator();
 
         if (!hasAuthority)
         {
@@ -94,11 +102,31 @@ public class NetworkPlayer : NetworkBehaviour {
             return;
         }
 
-        myAudioSource.volume = GameManager.GetSoundVolume();
         CmdSetPlayerColor();
+        myAudioSource.volume = GameManager.GetSoundVolume();
 	}
 
-    private void SettingUpPlayerIndicator(Color playerColor)
+    // Keep looping this method until SyncVar is ready then proceed to set color
+    private void SettingUpPlayerIndicator()
+    {
+        Debug.Log("Calling Set Up");
+        if (isThisPlayerReady)
+        {
+            SetPlayerIndicatorColor(indicatorColor);
+        }
+        else
+        {
+            StartCoroutine(AttemptToExecuteSettingUpAgain());
+        }
+    }
+
+    IEnumerator AttemptToExecuteSettingUpAgain()
+    {
+        yield return new WaitForEndOfFrame();       // Call ASAP
+        SettingUpPlayerIndicator();
+    }
+
+    private void SetPlayerIndicatorColor(Color playerColor)
     {
         if (!hasAuthority)
         {
@@ -108,6 +136,7 @@ public class NetworkPlayer : NetworkBehaviour {
             GetComponent<SpriteRenderer>().color = mySpriteColor;
         }
 
+        playerIndicator.SetActive(true);
         playerIndicator.GetComponent<SpriteRenderer>().color = playerColor;
     }
     #endregion
@@ -358,9 +387,8 @@ public class NetworkPlayer : NetworkBehaviour {
         {
             if (hasAuthority)
             {
-                // TODO PowerUpUI
-                // myPowerUpUI.TurnOnIndicationAndDurationCircle(1, duration);
-                // myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText(PowerUps.freeze);
+                myPowerUpUI.TurnOnIndicationAndDurationImage(1, duration);
+                myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText(PowerUps.freeze);
             }
 
             if (!isFrozen)
@@ -379,8 +407,7 @@ public class NetworkPlayer : NetworkBehaviour {
         }
         else if (isShielded)
         {
-            // TODO PowerUpUI
-            //if (hasAuthority) { myPowerUpUI.TargetPowerUpNegatedText(); }
+            if (hasAuthority) { myPowerUpUI.TargetPowerUpNegatedText(); }
 
             DebuffNegatedByShield();
         }
@@ -408,9 +435,8 @@ public class NetworkPlayer : NetworkBehaviour {
         {
             if (hasAuthority)
             {
-                // TODO PowerUpUI
-                //myPowerUpUI.TurnOnIndicationAndDurationCircle(2, duration);
-                //myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText(PowerUps.confuse);
+                myPowerUpUI.TurnOnIndicationAndDurationImage(2, duration);
+                myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText(PowerUps.confuse);
             }
 
             if (!isConfused)
@@ -428,8 +454,7 @@ public class NetworkPlayer : NetworkBehaviour {
         }
         else if (isShielded)
         {
-            // TODO PowerUpUI
-            //if (hasAuthority) { myPowerUpUI.TargetPowerUpNegatedText(); }
+            if (hasAuthority) { myPowerUpUI.TargetPowerUpNegatedText(); }
 
             DebuffNegatedByShield();
         }
@@ -458,9 +483,8 @@ public class NetworkPlayer : NetworkBehaviour {
         }
         else if (hasAuthority)
         {
-            // TODO PowerUpUI
-            //myPowerUpUI.TurnOnIndicationAndDurationCircle(3, duration);
-            //myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText(PowerUps.shield);
+            myPowerUpUI.TurnOnIndicationAndDurationImage(3, duration);
+            myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText(PowerUps.shield);
         }
 
         if (!isShielded)
@@ -500,28 +524,84 @@ public class NetworkPlayer : NetworkBehaviour {
 
         if (hasAuthority)
         {
-            // TODO PowerUpUI
-            //myPowerUpUI.PowerUpDurationEnd(3);
+            myPowerUpUI.PowerUpDurationEnd(3);
         }
 
         EndsShieldBuff();
     }
-    #endregion
 
-    #region Command
-    // Setup Command
-    [Command]
-    void CmdSetPlayerColor()
+    // 4 - Weaken
+    public void WeakenPlayer(float duration)
     {
-        Debug.Log("Setting Color");
-        if (playerID == 1)
+        Debug.Log("Weaken");
+        // If is not under shield effect
+        if (!isShielded)
         {
-            RpcSetPlayerColor(Color.blue);
+            if (hasAuthority)
+            {
+                myPowerUpUI.TurnOnIndicationAndDurationImage(4, duration);
+                myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText(PowerUps.weaken);
+            }
+
+            if (!isWeaken)
+            {
+                isWeaken = true;
+                WeakenActivationEffect(isWeaken);
+                weakenEffect.SetActive(isWeaken);
+                CmdCallWeakenEffect(isWeaken);
+                weakenCoroutine = StartCoroutine(WeakenDuration(duration));
+            }
+            else if (isWeaken)
+            {
+                StopCoroutine(weakenCoroutine);
+                weakenCoroutine = StartCoroutine(WeakenDuration(duration));
+            }
+        }
+        else if (isShielded)
+        {
+            if (hasAuthority) { myPowerUpUI.TargetPowerUpNegatedText(); }
+
+            DebuffNegatedByShield();
+        }
+    }
+
+    IEnumerator WeakenDuration(float debuffDuration)
+    {
+        yield return new WaitForSecondsRealtime(debuffDuration);
+        EndWeakenDebuff();
+    }
+
+    private void EndWeakenDebuff()
+    {
+        isWeaken = false;
+        WeakenActivationEffect(isWeaken);
+        weakenEffect.SetActive(isWeaken);
+        CmdCallWeakenEffect(isWeaken);
+    }
+
+    void WeakenActivationEffect(bool weakenStatus)
+    {
+        if (weakenStatus)
+        {
+            walkSpeed = initialWalkSpeed / myPowerUpScript.GetWeakenWalkSpeedReductionMultiplier();
+            jumpSpeed = initialJumpSpeed / myPowerUpScript.GetWeakenJumpSpeedReductionMultiplier();
         }
         else
         {
-            RpcSetPlayerColor(Color.red);
+            walkSpeed = initialWalkSpeed;
+            jumpSpeed = initialJumpSpeed;
         }
+    }
+    #endregion
+
+    #region Command
+    // Setup Command : Call to set color and boolean to SyncVar
+    [Command]
+    void CmdSetPlayerColor()
+    {
+        isThisPlayerReady = true;
+        if (playerID == 1) { indicatorColor = Color.blue; }
+        else { indicatorColor = Color.red; }
     }
 
 
@@ -546,6 +626,12 @@ public class NetworkPlayer : NetworkBehaviour {
         RpcCallPlayerIsShielded(isPlayerShielded);
     }
 
+    [Command]
+    void CmdCallWeakenEffect(bool effectBool)
+    {
+        RpcCallWeakenEffect(effectBool);
+    }
+
 
     // Animations related Commands
     [Command]
@@ -563,14 +649,6 @@ public class NetworkPlayer : NetworkBehaviour {
     #endregion
 
     #region RPC
-    // Setup RPC
-    [ClientRpc]
-    void RpcSetPlayerColor(Color playerColor)
-    {
-        SettingUpPlayerIndicator(playerColor);
-    }
-
-
     // Power Ups RPC
     [ClientRpc]
     void RpcCallFreezeParameters(float gravityScale, bool animationBool)
@@ -591,6 +669,12 @@ public class NetworkPlayer : NetworkBehaviour {
         shieldEffect.SetActive(effectBool);
     }
 
+    [ClientRpc]
+    void RpcCallWeakenEffect(bool effectBool)
+    {
+        weakenEffect.SetActive(effectBool);
+    }
+
 
     // Animation RPC
     [ClientRpc]
@@ -602,11 +686,14 @@ public class NetworkPlayer : NetworkBehaviour {
     [ClientRpc]
     void RpcUpdateWalkAnimation(bool playerRunning, float runningDirection)
     {
-        myAnimator.SetBool("isWalking", playerRunning);
-        if (playerRunning)
+        if (isThisPlayerReady)
         {
-            Vector3 myScale = transform.localScale;
-            transform.localScale = new Vector3(runningDirection * initialSpriteScale, myScale.y, myScale.z);
+            myAnimator.SetBool("isWalking", playerRunning);
+            if (playerRunning)
+            {
+                Vector3 myScale = transform.localScale;
+                transform.localScale = new Vector3(runningDirection * initialSpriteScale, myScale.y, myScale.z);
+            }
         }
     }
     #endregion
