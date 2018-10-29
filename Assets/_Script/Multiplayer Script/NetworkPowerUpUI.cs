@@ -8,6 +8,7 @@ public class NetworkPowerUpUI : MonoBehaviour {
     // Always make sure [0] for powerUpImages, Indication, DurationImage is for NULL / White Image
 
     [Header("Power Up UI Setup")]
+    [SerializeField] float popUpDisplayDuration = 5.0f;
     [SerializeField] List<Sprite> powerUpImages;
     [SerializeField] Image powerUpImageUI;
     [SerializeField] GameObject powerUpButtonUI;
@@ -25,8 +26,7 @@ public class NetworkPowerUpUI : MonoBehaviour {
     [SerializeField] AudioClip powerUpConfused;
     [SerializeField] AudioClip powerUpWeaken;
 
-    // TODO private this
-    public List<int> numberOfSimilarPowerActive = new List<int>();
+    List<int> numberOfSimilarPowerActive = new List<int>();
     int thisPlayerID;
     bool isPowerUpTextBoxBeingDisplayed = false;
     PowerUps currentPowerUp;
@@ -188,11 +188,11 @@ public class NetworkPowerUpUI : MonoBehaviour {
         switch (usedPowerUp)
         {
             case PowerUps.freeze:
-                powerUpText.text = "You felt a cold wind and ice starts to engulf and trapped you! You are frozen solid momentarily!";
+                powerUpText.text = "You felt a cold wind and ice starts to engulf and trapped you! \nYou are frozen solid momentarily!";
                 powerUpAudioSource.PlayOneShot(powerUpFrozen);
                 break;
             case PowerUps.confuse:
-                powerUpText.text = "You felt dizzy and lost your sense of direction!";
+                powerUpText.text = "You felt dizzy. \nYou can move on but you lost your sense of direction!";
                 powerUpAudioSource.PlayOneShot(powerUpConfused);
                 break;
             case PowerUps.shield:
@@ -201,7 +201,7 @@ public class NetworkPowerUpUI : MonoBehaviour {
                 powerUpAudioSource.PlayOneShot(powerUpUsedSuccessfully);
                 break;
             case PowerUps.weaken:
-                powerUpText.text = "You suddenly grow tired, your movement capability has reduced.";
+                powerUpText.text = "You suddenly grow tired. \nYour movement capability has reduced.";
                 powerUpAudioSource.PlayOneShot(powerUpWeaken);
                 break;
             default:
@@ -225,13 +225,13 @@ public class NetworkPowerUpUI : MonoBehaviour {
         switch (usedPowerUp)
         {
             case PowerUps.freeze:
-                powerUpText.text = "You used the power of ice! Your opponent is now frozen!";
+                powerUpText.text = "You used the power of ice! \nYour opponent is now frozen!";
                 break;
             case PowerUps.confuse:
-                powerUpText.text = "You used the power of deception! Your opponent has lost sense of direction!";
+                powerUpText.text = "You used the power of deception! \nYour opponent has lost sense of direction!";
                 break;
             case PowerUps.weaken:
-                powerUpText.text = "You used the power of energy drain! Your opponent has suddenly lose their strength!";
+                powerUpText.text = "You used the power of energy drain! \nYour opponent has suddenly lose their strength!";
                 break;
             default:
                 powerUpText.text = "This Power Up does not require shield check!";
@@ -243,7 +243,7 @@ public class NetworkPowerUpUI : MonoBehaviour {
     {
         ManagingPowerUpTextBox();
         powerUpAudioSource.PlayOneShot(powerUpNegated);
-        powerUpText.text = "Your power has been absorbed by your opponent's shield. The effect is negated!";
+        powerUpText.text = "Your power has been absorbed by your opponent's shield. \nThe effect is negated!";
     }
 
 
@@ -262,7 +262,7 @@ public class NetworkPowerUpUI : MonoBehaviour {
     {
         powerUpTextBox.SetActive(true);
         isPowerUpTextBoxBeingDisplayed = true;
-        yield return new WaitForSecondsRealtime(3.0f);
+        yield return new WaitForSecondsRealtime(popUpDisplayDuration);
         powerUpTextBox.SetActive(false);
         isPowerUpTextBoxBeingDisplayed = false;
     }

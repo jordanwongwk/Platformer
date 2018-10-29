@@ -9,6 +9,8 @@ public class UIMultiplayerManager : MonoBehaviour {
     [SerializeField] GameObject tutorialPanel;
     [SerializeField] Button joinRoomButton;
 
+    bool isPlayerBusyInRoom = false;
+
     public void OpenMultiplayerRoomPanel(bool status)
     {
         multiplayerRoomPanel.SetActive(status);
@@ -40,5 +42,20 @@ public class UIMultiplayerManager : MonoBehaviour {
     public void OnClickBackToMainMenu()
     {
         LevelManager.Instance.ExitToMainMenu();
+    }
+
+
+    public void SetIsPlayerBusy(bool isBusy)
+    {
+        isPlayerBusyInRoom = isBusy;
+    }
+
+
+    private void Update()
+    {
+        if (!isPlayerBusyInRoom && Input.GetKeyDown(KeyCode.Escape))
+        {
+            LevelManager.Instance.ExitToMainMenu();
+        }
     }
 }

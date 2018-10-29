@@ -102,28 +102,49 @@ public class PowerUpScript : NetworkBehaviour {
 
     public void RandomizedPower()
     {
-        int powerUpRNG = Random.Range(1, 100);
+        float calculateDistanceDifference = playerObject.transform.position.y - opponentObject.transform.position.y;
 
-        Debug.Log("PowerUpRNG: " + powerUpRNG);
-        if (powerUpRNG <= 25)
+        if (calculateDistanceDifference < 0)
         {
-            currentPowerUp = PowerUps.freeze;
+            Debug.Log("You are falling behind!");
+            RandomizedResultingPowerUp(25, 60, 95);
         }
-        else if (powerUpRNG > 25 && powerUpRNG <= 50)
+        else if (calculateDistanceDifference > 0)
         {
-            currentPowerUp = PowerUps.confuse;
+            Debug.Log("You are leading!");
+            RandomizedResultingPowerUp(5, 25, 45);
         }
-        else if (powerUpRNG > 50 && powerUpRNG <= 75)
+        else
         {
-            currentPowerUp = PowerUps.weaken;
-        }
-        else if (powerUpRNG > 75)
-        {
-            currentPowerUp = PowerUps.shield;
+            RandomizedResultingPowerUp(25, 50, 75);
         }
 
         thisPlayerPowerUpUI.SetUpPowerUpImageAndReadiness(currentPowerUp, true);
     }
+
+    void RandomizedResultingPowerUp(int firstMax, int secondMax, int thirdMax)
+    {
+        int powerUpRNG = Random.Range(1, 100);
+        Debug.Log("PowerUpRNG: " + powerUpRNG);
+
+        if (powerUpRNG <= firstMax)
+        {
+            currentPowerUp = PowerUps.freeze;
+        }
+        else if (powerUpRNG > firstMax && powerUpRNG <= secondMax)
+        {
+            currentPowerUp = PowerUps.confuse;
+        }
+        else if (powerUpRNG > secondMax && powerUpRNG <= thirdMax)
+        {
+            currentPowerUp = PowerUps.weaken;
+        }
+        else if (powerUpRNG > thirdMax)
+        {
+            currentPowerUp = PowerUps.shield;
+        }
+    }
+
 
     public void ExecutePower(PowerUps currentPowerUp)
     {

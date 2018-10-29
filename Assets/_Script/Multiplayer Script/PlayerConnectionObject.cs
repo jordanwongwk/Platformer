@@ -7,6 +7,7 @@ public class PlayerConnectionObject : NetworkBehaviour
 {
     public int playerID;
     public GameObject playerUnitPrefab;
+    [SerializeField] List<GameObject> initialSpawnPoints;
 
     [Header("Player / Client UI")]
     [SerializeField] GameObject forfeitConfirmationWindow;
@@ -16,6 +17,8 @@ public class PlayerConnectionObject : NetworkBehaviour
     GameObject thisPlayerGameObject;
     GameObject opponentPlayerGameObject;
     List<GameObject> activeWindows = new List<GameObject>();
+
+    const float COROUTINE_DELAY = 0.25f;
 
     #region Initialization
     // Use this for initialization
@@ -37,7 +40,7 @@ public class PlayerConnectionObject : NetworkBehaviour
 
         transform.GetChild(0).gameObject.SetActive(true);
         CmdRequestForMyUnit();
-        SettingUpPlayerInSpawn();
+        SettingUpServerAuthorityInGenerator();
         SettingUpOpponentPlayer();
 
         NetworkClient thisClient = NetworkManager.singleton.client;
@@ -73,15 +76,15 @@ public class PlayerConnectionObject : NetworkBehaviour
         }
     }
 
-
     IEnumerator SearchForGameServerManagerAgain()
     {
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(COROUTINE_DELAY);
         SettingUpGameServerManager();
     }
 
+
     // ONLY-SERVER: Set the spawner main controller as server's player
-    private void SettingUpPlayerInSpawn()
+    private void SettingUpServerAuthorityInGenerator()
     {
         // Set the player in SpawnScript
         if (isServer)
@@ -99,9 +102,10 @@ public class PlayerConnectionObject : NetworkBehaviour
 
     IEnumerator DelaySpawn()
     {
-        yield return new WaitForSeconds(0.25f);
-        SettingUpPlayerInSpawn();
+        yield return new WaitForSeconds(COROUTINE_DELAY);
+        SettingUpServerAuthorityInGenerator();
     }
+
 
     // Setting up all other players that are NOT controlled by this player (aka their opponent)
     void SettingUpOpponentPlayer()
@@ -109,10 +113,11 @@ public class PlayerConnectionObject : NetworkBehaviour
         // REQUIREMENT: This script must know who is their owner first before searching for opponent
         if (thisPlayerGameObject == null)
         {
-            StartCoroutine(WaitUntilCurrentPlayerIsRegistered());
+            StartCoroutine(SettingUpOpponentPlayerDelay());
             return;
         }
 
+        // Set up opponent game object
         var players = FindObjectsOfType<NetworkPlayer>();
         foreach (NetworkPlayer player in players)
         {
@@ -122,11 +127,17 @@ public class PlayerConnectionObject : NetworkBehaviour
                 break;
             }
         }
+
+        // If due to lag, opponent player is not set up, search again. (Client enters late but server already pass through this)
+        if (opponentPlayerGameObject == null)
+        {
+            StartCoroutine(SettingUpOpponentPlayerDelay());
+        }
     }
 
-    IEnumerator WaitUntilCurrentPlayerIsRegistered()
+    IEnumerator SettingUpOpponentPlayerDelay()
     {
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(COROUTINE_DELAY);
         SettingUpOpponentPlayer();
     }
 
@@ -218,7 +229,7 @@ public class PlayerConnectionObject : NetworkBehaviour
     {
         while (!connectionToClient.isReady)
         {
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(COROUTINE_DELAY);
         }
         SpawnUnit();
     }
@@ -226,7 +237,7 @@ public class PlayerConnectionObject : NetworkBehaviour
     private void SpawnUnit()
     {
         thisPlayerGameObject = Instantiate(playerUnitPrefab);
-        thisPlayerGameObject.transform.position = new Vector3(6, 3, 0);            // Position to Spawn Players
+        thisPlayerGameObject.transform.position = initialSpawnPoints[0].transform.position;            // Position to Spawn Players
         NetworkServer.SpawnWithClientAuthority(thisPlayerGameObject, connectionToClient);
         TargetSettingUpPlayerAfterSpawn(connectionToClient, thisPlayerGameObject);
     }
@@ -237,8 +248,9 @@ public class PlayerConnectionObject : NetworkBehaviour
     void TargetSettingUpPlayerAfterSpawn(NetworkConnection conn, GameObject player)
     {
         thisPlayerGameObject = player;
-        thisPlayerGameObject.GetComponent<NetworkPlayer>().SetPlayerID(playerID);        // Giving Player an ID
-        FindObjectOfType<CinemachineSetupScript>().SetFollowCameraTarget(player);
+        thisPlayerGameObject.GetComponent<NetworkPlayer>().SetPlayerID(playerID);                       // Giving Player an ID
+        thisPlayerGameObject.transform.position = initialSpawnPoints[playerID - 1].transform.position;  // Giving a proper spawn point for players
+        FindObjectOfType<CinemachineSetupScript>().SetFollowCameraTarget(player, playerID);
     }
     #endregion
 }

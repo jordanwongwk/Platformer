@@ -27,12 +27,12 @@ public class GameServerManager : NetworkBehaviour
     [SyncVar] bool isThisTimeKeeper = false;
     [SyncVar] bool playerForfeits = false;
     [SyncVar] int winnerPlayerID = -1;
+    [SyncVar] int distanceTravelledByServerPlayer = -1;
+    [SyncVar] int distanceTravelledByClientPlayer = -1;
 
     bool isTheGameOver = false;
     float currentTime;
-    [SyncVar] int distanceTravelledByServerPlayer = -10;
-    [SyncVar] int distanceTravelledByClientPlayer = -10;
-    public AudioSource myAudioSource;
+    AudioSource myAudioSource;
     MultiplayerDistanceSlider distanceSliderScript; 
 
     const int SERVER_PLAYER_ID = 1;
@@ -119,6 +119,56 @@ public class GameServerManager : NetworkBehaviour
         }
     }
 
+
+    // Show the distance travelled on result panel.
+    void CalculateTotalDistanceTravelled()
+    {
+        // Get the distance travelled value from server's distanceSliderScript
+        if (isServer)
+        {
+            distanceTravelledByServerPlayer = distanceSliderScript.GetServerPlayerDistanceTravelled();
+            distanceTravelledByClientPlayer = distanceSliderScript.GetClientPlayerDistanceTravelled();
+
+            // Distance obtained is then send to RPC to send to all clients (SyncVar only works from client -> Server, not the other way)
+            RpcSettingDistanceTravalled(distanceTravelledByServerPlayer, distanceTravelledByClientPlayer);
+        }
+
+        // Assign the distance travelled value to respective player
+        if (isServer)
+        {
+            DisplayDistanceTravelledText(distanceTravelledByServerPlayer);
+        }
+        else
+        {
+            if (distanceTravelledByClientPlayer >= -1)      
+            {
+                DisplayDistanceTravelledText(distanceTravelledByClientPlayer);
+            }
+            else
+            {
+                StartCoroutine(GetDistanceTravelledAgain());
+            }
+        }
+    }
+
+    IEnumerator GetDistanceTravelledAgain()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        CalculateTotalDistanceTravelled();
+    }
+
+    private void DisplayDistanceTravelledText(int distanceTravelledInt)
+    {
+        // Just in case there's negative
+        if (distanceTravelledInt <= 0) { distanceTravelledInt = 0; }
+
+        foreach (Text distanceText in panelDistanceTravelledTexts)
+        {
+            distanceText.text = distanceTravelledInt.ToString() + " m";
+        }
+    }
+
+
     // Displaying "Time's Up!" Text and coroutine for result panel
     private void DisplayingEndGameUI()
     {
@@ -163,49 +213,7 @@ public class GameServerManager : NetworkBehaviour
         if (isServer) { ResultDisplayingPanel(SERVER_PLAYER_ID, CLIENT_PLAYER_ID); }
         else { ResultDisplayingPanel(CLIENT_PLAYER_ID, SERVER_PLAYER_ID); }
     }
-
-
-    // TODO (For 26th Oct) Solve this distance issue
-    // Show the distance travelled on result panel.
-    void CalculateTotalDistanceTravelled()
-    {
-        // Get the distance travelled value from SERVER
-        if (isServer) { CmdSettingDistanceTravelled(); }
-
-        // Assign the distance travelled value to respective player
-        if (isServer)
-        {
-            DisplayDistanceTravelledText(distanceTravelledByServerPlayer);
-        }
-        else
-        {
-            if (distanceTravelledByClientPlayer >= -5)
-            {
-                DisplayDistanceTravelledText(distanceTravelledByClientPlayer);
-            }
-            else
-            {
-                StartCoroutine(GetDistanceTravelledAgain());
-            }
-        }
-    }
-
-    IEnumerator GetDistanceTravelledAgain()
-    {
-        yield return new WaitForEndOfFrame();
-        CalculateTotalDistanceTravelled();
-    }
-
-    private void DisplayDistanceTravelledText(int distanceTravelledInt)
-    {
-        // Just in case there's negative
-        if (distanceTravelledInt <= 0) { distanceTravelledInt = 0; }
-
-        foreach (Text distanceText in panelDistanceTravelledTexts)
-        {
-            distanceText.text = distanceTravelledInt.ToString() + " m";
-        }
-    }
+  
 
     // Generalized Panel Display method
     private void ResultDisplayingPanel(int playerID, int opponentID)
@@ -237,17 +245,17 @@ public class GameServerManager : NetworkBehaviour
         else if (forfeitPlayerID == CLIENT_PLAYER_ID) { winnerPlayerID = SERVER_PLAYER_ID; }
     }
 
-    [Command]
-    void CmdSettingDistanceTravelled()
-    {
-        distanceTravelledByServerPlayer = distanceSliderScript.GetServerPlayerDistanceTravelled();
-        distanceTravelledByClientPlayer = distanceSliderScript.GetClientPlayerDistanceTravelled();
-    }
-
     [ClientRpc]
     void RpcSendCurrentTimeToAllClient(float time)
     {
         currentTime = time;
+    }
+
+    [ClientRpc]
+    void RpcSettingDistanceTravalled(int serverPlayerDistance, int clientPlayerDistance)
+    {
+        distanceTravelledByServerPlayer = serverPlayerDistance;
+        distanceTravelledByClientPlayer = clientPlayerDistance;
     }
 }
 

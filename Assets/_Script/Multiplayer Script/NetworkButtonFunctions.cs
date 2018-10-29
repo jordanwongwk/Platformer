@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class NetworkButtonFunctions : NetworkBehaviour
 {
+    [SerializeField] UIMultiplayerManager uiMultiplayerManager;
+
     [Header("User Interactable UI")]
     [SerializeField] Button startGameButton;
     [SerializeField] InputField ipAddressInput;
@@ -29,12 +31,14 @@ public class NetworkButtonFunctions : NetworkBehaviour
     // Button Click to Start Host Room
     public void OnPressStartHostRoom()
     {
+        uiMultiplayerManager.SetIsPlayerBusy(true);
         NetworkManager.singleton.StartHost();
     }
 
     // Button Click to Join Hosted Room based on IP on InputField
     public void OnPressJoinRoom()
     {
+        uiMultiplayerManager.SetIsPlayerBusy(true);
         NetworkManager.singleton.networkAddress = ipAddressInput.text;
         NetworkClient client = NetworkManager.singleton.StartClient();
         ConnectingMessage();
@@ -72,6 +76,7 @@ public class NetworkButtonFunctions : NetworkBehaviour
     // Button pressed (On Connecting Window) to cancel joining attempt and close window
     public void OnClickCancelConnectionAttempt()
     {
+        uiMultiplayerManager.SetIsPlayerBusy(false);
         NetworkManager.singleton.StopClient();
         RemoveActiveWindow(connectingMessage);
     }
@@ -79,6 +84,7 @@ public class NetworkButtonFunctions : NetworkBehaviour
     // Button pressed (On Disconnection Window) to close the window
     public void CloseDisconnectWindow()
     {
+        uiMultiplayerManager.SetIsPlayerBusy(false);
         RemoveActiveWindow(disconnectMessage);
     }
 

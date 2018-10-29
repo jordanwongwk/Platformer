@@ -8,7 +8,6 @@ public class NetworkGeneratorScript : NetworkBehaviour {
     [Header("General Configurations")]
     [SerializeField] float navigateSpeed = 2.0f;
     [SerializeField] float generationCooldown = 2.0f;
-    [SerializeField] int powerUpRNGIncrease = 25;
     [SerializeField] GameObject powerUpPrefab;
 
     [Header("Obstacles Configurations")]
@@ -33,7 +32,10 @@ public class NetworkGeneratorScript : NetworkBehaviour {
     int currentObstacleCount = 0;
     int currentGeneratedObstacleInt = 0;
     int lastGeneratedObstacleInt = 0;
-    int powerUpGeneratingRNG = 10;
+
+    float probabilityToSpawnPowerUp = 0.5f;
+    int numberOfPowerUpMissedSpawn = 1;
+    int powerUpAppearedCount = 0;
     bool isSpawningObstacles = false;
     GameObject obstaclesParent;
 
@@ -171,8 +173,12 @@ public class NetworkGeneratorScript : NetworkBehaviour {
         newObstacle.transform.parent = obstaclesParent.transform;
 
         // Randomly generate power-up
-        int randomRNG = Random.Range(1, 100);
-        if (randomRNG <= powerUpGeneratingRNG)
+        float randomRNG = Random.Range(0.0f , 1.0f);
+
+        CalculateSpawnPowerUpProbability();
+        Debug.Log("Randomed Value: " + randomRNG + " . PowerUpProbability: " + probabilityToSpawnPowerUp);
+
+        if (randomRNG <= probabilityToSpawnPowerUp)
         {
             Vector3 powerUpSpawnPos = newObstacle.GetComponent<NetworkPowerUpSpawn>().GetPowerUpSpawnPoint();
 
@@ -180,11 +186,13 @@ public class NetworkGeneratorScript : NetworkBehaviour {
             powerUpInstance.transform.parent = newObstacle.transform;
 
             CmdSpawnPowerUpObject(powerUpInstance);
-            powerUpGeneratingRNG = powerUpRNGIncrease;
+            powerUpAppearedCount++;
+            numberOfPowerUpMissedSpawn = 1;         // RESET
+            Debug.Log("We are at height: " + transform.position.y + " with count " + powerUpAppearedCount);
         }
         else
         {
-            powerUpGeneratingRNG += powerUpRNGIncrease;
+            numberOfPowerUpMissedSpawn++;
         }
 
         CmdSpawnObstacleObject(newObstacle);
@@ -197,6 +205,13 @@ public class NetworkGeneratorScript : NetworkBehaviour {
         yield return new WaitForSeconds(generationCooldown);
         isSpawningObstacles = false;
     }
+
+    void CalculateSpawnPowerUpProbability()
+    {
+        probabilityToSpawnPowerUp = ((0.5f) / (1 + (0.2f * powerUpAppearedCount))) * (numberOfPowerUpMissedSpawn);
+    }
+
+
     #endregion
 
     #region Spawning Background
