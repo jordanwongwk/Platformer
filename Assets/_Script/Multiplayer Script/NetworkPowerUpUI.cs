@@ -25,6 +25,8 @@ public class NetworkPowerUpUI : MonoBehaviour {
     [SerializeField] AudioClip powerUpFrozen;
     [SerializeField] AudioClip powerUpConfused;
     [SerializeField] AudioClip powerUpWeaken;
+    [SerializeField] AudioClip powerUpBlind;
+    [SerializeField] AudioClip powerUpSlippery;
 
     List<int> numberOfSimilarPowerActive = new List<int>();
     int thisPlayerID;
@@ -44,6 +46,8 @@ public class NetworkPowerUpUI : MonoBehaviour {
     const int CONFUSE_NUMBER = 2;
     const int SHIELD_NUMBER = 3;
     const int WEAKEN_NUMBER = 4;
+    const int BLIND_NUMBER = 5;
+    const int SLIPPERY_NUMBER = 6;
 
     #region initialization
     // Use this for initialization
@@ -121,6 +125,12 @@ public class NetworkPowerUpUI : MonoBehaviour {
                 break;
             case PowerUps.weaken:
                 powerUpImageUI.sprite = powerUpImages[WEAKEN_NUMBER];
+                break;
+            case PowerUps.blind:
+                powerUpImageUI.sprite = powerUpImages[BLIND_NUMBER];
+                break;
+            case PowerUps.slippery:
+                powerUpImageUI.sprite = powerUpImages[SLIPPERY_NUMBER];
                 break;
             default:
                 powerUpImageUI.sprite = powerUpImages[NO_POWER_UP_NUMBER];
@@ -204,6 +214,14 @@ public class NetworkPowerUpUI : MonoBehaviour {
                 powerUpText.text = "You suddenly grow tired. \nYour movement capability has reduced.";
                 powerUpAudioSource.PlayOneShot(powerUpWeaken);
                 break;
+            case PowerUps.blind:
+                powerUpText.text = "You can't see well all the sudden. \nYour vision's range is reduced!";
+                powerUpAudioSource.PlayOneShot(powerUpBlind);
+                break;
+            case PowerUps.slippery:
+                powerUpText.text = "The floor seems slippery, it seems your feet is imbue with ice. \nBe careful as you walk!";
+                powerUpAudioSource.PlayOneShot(powerUpSlippery);
+                break;
             default:
                 powerUpText.text = "Error: This power up does not have any text.";
                 break;
@@ -232,6 +250,12 @@ public class NetworkPowerUpUI : MonoBehaviour {
                 break;
             case PowerUps.weaken:
                 powerUpText.text = "You used the power of energy drain! \nYour opponent has suddenly lose their strength!";
+                break;
+            case PowerUps.blind:
+                powerUpText.text = "You used the power of darkness! \nYour opponent is now blinded!";
+                break;
+            case PowerUps.slippery:
+                powerUpText.text = "You used the power of ice! \nYour opponent's feet are imbue with ice, making them slippery!";
                 break;
             default:
                 powerUpText.text = "This Power Up does not require shield check!";

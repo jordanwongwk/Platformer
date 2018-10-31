@@ -19,6 +19,8 @@ public class NetworkPlayer : NetworkBehaviour {
     [SerializeField] GameObject confusionEffect;
     [SerializeField] GameObject shieldEffect;
     [SerializeField] GameObject weakenEffect;
+    [SerializeField] GameObject blindEffect;
+    [SerializeField] GameObject slipperyEffect;
 
     [Header("Opponent Config")]
     [SerializeField] float opponentVisibility = 0.5f;
@@ -44,9 +46,11 @@ public class NetworkPlayer : NetworkBehaviour {
 
     // Network Configurations
     int playerID;
+    int slipperyPreventionWallMask;         // Mask for Slippery Power Up (Prevent slipping over wall / ladder)
     float initialWalkSpeed;
     float initialJumpSpeed;
-    
+    public float slidingDistX;             // For Slippery
+
     NetworkPowerUpUI myPowerUpUI;
     PowerUpScript myPowerUpScript;
     [SyncVar] Color indicatorColor;
@@ -55,11 +59,18 @@ public class NetworkPlayer : NetworkBehaviour {
     [SyncVar] bool isConfused = false;
     [SyncVar] bool isShielded = false;
     [SyncVar] bool isWeaken = false;
+    [SyncVar] bool isBlinded = false;
+    [SyncVar] public bool isSlippery = false;
 
     Coroutine frozenCoroutine;
     Coroutine confusedCoroutine;
     Coroutine shieldedCoroutine;
     Coroutine weakenCoroutine;
+    Coroutine blindedCoroutine;
+    Coroutine slipperyCoroutine;
+
+    //TEST
+    public GameObject testTrack;
 
     // Constants
     const float DEATH_DELAY = 3.0f;
@@ -95,6 +106,7 @@ public class NetworkPlayer : NetworkBehaviour {
         initialJumpSpeed = jumpSpeed;
 
         SettingUpPlayerIndicator();
+        SettingLayerMaskForSliding();
 
         if (!hasAuthority)
         {
@@ -138,6 +150,19 @@ public class NetworkPlayer : NetworkBehaviour {
 
         playerIndicator.SetActive(true);
         playerIndicator.GetComponent<SpriteRenderer>().color = playerColor;
+    }
+
+    // TODO check if this set-up interrupt other set up
+    // To set up certain layer objects prevent the momentum of slipping to maintain (Act as forced stop for slipping)
+    void SettingLayerMaskForSliding()
+    {
+        int foreground = 9;
+        int climbing = 12;
+
+        int foregroundMask = 1 << foreground;
+        int climbingMask = 1 << climbing;
+
+        slipperyPreventionWallMask = foregroundMask | climbingMask;
     }
     #endregion
 
@@ -200,6 +225,7 @@ public class NetworkPlayer : NetworkBehaviour {
             Jumping();
             Climbing();
             CheckForPlayerDeath();
+            Sliding();
         }
 	}
 
@@ -224,7 +250,7 @@ public class NetworkPlayer : NetworkBehaviour {
         else
         {
             myAnimator.SetBool("isWalking", false);
-            float direction = Mathf.Sign(horizontalMove);
+            float direction = Mathf.Sign(horizontalMove);         
             CmdUpdateWalkAnimation(false, direction);
         }
     }
@@ -280,6 +306,57 @@ public class NetworkPlayer : NetworkBehaviour {
         if (!isConfused) { verticalMove = CrossPlatformInputManager.GetAxis("Vertical"); }
         else if (isConfused) { verticalMove = -CrossPlatformInputManager.GetAxis("Vertical"); }
     }
+
+    void Sliding()
+    {
+        if (isSlippery)
+        {
+            float slipperyMultiplier = myPowerUpScript.GetSlipperyMultiplier();
+
+            // Raycast check to see if player has collided with wall / ladder
+            float raycastLength = 0.35f;
+            float rayDirection = Mathf.Sign(slidingDistX - transform.position.x);
+            Vector2 raycastDirection = new Vector2(rayDirection, 0f);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, raycastDirection, raycastLength, slipperyPreventionWallMask);
+
+            if (hit.collider != null)
+            {
+                slidingDistX = transform.position.x;
+            }
+
+            if (Mathf.Abs(horizontalMove) > Mathf.Epsilon)
+            {
+                // Sliding will not occur when player is climbing. 
+                // NOTE: When climbing, the edge of the platform still trigger this. Take note!
+                if (!myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Climbing")))
+                {
+                    float direction = Mathf.Sign(horizontalMove);
+                    slidingDistX += (Time.deltaTime * slipperyMultiplier * walkSpeed * direction);
+                }
+            }
+            else
+            {
+                if (Mathf.Abs(transform.position.x - slidingDistX) > Mathf.Epsilon)
+                {
+                    float lerpingX = Mathf.Lerp(transform.position.x, slidingDistX, Time.deltaTime);
+                    Vector3 slidingVector = new Vector3(lerpingX, transform.position.y, transform.position.z);
+                    transform.position = slidingVector;
+                }
+            }
+            testTrack.transform.position = new Vector3(slidingDistX, transform.position.y, transform.position.z);
+        }
+        else
+        {
+            SetSlidingDistanceXToInitial();
+        }
+    }
+
+    private void SetSlidingDistanceXToInitial()
+    {
+        slidingDistX = transform.position.x;
+    }
+
+
     #endregion
 
     #region Death Check
@@ -324,6 +401,9 @@ public class NetworkPlayer : NetworkBehaviour {
         myAnimator.SetTrigger("isRespawned");
         transform.position = respawnPoint;
         StartCoroutine(ChangeIsAliveStatus());
+
+        // Reset Slippery Point
+        SetSlidingDistanceXToInitial();
     }
 
     // To prevent death on 2nd time when respawning
@@ -368,6 +448,7 @@ public class NetworkPlayer : NetworkBehaviour {
         if (collision.gameObject.tag == "Platform")
         {
             transform.parent = collision.transform;
+            SetSlidingDistanceXToInitial();
         } 
     }
 
@@ -426,6 +507,7 @@ public class NetworkPlayer : NetworkBehaviour {
         myAnimator.SetBool("isFrozen", false);
         CmdCallFreezeParameters(1.0f, false);
     }
+    // 1 END - Freeze 
 
     // 2 - Confusion
     public void ConfusePlayer(float duration)
@@ -472,6 +554,7 @@ public class NetworkPlayer : NetworkBehaviour {
         confusionEffect.SetActive(isConfused);
         CmdCallConfusionEffect(isConfused);
     }
+    // 2 END - Confuse
 
     // 3 - Shield
     // Setting Up Shield
@@ -529,6 +612,7 @@ public class NetworkPlayer : NetworkBehaviour {
 
         EndsShieldBuff();
     }
+    // 3 END - Shield
 
     // 4 - Weaken
     public void WeakenPlayer(float duration)
@@ -592,6 +676,102 @@ public class NetworkPlayer : NetworkBehaviour {
             jumpSpeed = initialJumpSpeed;
         }
     }
+    // 4 END - Weaken
+
+    // 5 - Blind
+    public void BlindPlayer(float duration)
+    {
+        if (!hasAuthority) { return; }
+
+        Debug.Log("Blind");
+        if (!isShielded)
+        {
+            if (hasAuthority)
+            {
+                myPowerUpUI.TurnOnIndicationAndDurationImage(5, duration);
+                myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText(PowerUps.blind);
+            }
+
+            if (!isBlinded)
+            {
+                isBlinded = true;
+                blindEffect.SetActive(true);
+                blindedCoroutine = StartCoroutine(BlindDuration(duration));
+            }
+            else if (isBlinded)
+            {
+                StopCoroutine(blindedCoroutine);
+                blindedCoroutine = StartCoroutine(BlindDuration(duration));
+            }
+        }
+        else if (isShielded)
+        {
+            if (hasAuthority) { myPowerUpUI.TargetPowerUpNegatedText(); }
+
+            DebuffNegatedByShield();
+        }
+    }
+
+    IEnumerator BlindDuration(float debuffDuration)
+    {
+        yield return new WaitForSecondsRealtime(debuffDuration);
+        EndsBlindDebuff();
+    }
+
+    private void EndsBlindDebuff()
+    {
+        isBlinded = false;
+        blindEffect.SetActive(isBlinded);
+    }
+    // 5 END - Blind
+
+
+    // 6 - Slippery
+    public void SlipperyPlayer(float duration)
+    {
+        Debug.Log("Slippery");
+        if (!isShielded)
+        {
+            if (hasAuthority)
+            {
+                myPowerUpUI.TurnOnIndicationAndDurationImage(6, duration);
+                myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText(PowerUps.slippery);
+            }
+
+            if (!isSlippery)
+            {
+                isSlippery = true;
+                slipperyEffect.SetActive(isSlippery);
+                CmdCallSlipperyEffect(isSlippery);
+                slipperyCoroutine = StartCoroutine(SlipperyDuration(duration));
+            }
+            else if (isSlippery)
+            {
+                StopCoroutine(slipperyCoroutine);
+                slipperyCoroutine = StartCoroutine(SlipperyDuration(duration));
+            }
+        }
+        else if (isShielded)
+        {
+            if (hasAuthority) { myPowerUpUI.TargetPowerUpNegatedText(); }
+
+            DebuffNegatedByShield();
+        }
+    }
+
+    IEnumerator SlipperyDuration(float debuffDuration)
+    {
+        yield return new WaitForSecondsRealtime(debuffDuration);
+        EndsSlipperyDebuff();
+    }
+
+    private void EndsSlipperyDebuff()
+    {
+        isSlippery = false;
+        slipperyEffect.SetActive(isSlippery);
+        CmdCallSlipperyEffect(isSlippery);
+    }
+    // 6 END - Slippery
     #endregion
 
     #region Command
@@ -630,6 +810,12 @@ public class NetworkPlayer : NetworkBehaviour {
     void CmdCallWeakenEffect(bool effectBool)
     {
         RpcCallWeakenEffect(effectBool);
+    }
+
+    [Command]
+    void CmdCallSlipperyEffect(bool effectBool)
+    {
+        RpcCallSlipperyEffect(effectBool);
     }
 
 
@@ -673,6 +859,13 @@ public class NetworkPlayer : NetworkBehaviour {
     void RpcCallWeakenEffect(bool effectBool)
     {
         weakenEffect.SetActive(effectBool);
+    }
+
+    [ClientRpc]
+    void RpcCallSlipperyEffect(bool effectBool)
+    {
+        slipperyEffect.SetActive(effectBool);
+        // TODO Forgot something here...
     }
 
 

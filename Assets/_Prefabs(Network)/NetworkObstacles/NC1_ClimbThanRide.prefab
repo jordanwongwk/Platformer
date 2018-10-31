@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 114523712226203916}
   m_Layer: 9
   m_Name: MovingPlatform (2x1) (5)
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -622,7 +622,7 @@ GameObject:
   - component: {fileID: 114443959303689910}
   m_Layer: 9
   m_Name: MovingPlatform (2x1) (4)
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -692,7 +692,7 @@ GameObject:
   - component: {fileID: 114694928650650556}
   m_Layer: 9
   m_Name: MovingPlatform (2x1) (3)
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -776,7 +776,7 @@ GameObject:
   - component: {fileID: 114437329277691492}
   m_Layer: 9
   m_Name: MovingPlatform (2x1) (2)
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1278,7 +1278,7 @@ GameObject:
   - component: {fileID: 114137268378600828}
   m_Layer: 9
   m_Name: MovingPlatform (2x1) (6)
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1409,7 +1409,7 @@ GameObject:
   - component: {fileID: 114972307000147464}
   m_Layer: 9
   m_Name: MovingPlatform (2x1) (1)
-  m_TagString: Platform
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

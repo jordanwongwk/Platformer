@@ -4,19 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public enum PowerUps { freeze, confuse, shield, weaken };
+public enum PowerUps { freeze, confuse, shield, weaken, blind, slippery };
 
 public class PowerUpScript : NetworkBehaviour {
 
-    [Header("Buff / Debuff Durations")]
+    [Header("Trickery Durations")]
     [SerializeField] float frozenDuration = 5.0f;
     [SerializeField] float confuseDuration = 5.0f;
-    [SerializeField] float shieldDuration = 5.0f;
     [SerializeField] float weakenDuration = 5.0f;
+    [SerializeField] float blindDuration = 5.0f;
+    [SerializeField] float slipperyDuration = 5.0f;
+
+    [Header("Buff Duration")]
+    [SerializeField] float shieldDuration = 5.0f;
 
     [Header("Buff / Debuff Parameters")]
     [SerializeField] float weakenWalkSpeedReductionMultiplier = 2.0f;
     [SerializeField] float weakenJumpSpeedReductionMultiplier = 2.0f;
+    [SerializeField] float slipperyMultiplier = 2.5f;
 
     [SerializeField] PowerUps currentPowerUp;
     GameObject playerObject;
@@ -104,15 +109,18 @@ public class PowerUpScript : NetworkBehaviour {
     {
         float calculateDistanceDifference = playerObject.transform.position.y - opponentObject.transform.position.y;
 
+        // TODO Re-configure randomized power rate
         if (calculateDistanceDifference < 0)
         {
             Debug.Log("You are falling behind!");
-            RandomizedResultingPowerUp(25, 60, 95);
+            RandomizedResultingPowerUp(1, 2, 99);        // TEST PWR UP : Place testing PU in (> second max)
+            //RandomizedResultingPowerUp(25, 60, 95);
         }
         else if (calculateDistanceDifference > 0)
         {
             Debug.Log("You are leading!");
-            RandomizedResultingPowerUp(5, 25, 45);
+            RandomizedResultingPowerUp(1, 2, 3);        // TEST PWR UP : Place shield (> third max) for test negation
+            //RandomizedResultingPowerUp(5, 25, 45);
         }
         else
         {
@@ -137,7 +145,8 @@ public class PowerUpScript : NetworkBehaviour {
         }
         else if (powerUpRNG > secondMax && powerUpRNG <= thirdMax)
         {
-            currentPowerUp = PowerUps.weaken;
+            currentPowerUp = PowerUps.slippery;
+            //currentPowerUp = PowerUps.weaken;
         }
         else if (powerUpRNG > thirdMax)
         {
@@ -158,12 +167,20 @@ public class PowerUpScript : NetworkBehaviour {
                 CmdConfuseOpponentPlayer(opponentObject, confuseDuration);
                 SendCasterResultText(currentPowerUp, opponentObject);
                 break;
-            case PowerUps.shield:
-                CmdShieldCurrentPlayer(playerObject, shieldDuration);
-                break;
             case PowerUps.weaken:
                 CmdWeakenOpponentPlayer(opponentObject, weakenDuration);
                 SendCasterResultText(currentPowerUp, opponentObject);
+                break;
+            case PowerUps.blind:
+                CmdBlindOpponentPlayer(opponentObject, blindDuration);
+                SendCasterResultText(currentPowerUp, opponentObject);
+                break;
+            case PowerUps.slippery:
+                CmdSlipperyOpponentPlayer(opponentObject, slipperyDuration);
+                SendCasterResultText(currentPowerUp, opponentObject);
+                break;
+            case PowerUps.shield:
+                CmdShieldCurrentPlayer(playerObject, shieldDuration);
                 break;
             default:
                 Debug.LogError("No Execution for this Power Up!");
@@ -194,6 +211,11 @@ public class PowerUpScript : NetworkBehaviour {
     {
         return weakenJumpSpeedReductionMultiplier;
     }
+
+    public float GetSlipperyMultiplier()
+    {
+        return slipperyMultiplier;
+    }
     #endregion
 
 
@@ -221,6 +243,18 @@ public class PowerUpScript : NetworkBehaviour {
         RpcWeakenOpponentPlayer(player, duration);
     }
 
+    [Command]
+    void CmdBlindOpponentPlayer(GameObject player, float duration)
+    {
+        RpcBlindOpponentPlayer(player, duration);
+    }
+
+    [Command]
+    void CmdSlipperyOpponentPlayer(GameObject player, float duration)
+    {
+        RpcSlipperyOpponentPlayer(player, duration);
+    }
+
 
     [ClientRpc]
     void RpcFreezeOpponentPlayer(GameObject player, float duration)
@@ -246,4 +280,15 @@ public class PowerUpScript : NetworkBehaviour {
         player.GetComponent<NetworkPlayer>().WeakenPlayer(duration);
     }
 
+    [ClientRpc]
+    void RpcBlindOpponentPlayer(GameObject player, float duration)
+    {
+        player.GetComponent<NetworkPlayer>().BlindPlayer(duration);
+    }
+
+    [ClientRpc]
+    void RpcSlipperyOpponentPlayer(GameObject player, float duration)
+    {
+        player.GetComponent<NetworkPlayer>().SlipperyPlayer(duration);
+    }
 }

@@ -176,7 +176,7 @@ public class NetworkGeneratorScript : NetworkBehaviour {
         float randomRNG = Random.Range(0.0f , 1.0f);
 
         CalculateSpawnPowerUpProbability();
-        Debug.Log("Randomed Value: " + randomRNG + " . PowerUpProbability: " + probabilityToSpawnPowerUp);
+        //Debug.Log("Randomed Value: " + randomRNG + " . PowerUpProbability: " + probabilityToSpawnPowerUp);
 
         if (randomRNG <= probabilityToSpawnPowerUp)
         {
@@ -188,7 +188,7 @@ public class NetworkGeneratorScript : NetworkBehaviour {
             CmdSpawnPowerUpObject(powerUpInstance);
             powerUpAppearedCount++;
             numberOfPowerUpMissedSpawn = 1;         // RESET
-            Debug.Log("We are at height: " + transform.position.y + " with count " + powerUpAppearedCount);
+            //Debug.Log("We are at height: " + transform.position.y + " with count " + powerUpAppearedCount);
         }
         else
         {
