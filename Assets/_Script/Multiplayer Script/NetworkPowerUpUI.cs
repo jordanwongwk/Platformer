@@ -205,11 +205,6 @@ public class NetworkPowerUpUI : MonoBehaviour {
                 powerUpText.text = "You felt dizzy. \nYou can move on but you lost your sense of direction!";
                 powerUpAudioSource.PlayOneShot(powerUpConfused);
                 break;
-            case PowerUps.shield:
-                powerUpText.text = "You've obtained the Guardian's blessing, granting you a shield that blocks any tricks your opponent try on you momentarily.";
-                // TODO do you want a special shield SFX?
-                powerUpAudioSource.PlayOneShot(powerUpUsedSuccessfully);
-                break;
             case PowerUps.weaken:
                 powerUpText.text = "You suddenly grow tired. \nYour movement capability has reduced.";
                 powerUpAudioSource.PlayOneShot(powerUpWeaken);
@@ -256,6 +251,9 @@ public class NetworkPowerUpUI : MonoBehaviour {
                 break;
             case PowerUps.slippery:
                 powerUpText.text = "You used the power of ice! \nYour opponent's feet are imbue with ice, making them slippery!";
+                break;
+            case PowerUps.shield:
+                powerUpText.text = "You've obtained the Guardian's blessing, granting you a shield that blocks any tricks your opponent try on you momentarily.";
                 break;
             default:
                 powerUpText.text = "This Power Up does not require shield check!";

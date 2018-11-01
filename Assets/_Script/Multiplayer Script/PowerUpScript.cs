@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public enum PowerUps { freeze, confuse, shield, weaken, blind, slippery };
+public enum PowerUps { freeze, confuse, shield, weaken, blind, slippery, orbitalBeam };
 
 public class PowerUpScript : NetworkBehaviour {
 
@@ -17,6 +17,8 @@ public class PowerUpScript : NetworkBehaviour {
 
     [Header("Buff Duration")]
     [SerializeField] float shieldDuration = 5.0f;
+    [Tooltip("Include channeling time for Orbital Beam")]
+    [SerializeField] float orbitalBeamDuration = 15.0f;
 
     [Header("Buff / Debuff Parameters")]
     [SerializeField] float weakenWalkSpeedReductionMultiplier = 2.0f;
@@ -181,6 +183,12 @@ public class PowerUpScript : NetworkBehaviour {
                 break;
             case PowerUps.shield:
                 CmdShieldCurrentPlayer(playerObject, shieldDuration);
+                SendCasterResultText(currentPowerUp, playerObject);
+                break;
+            case PowerUps.orbitalBeam:
+                //CmdOrbitalBeamCurrentPlayer(playerObject, orbitalBeamDuration);
+                //SendCasterResultText(currentPowerUp, playerObject);
+                //CmdOrbitalBeamOpponentPlayer(opponentPlayer);         // Notify and Play Sound
                 break;
             default:
                 Debug.LogError("No Execution for this Power Up!");
@@ -190,6 +198,13 @@ public class PowerUpScript : NetworkBehaviour {
 
     void SendCasterResultText(PowerUps usedPowerUp, GameObject target)
     {
+        // If this is a buff
+        if (target == playerObject)
+        {
+            thisPlayerPowerUpUI.UserPowerUpSuccessfulInflictionText(usedPowerUp);
+            return;
+        }
+
         // If opponent is NOT shielded
         if (target.GetComponent<NetworkPlayer>().GetPlayerIsShielded() == false)
         {

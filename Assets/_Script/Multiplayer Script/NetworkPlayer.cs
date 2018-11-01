@@ -49,7 +49,8 @@ public class NetworkPlayer : NetworkBehaviour {
     int slipperyPreventionWallMask;         // Mask for Slippery Power Up (Prevent slipping over wall / ladder)
     float initialWalkSpeed;
     float initialJumpSpeed;
-    public float slidingDistX;             // For Slippery
+    float slidingDistX;                     // For Slippery : The destination on which player should slide to
+    float lastPlatformXPos = 0f;            // For Slippery : On Platform, to get its moving direction
 
     NetworkPowerUpUI myPowerUpUI;
     PowerUpScript myPowerUpScript;
@@ -68,9 +69,6 @@ public class NetworkPlayer : NetworkBehaviour {
     Coroutine weakenCoroutine;
     Coroutine blindedCoroutine;
     Coroutine slipperyCoroutine;
-
-    //TEST
-    public GameObject testTrack;
 
     // Constants
     const float DEATH_DELAY = 3.0f;
@@ -224,8 +222,8 @@ public class NetworkPlayer : NetworkBehaviour {
             Walking();
             Jumping();
             Climbing();
-            CheckForPlayerDeath();
             Sliding();
+            CheckForPlayerDeath();
         }
 	}
 
@@ -250,7 +248,7 @@ public class NetworkPlayer : NetworkBehaviour {
         else
         {
             myAnimator.SetBool("isWalking", false);
-            float direction = Mathf.Sign(horizontalMove);         
+            float direction = Mathf.Sign(horizontalMove); 
             CmdUpdateWalkAnimation(false, direction);
         }
     }
@@ -260,6 +258,7 @@ public class NetworkPlayer : NetworkBehaviour {
         if (!isConfused) { horizontalMove = CrossPlatformInputManager.GetAxis("Horizontal"); }
         else if (isConfused) { horizontalMove = -CrossPlatformInputManager.GetAxis("Horizontal"); }
     }
+
 
     void Jumping()
     {
@@ -274,6 +273,7 @@ public class NetworkPlayer : NetworkBehaviour {
             CmdJumpAnimationTrigger();
         }
     }
+
 
     void Climbing()
     {
@@ -307,19 +307,19 @@ public class NetworkPlayer : NetworkBehaviour {
         else if (isConfused) { verticalMove = -CrossPlatformInputManager.GetAxis("Vertical"); }
     }
 
+
     void Sliding()
     {
         if (isSlippery)
         {
             float slipperyMultiplier = myPowerUpScript.GetSlipperyMultiplier();
 
-            // Raycast check to see if player has collided with wall / ladder
+            // Raycast check to see if player has collided with wall / ladder from both front and back
             float raycastLength = 0.35f;
-            float rayDirection = Mathf.Sign(slidingDistX - transform.position.x);
-            Vector2 raycastDirection = new Vector2(rayDirection, 0f);
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, raycastDirection, raycastLength, slipperyPreventionWallMask);
+            RaycastHit2D hitRight = Physics2D.Raycast(transform.position, transform.right, raycastLength, slipperyPreventionWallMask);
+            RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, (-1f * transform.right) , raycastLength, slipperyPreventionWallMask);
 
-            if (hit.collider != null)
+            if (hitRight.collider != null || hitLeft.collider != null)
             {
                 slidingDistX = transform.position.x;
             }
@@ -343,7 +343,6 @@ public class NetworkPlayer : NetworkBehaviour {
                     transform.position = slidingVector;
                 }
             }
-            testTrack.transform.position = new Vector3(slidingDistX, transform.position.y, transform.position.z);
         }
         else
         {
@@ -355,8 +354,6 @@ public class NetworkPlayer : NetworkBehaviour {
     {
         slidingDistX = transform.position.x;
     }
-
-
     #endregion
 
     #region Death Check
@@ -448,13 +445,38 @@ public class NetworkPlayer : NetworkBehaviour {
         if (collision.gameObject.tag == "Platform")
         {
             transform.parent = collision.transform;
-            SetSlidingDistanceXToInitial();
+
+            if (isSlippery)
+            {
+                // Slippery movement caused by inertia from moving platforms
+                ProcessSlipperyOnPlatform(collision);
+            }
         } 
+    }
+
+    private void ProcessSlipperyOnPlatform(Collision2D collision)
+    {
+        if (lastPlatformXPos != 0f)
+        {
+            // A quick calculation to determine platform moving direction by deducting its last position
+            float distanceDiff = collision.gameObject.transform.position.x - lastPlatformXPos;
+
+            // If platform is indeed moving and not standing still (distanceDiff == 0f)
+            if (distanceDiff != 0f)
+            {
+                float direction = Mathf.Sign(distanceDiff);
+                slidingDistX += (Time.deltaTime * 0.75f * walkSpeed * direction);
+            }
+        }
+
+        // Get the position of the platform to be used on next frame
+        lastPlatformXPos = collision.gameObject.transform.position.x;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         transform.parent = null;
+        lastPlatformXPos = 0f;      // Reset the last platform X position so that it is ready to re-register upon exiting the platform
     }
     // End attaching to moving platform
 
@@ -567,7 +589,6 @@ public class NetworkPlayer : NetworkBehaviour {
         else if (hasAuthority)
         {
             myPowerUpUI.TurnOnIndicationAndDurationImage(3, duration);
-            myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText(PowerUps.shield);
         }
 
         if (!isShielded)
@@ -772,6 +793,22 @@ public class NetworkPlayer : NetworkBehaviour {
         CmdCallSlipperyEffect(isSlippery);
     }
     // 6 END - Slippery
+
+
+    // 7 - Orbital Beam
+    // If player is caster / user
+    public void OrbitalBeamPlayer(float duration)
+    {
+
+    }
+
+    // If player is victim
+    public void OrbitalBeamWarning()
+    {
+        //myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText
+    }
+
+    // 7 END - Orbital Beam
     #endregion
 
     #region Command
