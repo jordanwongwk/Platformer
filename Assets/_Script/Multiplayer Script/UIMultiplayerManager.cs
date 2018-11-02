@@ -6,9 +6,12 @@ using UnityEngine.UI;
 public class UIMultiplayerManager : MonoBehaviour {
 
     [SerializeField] GameObject multiplayerRoomPanel;
-    [SerializeField] GameObject tutorialPanel;
+    [SerializeField] GameObject tutorialListPanel;
+    [SerializeField] GameObject networkTutorialPanel;
+    [SerializeField] GameObject gameTutorialPanel;
     [SerializeField] Button joinRoomButton;
 
+    List<GameObject> ActiveTutorialPanels = new List<GameObject>();
     bool isPlayerBusyInRoom = false;
 
     public void OpenMultiplayerRoomPanel(bool status)
@@ -29,14 +32,31 @@ public class UIMultiplayerManager : MonoBehaviour {
         joinRoomButton.interactable = true;
     }
 
-    public void OnClickShowTutorial()
+    public void OnClickShowTutorialList()
     {
-        tutorialPanel.SetActive(true);
+        tutorialListPanel.SetActive(true);
+        ActiveTutorialPanels.Add(tutorialListPanel);
     }
 
-    public void OnClickHideTutorial()
+    public void OnClickShowNetworkTutorial()
     {
-        tutorialPanel.SetActive(false);
+        networkTutorialPanel.SetActive(true);
+        ActiveTutorialPanels.Add(networkTutorialPanel);
+    }
+
+    public void OnClickShowGameTutorial()
+    {
+        gameTutorialPanel.SetActive(true);
+        ActiveTutorialPanels.Add(gameTutorialPanel);
+    }
+
+    public void OnClickCloseTutorial()
+    {
+        int currentlyActiveTutorialInt = ActiveTutorialPanels.Count - 1;
+        GameObject currentlyActiveTutorial = ActiveTutorialPanels[currentlyActiveTutorialInt];
+
+        currentlyActiveTutorial.SetActive(false);
+        ActiveTutorialPanels.Remove(currentlyActiveTutorial);
     }
 
     public void OnClickBackToMainMenu()

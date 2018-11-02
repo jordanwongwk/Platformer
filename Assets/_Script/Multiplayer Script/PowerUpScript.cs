@@ -17,8 +17,7 @@ public class PowerUpScript : NetworkBehaviour {
 
     [Header("Buff Duration")]
     [SerializeField] float shieldDuration = 5.0f;
-    [Tooltip("Include channeling time for Orbital Beam")]
-    [SerializeField] float orbitalBeamDuration = 15.0f;
+    [SerializeField] float orbitalBeamDuration = 10.0f;
 
     [Header("Buff / Debuff Parameters")]
     [SerializeField] float weakenWalkSpeedReductionMultiplier = 2.0f;
@@ -147,7 +146,7 @@ public class PowerUpScript : NetworkBehaviour {
         }
         else if (powerUpRNG > secondMax && powerUpRNG <= thirdMax)
         {
-            currentPowerUp = PowerUps.slippery;
+            currentPowerUp = PowerUps.orbitalBeam;
             //currentPowerUp = PowerUps.weaken;
         }
         else if (powerUpRNG > thirdMax)
@@ -186,9 +185,9 @@ public class PowerUpScript : NetworkBehaviour {
                 SendCasterResultText(currentPowerUp, playerObject);
                 break;
             case PowerUps.orbitalBeam:
-                //CmdOrbitalBeamCurrentPlayer(playerObject, orbitalBeamDuration);
-                //SendCasterResultText(currentPowerUp, playerObject);
-                //CmdOrbitalBeamOpponentPlayer(opponentPlayer);         // Notify and Play Sound
+                CmdOrbitalBeamCurrentPlayer(playerObject, orbitalBeamDuration);
+                SendCasterResultText(currentPowerUp, playerObject);
+                CmdOrbitalBeamOpponentPlayer(opponentObject);         // Notify and Play Sound
                 break;
             default:
                 Debug.LogError("No Execution for this Power Up!");
@@ -270,6 +269,18 @@ public class PowerUpScript : NetworkBehaviour {
         RpcSlipperyOpponentPlayer(player, duration);
     }
 
+    [Command]
+    void CmdOrbitalBeamCurrentPlayer(GameObject player, float duration)
+    {
+        RpcOrbitalBeamCurrentPlayer(player, duration);
+    }
+
+    [Command]
+    void CmdOrbitalBeamOpponentPlayer(GameObject player)
+    {
+        RpcOrbitalBeamOpponentPlayer(player);
+    }
+
 
     [ClientRpc]
     void RpcFreezeOpponentPlayer(GameObject player, float duration)
@@ -305,5 +316,17 @@ public class PowerUpScript : NetworkBehaviour {
     void RpcSlipperyOpponentPlayer(GameObject player, float duration)
     {
         player.GetComponent<NetworkPlayer>().SlipperyPlayer(duration);
+    }
+
+    [ClientRpc]
+    void RpcOrbitalBeamCurrentPlayer(GameObject player, float duration)
+    {
+        player.GetComponent<NetworkPlayer>().OrbitalBeamPlayer(duration);
+    }
+
+    [ClientRpc]
+    void RpcOrbitalBeamOpponentPlayer(GameObject player)
+    {
+        player.GetComponent<NetworkPlayer>().OrbitalBeamWarning();
     }
 }

@@ -21,6 +21,8 @@ public class NetworkPlayer : NetworkBehaviour {
     [SerializeField] GameObject weakenEffect;
     [SerializeField] GameObject blindEffect;
     [SerializeField] GameObject slipperyEffect;
+    [SerializeField] GameObject orbitalBeamChargingEffect;
+    [SerializeField] GameObject orbitalBeamFiringEffect;
 
     [Header("Opponent Config")]
     [SerializeField] float opponentVisibility = 0.5f;
@@ -52,6 +54,7 @@ public class NetworkPlayer : NetworkBehaviour {
     float slidingDistX;                     // For Slippery : The destination on which player should slide to
     float lastPlatformXPos = 0f;            // For Slippery : On Platform, to get its moving direction
 
+    GameObject opponentPlayer;
     NetworkPowerUpUI myPowerUpUI;
     PowerUpScript myPowerUpScript;
     [SyncVar] Color indicatorColor;
@@ -61,7 +64,8 @@ public class NetworkPlayer : NetworkBehaviour {
     [SyncVar] bool isShielded = false;
     [SyncVar] bool isWeaken = false;
     [SyncVar] bool isBlinded = false;
-    [SyncVar] public bool isSlippery = false;
+    [SyncVar] bool isSlippery = false;
+    [SyncVar] bool isFiringOrbitalBeam = false;
 
     Coroutine frozenCoroutine;
     Coroutine confusedCoroutine;
@@ -69,6 +73,7 @@ public class NetworkPlayer : NetworkBehaviour {
     Coroutine weakenCoroutine;
     Coroutine blindedCoroutine;
     Coroutine slipperyCoroutine;
+    Coroutine orbitalBeamCoroutine;
 
     // Constants
     const float DEATH_DELAY = 3.0f;
@@ -112,9 +117,34 @@ public class NetworkPlayer : NetworkBehaviour {
             return;
         }
 
+        SearchForOpponentPlayer();
         CmdSetPlayerColor();
         myAudioSource.volume = GameManager.GetSoundVolume();
+        orbitalBeamFiringEffect.GetComponent<AudioSource>().volume = (GameManager.GetSoundVolume()) * 0.5f;
 	}
+
+    void SearchForOpponentPlayer()
+    {
+        var playersInGame = FindObjectsOfType<NetworkPlayer>();
+        foreach (NetworkPlayer currentPlayer in playersInGame)
+        {
+            if (currentPlayer != this)
+            {
+                opponentPlayer = currentPlayer.gameObject;
+            }
+        }
+
+        if (opponentPlayer == null)
+        {
+            StartCoroutine(SearchForOpponentPlayerAgain());
+        }
+    }
+
+    IEnumerator SearchForOpponentPlayerAgain()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+        SearchForOpponentPlayer();
+    }
 
     // Keep looping this method until SyncVar is ready then proceed to set color
     private void SettingUpPlayerIndicator()
@@ -799,13 +829,77 @@ public class NetworkPlayer : NetworkBehaviour {
     // If player is caster / user
     public void OrbitalBeamPlayer(float duration)
     {
+        if (!hasAuthority)
+        {
+            return;
+        }
 
+        if (!isFiringOrbitalBeam)
+        {
+            isFiringOrbitalBeam = true;
+            orbitalBeamChargingEffect.SetActive(isFiringOrbitalBeam);
+            // TODO want play charging sound?
+            CmdCallOrbitalBeamChargingEffect(isFiringOrbitalBeam);
+            StartCoroutine(ChargingUpBeam(duration));       
+        }
+        else
+        {
+            Debug.Log("Cannot dupe");
+            myPowerUpUI.UserPowerUpThatCannotBeCastWhileActive(PowerUps.orbitalBeam);
+        }
+    }
+
+    IEnumerator ChargingUpBeam(float duration)
+    {
+        yield return new WaitForSecondsRealtime(5.0f);
+        myPowerUpUI.TurnOnIndicationAndDurationImage(7, duration);
+        orbitalBeamFiringEffect.SetActive(isFiringOrbitalBeam);
+        CmdCallOrbitalBeamFiringEffect(isFiringOrbitalBeam);
+        StartCoroutine(FiringUpBeam(duration));
+    }
+
+    IEnumerator FiringUpBeam(float duration)
+    {
+        yield return new WaitForSecondsRealtime(duration);
+        EndsOrbitalBeamEffect();
+    }
+
+    void EndsOrbitalBeamEffect()
+    {
+        orbitalBeamFiringEffect.SetActive(false);
+        CmdCallOrbitalBeamFiringEffect(false);
+
+        orbitalBeamChargingEffect.SetActive(false);
+        CmdCallOrbitalBeamChargingEffect(false);
+
+        StartCoroutine(CooldownAfterEffectEnds());
+    }
+
+    IEnumerator CooldownAfterEffectEnds()
+    {
+        yield return new WaitForEndOfFrame();
+        isFiringOrbitalBeam = false;
+    }
+
+    public bool GetOrbitalBeamStatus()
+    {
+        return isFiringOrbitalBeam;
     }
 
     // If player is victim
     public void OrbitalBeamWarning()
     {
-        //myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText
+        if (hasAuthority)
+        {
+            if (opponentPlayer.GetComponent<NetworkPlayer>().GetOrbitalBeamStatus() == false)
+            {
+                myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText(PowerUps.orbitalBeam);
+            }
+            else
+            {
+                Debug.Log("Meh, dont have la");
+            }
+        }
     }
 
     // 7 END - Orbital Beam
@@ -853,6 +947,18 @@ public class NetworkPlayer : NetworkBehaviour {
     void CmdCallSlipperyEffect(bool effectBool)
     {
         RpcCallSlipperyEffect(effectBool);
+    }
+
+    [Command]
+    void CmdCallOrbitalBeamChargingEffect(bool effectBool)
+    {
+        RpcCallOrbitalBeamChargingEffect(effectBool);
+    }
+
+    [Command]
+    void CmdCallOrbitalBeamFiringEffect(bool effectBool)
+    {
+        RpcCallOrbitalBeamFiringEffect(effectBool);
     }
 
 
@@ -903,6 +1009,18 @@ public class NetworkPlayer : NetworkBehaviour {
     {
         slipperyEffect.SetActive(effectBool);
         // TODO Forgot something here...
+    }
+
+    [ClientRpc]
+    void RpcCallOrbitalBeamChargingEffect(bool effectBool)
+    {
+        orbitalBeamChargingEffect.SetActive(effectBool);
+    }
+
+    [ClientRpc]
+    void RpcCallOrbitalBeamFiringEffect(bool effectBool)
+    {
+        orbitalBeamFiringEffect.SetActive(effectBool);
     }
 
 

@@ -12,6 +12,7 @@ public class NetworkPowerUpUI : MonoBehaviour {
     [SerializeField] List<Sprite> powerUpImages;
     [SerializeField] Image powerUpImageUI;
     [SerializeField] GameObject powerUpButtonUI;
+    [SerializeField] GameObject powerUpReadyIndicator;
 
     [Header("Power Up Indication UI Setup")]
     [SerializeField] GameObject powerUpTextBox;
@@ -27,6 +28,7 @@ public class NetworkPowerUpUI : MonoBehaviour {
     [SerializeField] AudioClip powerUpWeaken;
     [SerializeField] AudioClip powerUpBlind;
     [SerializeField] AudioClip powerUpSlippery;
+    [SerializeField] AudioClip powerUpOrbitalBeamDanger;
 
     List<int> numberOfSimilarPowerActive = new List<int>();
     int thisPlayerID;
@@ -48,6 +50,7 @@ public class NetworkPowerUpUI : MonoBehaviour {
     const int WEAKEN_NUMBER = 4;
     const int BLIND_NUMBER = 5;
     const int SLIPPERY_NUMBER = 6;
+    const int ORBITAL_BEAM_NUMBER = 7;
 
     #region initialization
     // Use this for initialization
@@ -109,6 +112,7 @@ public class NetworkPowerUpUI : MonoBehaviour {
     public void SetUpPowerUpImageAndReadiness(PowerUps powerUpGranted, bool ready)
     {
         powerUpAudioSource.PlayOneShot(powerUpPickedUp);
+        powerUpReadyIndicator.SetActive(true);
         powerUpButton.interactable = ready;
         currentPowerUp = powerUpGranted;
 
@@ -132,6 +136,9 @@ public class NetworkPowerUpUI : MonoBehaviour {
             case PowerUps.slippery:
                 powerUpImageUI.sprite = powerUpImages[SLIPPERY_NUMBER];
                 break;
+            case PowerUps.orbitalBeam:
+                powerUpImageUI.sprite = powerUpImages[ORBITAL_BEAM_NUMBER];
+                break;
             default:
                 powerUpImageUI.sprite = powerUpImages[NO_POWER_UP_NUMBER];
                 Debug.LogError("No Image for this Power Up!");
@@ -142,6 +149,7 @@ public class NetworkPowerUpUI : MonoBehaviour {
     public void OnClickUsePowerUp()
     {
         powerUpButton.interactable = false;
+        powerUpReadyIndicator.SetActive(false);
         powerUpImageUI.sprite = powerUpImages[NO_POWER_UP_NUMBER];
         thisPlayerPowerUpScript.ExecutePower(currentPowerUp);
     }
@@ -217,6 +225,10 @@ public class NetworkPowerUpUI : MonoBehaviour {
                 powerUpText.text = "The floor seems slippery, it seems your feet is imbue with ice. \nBe careful as you walk!";
                 powerUpAudioSource.PlayOneShot(powerUpSlippery);
                 break;
+            case PowerUps.orbitalBeam:
+                powerUpText.text = "You sense the presence of high energy charging. \nAvoid the red laser NOW!";
+                powerUpAudioSource.PlayOneShot(powerUpOrbitalBeamDanger);
+                break;
             default:
                 powerUpText.text = "Error: This power up does not have any text.";
                 break;
@@ -255,6 +267,9 @@ public class NetworkPowerUpUI : MonoBehaviour {
             case PowerUps.shield:
                 powerUpText.text = "You've obtained the Guardian's blessing, granting you a shield that blocks any tricks your opponent try on you momentarily.";
                 break;
+            case PowerUps.orbitalBeam:
+                powerUpText.text = "Orbital Beam is charging up. \nBeam is firing in 3 seconds.";
+                break;
             default:
                 powerUpText.text = "This Power Up does not require shield check!";
                 break;
@@ -266,6 +281,14 @@ public class NetworkPowerUpUI : MonoBehaviour {
         ManagingPowerUpTextBox();
         powerUpAudioSource.PlayOneShot(powerUpNegated);
         powerUpText.text = "Your power has been absorbed by your opponent's shield. \nThe effect is negated!";
+    }
+
+    public void UserPowerUpThatCannotBeCastWhileActive(PowerUps blockedPowerUp)
+    {
+        ManagingPowerUpTextBox();
+        powerUpAudioSource.PlayOneShot(powerUpNegated); // TODO cancel sound?
+        powerUpText.text = "This power-up cannot be casted while it is active! Try again when it expires.";
+        SetUpPowerUpImageAndReadiness(blockedPowerUp, true);
     }
 
 
