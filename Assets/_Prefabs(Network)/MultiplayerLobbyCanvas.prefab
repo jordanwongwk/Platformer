@@ -3542,7 +3542,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: close tutorial
+  m_Text: Back
 --- !u!114 &114152086406401554
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5537,8 +5537,8 @@ MonoBehaviour:
     (Wifi or mobile hotspot)</color>\n\n2. You can use mobile data, activate \"Hotspot\",
     and allow the other player to connect your hotspot in case there are no wifi available
     at the moment. \n<color=red>(Do take note that the consumption of data is strictly
-    to your own responsibility!) </color> <color=blue>\nmake sure the other player
-    close any options that update / download apps on wifi connection!</color>"
+    to your own responsibility!) \n</color> <color=blue>Warning:     make sure the
+    other player close any options that update / download apps on wifi connection!</color>"
 --- !u!114 &114558769104747476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5947,11 +5947,15 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "2. Helpful power-up <color=red> (Target: Self) </color>\n    (I) Shield:
-    Protect you from <color=red> your opponent's trickery power-up* </color>\n\n*
-    It does <color=red>not </color> protect you from <color=red>terrain's hazard</color>!\n**
-    It can only <color=red>withstand one trickery power-up</color> . It will disappeared
-    when one harmful power up is negated."
+  m_Text: '2. Helpful power-up <color=red> (Target: Self) </color>
+
+    (I) Shield: Protect you from <color=red> your opponent''s trickery power-up* </color>
+
+
+    * It does <color=red>not </color> protect you from <color=red>terrain''s hazard</color>!
+
+    ** It can only <color=red>withstand one trickery power-up</color> . It will disappeared
+    when one harmful power up is negated.'
 --- !u!114 &114705503041096242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6612,7 +6616,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: close tutorial
+  m_Text: Back
 --- !u!114 &114799165882169400
 MonoBehaviour:
   m_ObjectHideFlags: 1

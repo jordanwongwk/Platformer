@@ -29,7 +29,6 @@ public class PowerUpScript : NetworkBehaviour {
     GameObject opponentObject;
     NetworkPowerUpUI thisPlayerPowerUpUI;
 
-
     #region Initialization
     // Use this for initialization
     void Start()
@@ -110,51 +109,146 @@ public class PowerUpScript : NetworkBehaviour {
     {
         float calculateDistanceDifference = playerObject.transform.position.y - opponentObject.transform.position.y;
 
-        // TODO Re-configure randomized power rate
-        if (calculateDistanceDifference < 0)
+        if (calculateDistanceDifference > 100f)
         {
-            Debug.Log("You are falling behind!");
-            RandomizedResultingPowerUp(1, 2, 99);        // TEST PWR UP : Place testing PU in (> second max)
-            //RandomizedResultingPowerUp(25, 60, 95);
+            Debug.Log("You are way ahead.");
+            // Common trickery: 10%; Shield: 90%
+            LeadingAndWayLeadingPowerUpRNG(2.5f, 5.0f, 7.5f, 10.0f, 100f);
         }
-        else if (calculateDistanceDifference > 0)
+        else if (calculateDistanceDifference > 50f && calculateDistanceDifference <= 100f)
         {
-            Debug.Log("You are leading!");
-            RandomizedResultingPowerUp(1, 2, 3);        // TEST PWR UP : Place shield (> third max) for test negation
-            //RandomizedResultingPowerUp(5, 25, 45);
+            Debug.Log("You are leading.");
+            // Common trickery: 50%; Shield: 50%
+            LeadingAndWayLeadingPowerUpRNG(12.5f, 25.0f, 37.5f, 50.0f, 100f);
+        }
+        else if (calculateDistanceDifference > -50f && calculateDistanceDifference <= 50f)
+        {
+            Debug.Log("Deadlock state");
+            // Freeze: 5%; Common trickery + Shield: 95%
+            DeadlockAndFallingBehindPowerUpRNG(5.0f, 24.0f, 43.0f, 62.0f, 81.0f, 100f);
+        }
+        else if (calculateDistanceDifference > -100f && calculateDistanceDifference <= -50f)
+        {
+            Debug.Log("You are falling behind");
+            // Freeze: 45%; Common Trickery: 50%; Shield: 5%
+            DeadlockAndFallingBehindPowerUpRNG(45.0f, 57.5f, 70.0f, 82.5f, 95.0f, 100f);
+        }
+        else if (calculateDistanceDifference <= -100f)
+        {
+            Debug.Log("You are falling way behind.");
+            FallingWayBehindPowerUpRNG(70.0f, 80.0f, 85.0f, 90.0f, 95.0f, 100.0f, calculateDistanceDifference);
         }
         else
         {
-            RandomizedResultingPowerUp(25, 50, 75);
+            Debug.Log("Not registered distance");
         }
 
         thisPlayerPowerUpUI.SetUpPowerUpImageAndReadiness(currentPowerUp, true);
     }
 
-    void RandomizedResultingPowerUp(int firstMax, int secondMax, int thirdMax)
+    void LeadingAndWayLeadingPowerUpRNG(float confuseRange, float weakenRange, float blindRange, 
+                                        float slipperyRange, float shieldRange)
     {
-        int powerUpRNG = Random.Range(1, 100);
-        Debug.Log("PowerUpRNG: " + powerUpRNG);
+        float powerUpRNG = Random.Range(1f, 100f);
+        Debug.Log("Leading PowerUpRNG: " + powerUpRNG);
 
-        if (powerUpRNG <= firstMax)
-        {
-            currentPowerUp = PowerUps.freeze;
-        }
-        else if (powerUpRNG > firstMax && powerUpRNG <= secondMax)
+        if (powerUpRNG <= confuseRange)
         {
             currentPowerUp = PowerUps.confuse;
         }
-        else if (powerUpRNG > secondMax && powerUpRNG <= thirdMax)
+        else if (powerUpRNG > confuseRange && powerUpRNG <= weakenRange)
         {
-            currentPowerUp = PowerUps.orbitalBeam;
-            //currentPowerUp = PowerUps.weaken;
+            currentPowerUp = PowerUps.weaken;
         }
-        else if (powerUpRNG > thirdMax)
+        else if (powerUpRNG > weakenRange && powerUpRNG <= blindRange)
+        {
+            currentPowerUp = PowerUps.blind;
+        }
+        else if (powerUpRNG > blindRange && powerUpRNG <= slipperyRange)
+        {
+            currentPowerUp = PowerUps.slippery;
+        }
+        else if (powerUpRNG > slipperyRange && powerUpRNG <= shieldRange)
         {
             currentPowerUp = PowerUps.shield;
         }
     }
 
+    void DeadlockAndFallingBehindPowerUpRNG(float freezeRange, float confuseRange, float weakenRange, 
+                                            float blindRange, float slipperyRange, float shieldRange)
+    {
+        float powerUpRNG = Random.Range(1f, 100f);
+        Debug.Log("Deadlock / falling behind PowerUpRNG: " + powerUpRNG);
+
+        if (powerUpRNG <= freezeRange)
+        {
+            currentPowerUp = PowerUps.freeze;
+        }
+        else if (powerUpRNG > freezeRange && powerUpRNG <= confuseRange)
+        {
+            currentPowerUp = PowerUps.confuse;
+        }
+        else if (powerUpRNG > confuseRange && powerUpRNG <= weakenRange)
+        {
+            currentPowerUp = PowerUps.weaken;
+        }
+        else if (powerUpRNG > weakenRange && powerUpRNG <= blindRange)
+        {
+            currentPowerUp = PowerUps.blind;
+        }
+        else if (powerUpRNG > blindRange && powerUpRNG <= slipperyRange)
+        {
+            currentPowerUp = PowerUps.slippery;
+        }
+        else if (powerUpRNG > slipperyRange && powerUpRNG <= shieldRange)
+        {
+            currentPowerUp = PowerUps.shield;
+        }
+    }
+
+    void FallingWayBehindPowerUpRNG(float freezeRange, float oBeamRange, float confuseRange, 
+                                    float weakenRange, float blindRange, float slipperyRange, 
+                                    float differenceDist)
+    {
+        float powerUpRNG = Random.Range(1f, 100f);
+        Debug.Log("Falling Way Behind PowerUpRNG: " + powerUpRNG);
+        float absDifference = Mathf.Abs(differenceDist);
+
+        // Max Freeze Range reduction is to 30
+        if (absDifference <= 300f)
+        {
+            freezeRange -= (absDifference - 100f) * 0.2f;
+        }
+        else
+        {
+            freezeRange = 30.0f;
+        }
+
+        if (powerUpRNG <= freezeRange)
+        {
+            currentPowerUp = PowerUps.freeze;
+        }
+        else if (powerUpRNG > freezeRange && powerUpRNG <= oBeamRange)
+        {
+            currentPowerUp = PowerUps.orbitalBeam;
+        }
+        else if (powerUpRNG > oBeamRange && powerUpRNG <= confuseRange)
+        {
+            currentPowerUp = PowerUps.confuse;
+        }
+        else if (powerUpRNG > confuseRange && powerUpRNG <= weakenRange)
+        {
+            currentPowerUp = PowerUps.weaken;
+        }
+        else if (powerUpRNG > weakenRange && powerUpRNG <= blindRange)
+        {
+            currentPowerUp = PowerUps.blind;
+        }
+        else if (powerUpRNG > blindRange && powerUpRNG <= slipperyRange)
+        {
+            currentPowerUp = PowerUps.slippery;
+        }
+    }
 
     public void ExecutePower(PowerUps currentPowerUp)
     {
