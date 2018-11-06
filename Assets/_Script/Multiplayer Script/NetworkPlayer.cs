@@ -54,6 +54,7 @@ public class NetworkPlayer : NetworkBehaviour {
     float slidingDistX;                     // For Slippery : The destination on which player should slide to
     float lastPlatformXPos = 0f;            // For Slippery : On Platform, to get its moving direction
 
+    AudioSource oBeamChargingSoundSource;
     GameObject opponentPlayer;
     NetworkPowerUpUI myPowerUpUI;
     PowerUpScript myPowerUpScript;
@@ -111,6 +112,8 @@ public class NetworkPlayer : NetworkBehaviour {
         SettingUpPlayerIndicator();
         SettingLayerMaskForSliding();
 
+        orbitalBeamFiringEffect.GetComponent<AudioSource>().volume = (GameManager.GetSoundVolume()) * 0.25f;
+
         if (!hasAuthority)
         {
             myAudioSource.volume = 0f;
@@ -119,9 +122,12 @@ public class NetworkPlayer : NetworkBehaviour {
 
         SearchForOpponentPlayer();
         CmdSetPlayerColor();
+
+        oBeamChargingSoundSource = orbitalBeamChargingEffect.transform.Find("ChargingAudio").GetComponent<AudioSource>();
+
         myAudioSource.volume = GameManager.GetSoundVolume();
-        orbitalBeamFiringEffect.GetComponent<AudioSource>().volume = (GameManager.GetSoundVolume()) * 0.5f;
-	}
+        oBeamChargingSoundSource.volume = (GameManager.GetSoundVolume()) * 0.75f;
+    }
 
     void SearchForOpponentPlayer()
     {
@@ -180,7 +186,6 @@ public class NetworkPlayer : NetworkBehaviour {
         playerIndicator.GetComponent<SpriteRenderer>().color = playerColor;
     }
 
-    // TODO check if this set-up interrupt other set up
     // To set up certain layer objects prevent the momentum of slipping to maintain (Act as forced stop for slipping)
     void SettingLayerMaskForSliding()
     {
@@ -838,7 +843,7 @@ public class NetworkPlayer : NetworkBehaviour {
         {
             isFiringOrbitalBeam = true;
             orbitalBeamChargingEffect.SetActive(isFiringOrbitalBeam);
-            // TODO want play charging sound?
+            oBeamChargingSoundSource.Play();
             CmdCallOrbitalBeamChargingEffect(isFiringOrbitalBeam);
             StartCoroutine(ChargingUpBeam(duration));       
         }
@@ -901,8 +906,25 @@ public class NetworkPlayer : NetworkBehaviour {
             }
         }
     }
-
     // 7 END - Orbital Beam
+
+    // 8 - Teleportation
+
+    // Execute Power-up -> show effect, play sound, has nothing to do with other player so no notification there
+    // Cmd -> Cmd the particle effects when teleport
+
+    public void TeleportToLocation(Vector3 teleportPoint)
+    {
+        // Play a particle system upon arrival (maybe like a dust effect) 
+        // OR just play sound 
+        // OR just make initial effect disappear
+        // CMD off the effect
+        transform.position = teleportPoint;
+    }
+
+    //public void SetIsTeleport(bool status)
+
+    // 8 END - Teleportation
     #endregion
 
     #region Command
@@ -1008,7 +1030,6 @@ public class NetworkPlayer : NetworkBehaviour {
     void RpcCallSlipperyEffect(bool effectBool)
     {
         slipperyEffect.SetActive(effectBool);
-        // TODO Forgot something here...
     }
 
     [ClientRpc]

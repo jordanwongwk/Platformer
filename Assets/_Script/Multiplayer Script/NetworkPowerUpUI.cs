@@ -268,7 +268,7 @@ public class NetworkPowerUpUI : MonoBehaviour {
                 powerUpText.text = "You've obtained the Guardian's blessing, granting you a shield that blocks any tricks your opponent try on you momentarily.";
                 break;
             case PowerUps.orbitalBeam:
-                powerUpText.text = "Orbital Beam is charging up. \nBeam is firing in 3 seconds.";
+                powerUpText.text = "Orbital Beam is charging up. \nBeam is firing in 5 seconds.";
                 break;
             default:
                 powerUpText.text = "This Power Up does not require shield check!";
@@ -286,7 +286,7 @@ public class NetworkPowerUpUI : MonoBehaviour {
     public void UserPowerUpThatCannotBeCastWhileActive(PowerUps blockedPowerUp)
     {
         ManagingPowerUpTextBox();
-        powerUpAudioSource.PlayOneShot(powerUpNegated); // TODO cancel sound?
+        powerUpAudioSource.PlayOneShot(powerUpNegated);
         powerUpText.text = "This power-up cannot be casted while it is active! Try again when it expires.";
         SetUpPowerUpImageAndReadiness(blockedPowerUp, true);
     }

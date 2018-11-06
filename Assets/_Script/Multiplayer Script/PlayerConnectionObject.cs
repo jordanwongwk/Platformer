@@ -171,6 +171,9 @@ public class PlayerConnectionObject : NetworkBehaviour
     public void OnClickReturnToMainMenu()
     {
         Time.timeScale = 1.0f;
+
+        FindObjectOfType<AdScript>().showInterstitialAd();
+
         if (isServer) { NetworkManager.singleton.StopHost(); }
         else { NetworkManager.singleton.StopClient(); }
     }
