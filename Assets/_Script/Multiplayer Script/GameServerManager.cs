@@ -45,15 +45,27 @@ public class GameServerManager : NetworkBehaviour
         if (isServer && isLocalPlayer)
         {
             isThisTimeKeeper = true;
+            currentTime = timeLimit;
             distanceSliderScript = distanceSlider.GetComponent<MultiplayerDistanceSlider>();
         }
 
+        StartCoroutine(DelayOnSettingUpCanvas());
+    }
+
+    // Add a short delay before turning on canvas so that the SyncVar boolean has time to apply
+    IEnumerator DelayOnSettingUpCanvas()
+    {
+        yield return new WaitForSecondsRealtime(0.25f);
+        SetupGeneralCanvas();
+    }
+
+    private void SetupGeneralCanvas()
+    {
         // The "isThisTimeKeeper" boolean is a SyncVar, the server has made it TRUE. This means on the client side,
         // the similar object will have this boolean TRUE as well. Thus, the following method is run by the Player 1
         // Connection Object for both on server and on P2 client!
         if (isThisTimeKeeper)
         {
-            currentTime = timeLimit;
             generalCanvasObject.SetActive(true);
 
             myAudioSource = GetComponent<AudioSource>();

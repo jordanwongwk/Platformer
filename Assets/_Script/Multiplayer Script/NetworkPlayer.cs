@@ -7,6 +7,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class NetworkPlayer : NetworkBehaviour {
 
+    // Player Public Configuration Variables
     [Header ("Player Stat")]
     [SerializeField] float walkSpeed = 5.0f;
     [SerializeField] float jumpSpeed = 5.0f;
@@ -15,6 +16,10 @@ public class NetworkPlayer : NetworkBehaviour {
     [Header("Player Setup")]
     [SerializeField] AudioClip jumpSound;
     [SerializeField] AudioClip deathSound;
+    [SerializeField] GameObject teleportSpotCheckObject;        // Network
+
+    // Network Public Configuration Variables
+    [Header("Power Up Effects")]
     [SerializeField] GameObject playerIndicator;
     [SerializeField] GameObject confusionEffect;
     [SerializeField] GameObject shieldEffect;
@@ -23,11 +28,12 @@ public class NetworkPlayer : NetworkBehaviour {
     [SerializeField] GameObject slipperyEffect;
     [SerializeField] GameObject orbitalBeamChargingEffect;
     [SerializeField] GameObject orbitalBeamFiringEffect;
+    [SerializeField] GameObject teleportEffect;
 
     [Header("Opponent Config")]
     [SerializeField] float opponentVisibility = 0.5f;
 
-    // Player Configuration Variables
+    // Player Private Configuration Variables
     Rigidbody2D myRigidBody;
     BoxCollider2D myFeetCollider;
     CapsuleCollider2D myBodyCollider;
@@ -46,13 +52,14 @@ public class NetworkPlayer : NetworkBehaviour {
     bool isMortal = false;
     bool deathByDrowning;
 
-    // Network Configurations
+    // Network Private Configuration Variables
     int playerID;
     int slipperyPreventionWallMask;         // Mask for Slippery Power Up (Prevent slipping over wall / ladder)
     float initialWalkSpeed;
     float initialJumpSpeed;
     float slidingDistX;                     // For Slippery : The destination on which player should slide to
     float lastPlatformXPos = 0f;            // For Slippery : On Platform, to get its moving direction
+    bool isTeleporting = false;
 
     AudioSource oBeamChargingSoundSource;
     GameObject opponentPlayer;
@@ -79,6 +86,7 @@ public class NetworkPlayer : NetworkBehaviour {
     // Constants
     const float DEATH_DELAY = 3.0f;
     const int LIMITED_LIFE_AMOUNT = 5;
+
 
     #region Initialization
     private void Awake()
@@ -252,7 +260,7 @@ public class NetworkPlayer : NetworkBehaviour {
     {
         if (!hasAuthority) { return; }
 
-        if (isAlive && !isFrozen)
+        if (isAlive && !isFrozen && !isTeleporting)
         {
             Walking();
             Jumping();
@@ -850,7 +858,7 @@ public class NetworkPlayer : NetworkBehaviour {
         else
         {
             Debug.Log("Cannot dupe");
-            myPowerUpUI.UserPowerUpThatCannotBeCastWhileActive(PowerUps.orbitalBeam);
+            myPowerUpUI.UserPowerUpRefund(PowerUps.orbitalBeam);
         }
     }
 
@@ -900,30 +908,64 @@ public class NetworkPlayer : NetworkBehaviour {
             {
                 myPowerUpUI.TargetPowerUpSuccesfullyBeenInflictedText(PowerUps.orbitalBeam);
             }
-            else
-            {
-                Debug.Log("Meh, dont have la");
-            }
         }
     }
     // 7 END - Orbital Beam
 
     // 8 - Teleportation
+    public void TeleportPlayer()
+    {
+        if (!isTeleporting)
+        {
+            isTeleporting = true;
+            teleportEffect.SetActive(isTeleporting);
+            CmdCallTeleportEffect(isTeleporting);
 
-    // Execute Power-up -> show effect, play sound, has nothing to do with other player so no notification there
-    // Cmd -> Cmd the particle effects when teleport
+            if (hasAuthority)
+            {
+                teleportSpotCheckObject.SetActive(isTeleporting);
+                StartCoroutine(ShortDelayForTeleportScript());
+            }
+        }
+    }
+
+    IEnumerator ShortDelayForTeleportScript()
+    {
+        yield return new WaitForEndOfFrame();
+        teleportSpotCheckObject.GetComponent<TeleportScript>().StartFindingForTeleportLocation();
+    }
 
     public void TeleportToLocation(Vector3 teleportPoint)
     {
-        // Play a particle system upon arrival (maybe like a dust effect) 
-        // OR just play sound 
-        // OR just make initial effect disappear
-        // CMD off the effect
-        transform.position = teleportPoint;
+        if (hasAuthority)
+        {
+            transform.position = teleportPoint;
+        }
+        float triggerOutSFXLength = teleportSpotCheckObject.GetComponent<TeleportScript>().GetTeleportOutAudioLength();
+        StartCoroutine(DelayTeleportEffectClosure(triggerOutSFXLength));
     }
 
-    //public void SetIsTeleport(bool status)
+    // This delay is for the audio clip to play before disabling it
+    IEnumerator DelayTeleportEffectClosure(float audioSFXLength)
+    {
+        yield return new WaitForSecondsRealtime(audioSFXLength);
+        TurnOffTeleportEffect();
+    }
 
+    public void UnableToTeleportRefund()
+    {
+        if (hasAuthority) { myPowerUpUI.UserPowerUpRefund(PowerUps.teleport); }
+        TurnOffTeleportEffect();
+    }
+
+    void TurnOffTeleportEffect()
+    {
+        isTeleporting = false;
+        teleportEffect.SetActive(isTeleporting);
+        CmdCallTeleportEffect(isTeleporting);
+
+        if (hasAuthority) { teleportSpotCheckObject.SetActive(isTeleporting); }
+    }
     // 8 END - Teleportation
     #endregion
 
@@ -981,6 +1023,12 @@ public class NetworkPlayer : NetworkBehaviour {
     void CmdCallOrbitalBeamFiringEffect(bool effectBool)
     {
         RpcCallOrbitalBeamFiringEffect(effectBool);
+    }
+
+    [Command]
+    void CmdCallTeleportEffect(bool effectBool)
+    {
+        RpcCallTeleportEffect(effectBool);
     }
 
 
@@ -1042,6 +1090,12 @@ public class NetworkPlayer : NetworkBehaviour {
     void RpcCallOrbitalBeamFiringEffect(bool effectBool)
     {
         orbitalBeamFiringEffect.SetActive(effectBool);
+    }
+
+    [ClientRpc]
+    void RpcCallTeleportEffect(bool effectBool)
+    {
+        teleportEffect.SetActive(effectBool);
     }
 
 

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public enum PowerUps { freeze, confuse, shield, weaken, blind, slippery, orbitalBeam };
+public enum PowerUps { freeze, confuse, shield, weaken, blind, slippery, orbitalBeam, teleport };
 
 public class PowerUpScript : NetworkBehaviour {
 
@@ -102,9 +102,9 @@ public class PowerUpScript : NetworkBehaviour {
         yield return new WaitForSecondsRealtime(0.5f);
         SetupOpponentGameObject();
     }
-
     #endregion
 
+    #region randomizing power-ups
     public void RandomizedPower()
     {
         float calculateDistanceDifference = playerObject.transform.position.y - opponentObject.transform.position.y;
@@ -124,19 +124,20 @@ public class PowerUpScript : NetworkBehaviour {
         else if (calculateDistanceDifference > -50f && calculateDistanceDifference <= 50f)
         {
             Debug.Log("Deadlock state");
-            // Freeze: 5%; Common trickery + Shield: 95%
-            DeadlockAndFallingBehindPowerUpRNG(5.0f, 24.0f, 43.0f, 62.0f, 81.0f, 100f);
+            // Freeze: 5%; Common trickery + Shield: 90%, Teleport: 5%
+            DeadlockPowerUpRNG(5.0f, 23.0f, 41.0f, 59.0f, 77.0f, 95.0f, 100.0f);
         }
         else if (calculateDistanceDifference > -100f && calculateDistanceDifference <= -50f)
         {
             Debug.Log("You are falling behind");
-            // Freeze: 45%; Common Trickery: 50%; Shield: 5%
-            DeadlockAndFallingBehindPowerUpRNG(45.0f, 57.5f, 70.0f, 82.5f, 95.0f, 100f);
+            // Freeze: 35%; Common Trickery: 40%; Teleport: 25%
+            FallingBehindPowerUpRNG(35.0f, 45.0f, 55.0f, 65.0f, 75.0f, 100f);
         }
         else if (calculateDistanceDifference <= -100f)
         {
             Debug.Log("You are falling way behind.");
-            FallingWayBehindPowerUpRNG(70.0f, 80.0f, 85.0f, 90.0f, 95.0f, 100.0f, calculateDistanceDifference);
+            // Freeze: 60% (Or Less); OBeam: 10% (Or More); Teleport: 30%
+            FallingWayBehindPowerUpRNG(60.0f, 70.0f, 100.0f, calculateDistanceDifference);
         }
         else
         {
@@ -174,11 +175,12 @@ public class PowerUpScript : NetworkBehaviour {
         }
     }
 
-    void DeadlockAndFallingBehindPowerUpRNG(float freezeRange, float confuseRange, float weakenRange, 
-                                            float blindRange, float slipperyRange, float shieldRange)
+    void DeadlockPowerUpRNG(float freezeRange, float confuseRange, float weakenRange, 
+                            float blindRange, float slipperyRange, float shieldRange,
+                            float teleportRange)
     {
         float powerUpRNG = Random.Range(1f, 100f);
-        Debug.Log("Deadlock / falling behind PowerUpRNG: " + powerUpRNG);
+        Debug.Log("Deadlock PowerUpRNG: " + powerUpRNG);
 
         if (powerUpRNG <= freezeRange)
         {
@@ -204,35 +206,23 @@ public class PowerUpScript : NetworkBehaviour {
         {
             currentPowerUp = PowerUps.shield;
         }
+        else if (powerUpRNG > shieldRange && powerUpRNG <= teleportRange)
+        {
+            currentPowerUp = PowerUps.teleport;
+        }
     }
 
-    void FallingWayBehindPowerUpRNG(float freezeRange, float oBeamRange, float confuseRange, 
-                                    float weakenRange, float blindRange, float slipperyRange, 
-                                    float differenceDist)
+    void FallingBehindPowerUpRNG(float freezeRange, float confuseRange, float weakenRange,
+                                 float blindRange, float slipperyRange, float teleportRange)
     {
         float powerUpRNG = Random.Range(1f, 100f);
-        Debug.Log("Falling Way Behind PowerUpRNG: " + powerUpRNG);
-        float absDifference = Mathf.Abs(differenceDist);
-
-        // Max Freeze Range reduction is to 30
-        if (absDifference <= 300f)
-        {
-            freezeRange -= (absDifference - 100f) * 0.2f;
-        }
-        else
-        {
-            freezeRange = 30.0f;
-        }
+        Debug.Log("Falling behind PowerUpRNG: " + powerUpRNG);
 
         if (powerUpRNG <= freezeRange)
         {
             currentPowerUp = PowerUps.freeze;
         }
-        else if (powerUpRNG > freezeRange && powerUpRNG <= oBeamRange)
-        {
-            currentPowerUp = PowerUps.orbitalBeam;
-        }
-        else if (powerUpRNG > oBeamRange && powerUpRNG <= confuseRange)
+        else if (powerUpRNG > freezeRange && powerUpRNG <= confuseRange)
         {
             currentPowerUp = PowerUps.confuse;
         }
@@ -248,7 +238,43 @@ public class PowerUpScript : NetworkBehaviour {
         {
             currentPowerUp = PowerUps.slippery;
         }
+        else if (powerUpRNG > slipperyRange && powerUpRNG <= teleportRange)
+        {
+            currentPowerUp = PowerUps.teleport;
+        }
     }
+
+    void FallingWayBehindPowerUpRNG(float freezeRange, float oBeamRange, float teleportRange,
+                                    float differenceDist)
+    {
+        float powerUpRNG = Random.Range(1f, 100f);
+        Debug.Log("Falling Way Behind PowerUpRNG: " + powerUpRNG);
+        float absDifference = Mathf.Abs(differenceDist);
+
+        // Max Freeze Range reduction is to 30
+        if (absDifference <= 300f)
+        {
+            freezeRange -= (absDifference - 100f) * 0.2f;
+        }
+        else
+        {
+            freezeRange = 20.0f;
+        }
+
+        if (powerUpRNG <= freezeRange)
+        {
+            currentPowerUp = PowerUps.freeze;
+        }
+        else if (powerUpRNG > freezeRange && powerUpRNG <= oBeamRange)
+        {
+            currentPowerUp = PowerUps.orbitalBeam;
+        }
+        else if (powerUpRNG > oBeamRange && powerUpRNG <= teleportRange)
+        {
+            currentPowerUp = PowerUps.teleport;
+        }
+    }
+    #endregion
 
     public void ExecutePower(PowerUps currentPowerUp)
     {
@@ -282,6 +308,10 @@ public class PowerUpScript : NetworkBehaviour {
                 CmdOrbitalBeamCurrentPlayer(playerObject, orbitalBeamDuration);
                 SendCasterResultText(currentPowerUp, playerObject);
                 CmdOrbitalBeamOpponentPlayer(opponentObject);         // Notify and Play Sound
+                break;
+            case PowerUps.teleport:
+                CmdTeleportCurrentPlayer(playerObject);
+                SendCasterResultText(currentPowerUp, playerObject);
                 break;
             default:
                 Debug.LogError("No Execution for this Power Up!");
@@ -375,6 +405,13 @@ public class PowerUpScript : NetworkBehaviour {
         RpcOrbitalBeamOpponentPlayer(player);
     }
 
+    [Command]
+    void CmdTeleportCurrentPlayer(GameObject player)
+    {
+        RpcTeleportCurrentPlayer(player);
+    }
+
+
 
     [ClientRpc]
     void RpcFreezeOpponentPlayer(GameObject player, float duration)
@@ -422,5 +459,11 @@ public class PowerUpScript : NetworkBehaviour {
     void RpcOrbitalBeamOpponentPlayer(GameObject player)
     {
         player.GetComponent<NetworkPlayer>().OrbitalBeamWarning();
+    }
+
+    [ClientRpc]
+    void RpcTeleportCurrentPlayer(GameObject player)
+    {
+        player.GetComponent<NetworkPlayer>().TeleportPlayer();
     }
 }

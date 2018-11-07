@@ -6588,6 +6588,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d779b8a903fa47c40b3419840733afe2, type: 3}
   - {fileID: 21300000, guid: 4b3ae898bcecc69499e61b383c373c37, type: 3}
   - {fileID: 21300000, guid: 1b7534ce071c4d2449646a14bf719f61, type: 3}
+  - {fileID: 21300000, guid: 59c20829bccfa804db41338ac9f64e5b, type: 3}
   powerUpImageUI: {fileID: 114205133096728262}
   powerUpButtonUI: {fileID: 1403434194539896}
   powerUpReadyIndicator: {fileID: 1816505254587630}

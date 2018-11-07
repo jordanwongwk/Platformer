@@ -51,6 +51,7 @@ public class NetworkPowerUpUI : MonoBehaviour {
     const int BLIND_NUMBER = 5;
     const int SLIPPERY_NUMBER = 6;
     const int ORBITAL_BEAM_NUMBER = 7;
+    const int TELEPORT_NUMBER = 8;
 
     #region initialization
     // Use this for initialization
@@ -138,6 +139,9 @@ public class NetworkPowerUpUI : MonoBehaviour {
                 break;
             case PowerUps.orbitalBeam:
                 powerUpImageUI.sprite = powerUpImages[ORBITAL_BEAM_NUMBER];
+                break;
+            case PowerUps.teleport:
+                powerUpImageUI.sprite = powerUpImages[TELEPORT_NUMBER];
                 break;
             default:
                 powerUpImageUI.sprite = powerUpImages[NO_POWER_UP_NUMBER];
@@ -270,8 +274,11 @@ public class NetworkPowerUpUI : MonoBehaviour {
             case PowerUps.orbitalBeam:
                 powerUpText.text = "Orbital Beam is charging up. \nBeam is firing in 5 seconds.";
                 break;
+            case PowerUps.teleport:
+                powerUpText.text = "You used the power of teleportation! \nThis will draw you closer to your victory.";
+                break;
             default:
-                powerUpText.text = "This Power Up does not require shield check!";
+                powerUpText.text = "No matching text found";
                 break;
         }
     }
@@ -283,11 +290,24 @@ public class NetworkPowerUpUI : MonoBehaviour {
         powerUpText.text = "Your power has been absorbed by your opponent's shield. \nThe effect is negated!";
     }
 
-    public void UserPowerUpThatCannotBeCastWhileActive(PowerUps blockedPowerUp)
+    public void UserPowerUpRefund(PowerUps blockedPowerUp)
     {
         ManagingPowerUpTextBox();
         powerUpAudioSource.PlayOneShot(powerUpNegated);
-        powerUpText.text = "This power-up cannot be casted while it is active! Try again when it expires.";
+
+        switch (blockedPowerUp)
+        {
+            case PowerUps.orbitalBeam:
+                powerUpText.text = "This power-up cannot be casted while it is active! Try again when it expires.";
+                break;
+            case PowerUps.teleport:
+                powerUpText.text = "Unable to search for a safe spot to teleport. \nTry another spot.";
+                break;
+            default:
+                Debug.Log("This power shouldn't be refunded.");
+                break;
+        }
+        
         SetUpPowerUpImageAndReadiness(blockedPowerUp, true);
     }
 

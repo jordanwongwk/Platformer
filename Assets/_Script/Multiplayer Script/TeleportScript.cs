@@ -6,24 +6,23 @@ public class TeleportScript : MonoBehaviour {
 
     [SerializeField] float teleportDistanceThreshold = 1.0f;
     [SerializeField] float teleportCheckerMovementSpeed = 4.0f;
+    [SerializeField] AudioClip teleportOutAudio;
 
-    public bool toggleStartTeleport = false;
     bool isTriggeredToMove = false;
-    bool isInGround = false;
     Vector3 lastTouchPosition;
     NetworkPlayer thisPlayer;
     BoxCollider2D teleportCollider;
+    AudioSource myAudioSource;
 
     void Start()
     {
         thisPlayer = GetComponentInParent<NetworkPlayer>();
-        teleportCollider = GetComponent<BoxCollider2D>();
+        myAudioSource = GetComponent<AudioSource>();
+        myAudioSource.volume = PlayerPrefsManager.GetSoundVolume();
     }
 
     void Update ()
     {
-        FindForSuitableLocation(); // TEST
-
         if (isTriggeredToMove)
         {
             float yChange = teleportCheckerMovementSpeed * Time.deltaTime;
@@ -34,32 +33,28 @@ public class TeleportScript : MonoBehaviour {
                 isTriggeredToMove = false;
                 if (Mathf.Abs(lastTouchPosition.y - thisPlayer.transform.position.y) <= teleportDistanceThreshold)
                 {
-                    Debug.Log("Unable to teleport");
-                    // Refund PowerUp
+                    thisPlayer.UnableToTeleportRefund();                    
                 }
                 else
                 {
-                    Debug.Log("Teleport Axis: " + lastTouchPosition);
+                    myAudioSource.PlayOneShot(teleportOutAudio);
                     thisPlayer.TeleportToLocation(lastTouchPosition);
                 }
-                // Send instruction to enable player movement (maybe set a bool false)
-                // thisPlayer.SetIsTeleport(false);
             }
         }
 	}
 
-    public void FindForSuitableLocation()
+    // Start / Trigger Teleport Search
+    public void StartFindingForTeleportLocation()
     {
-        if (toggleStartTeleport)
-        {
-            isTriggeredToMove = true;
-            transform.localPosition = new Vector3(0f, 0f, 0f);
-            lastTouchPosition = thisPlayer.transform.position;
-            // Send instruction to Player to Stop Moving (maybe set a bool true)
-            // thisPlayer.SetIsTeleport(true);
+        isTriggeredToMove = true;
+        transform.localPosition = new Vector3(0f, 0f, 0f);
+        lastTouchPosition = thisPlayer.transform.position;
+    }
 
-            toggleStartTeleport = false; // For Toggle
-        }
+    public float GetTeleportOutAudioLength()
+    {
+        return teleportOutAudio.length;
     }
 
     // This only collides with a layer call "PlayerTeleportLayer"
@@ -67,7 +62,6 @@ public class TeleportScript : MonoBehaviour {
     {
         if (isTriggeredToMove)
         {
-            Debug.Log("Log spot " + transform.position);
             lastTouchPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         }
     }
