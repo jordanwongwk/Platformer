@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] GameObject leaderboardPanel;
     [SerializeField] GameObject optionsPanel;
     [SerializeField] GameObject creditsPanel;
+    [SerializeField] GameObject contactUsPanel;
 
     [Header("Error and Confirmation")]
     [SerializeField] GameObject warningNoGameMode;
@@ -147,6 +148,18 @@ public class UIManager : MonoBehaviour {
     public void DisableCreditsPanel()
     {
         PanelIsTurningOff(creditsPanel);
+    }
+    #endregion
+
+    #region Contact Us Panel
+    public void EnableContactUsPanel()
+    {
+        PanelIsTurningOn(contactUsPanel);
+    }
+
+    public void DisableContactUsPanel()
+    {
+        PanelIsTurningOff(contactUsPanel);
     }
     #endregion
 

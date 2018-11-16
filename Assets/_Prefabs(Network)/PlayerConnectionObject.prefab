@@ -6928,7 +6928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6671800aa8b8284f9c8c0468ef53939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLimit: 300
+  timeLimit: 60
   generalCanvasObject: {fileID: 1017156458360942}
   timesUpTextImage: {fileID: 1019016633330358}
   distanceSlider: {fileID: 1048515714038588}

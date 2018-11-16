@@ -15,6 +15,7 @@ public class NetworkButtonFunctions : NetworkBehaviour
     [Header("Pop-Up Messages")]
     [SerializeField] GameObject connectingMessage;
     [SerializeField] GameObject disconnectMessage;
+    [SerializeField] GameObject fullRoomMessage;
 
     public int readyPlayerCount = 0;
     int minimumPlayersToStart;
@@ -25,6 +26,12 @@ public class NetworkButtonFunctions : NetworkBehaviour
     private void Start()
     {
         minimumPlayersToStart = FindObjectOfType<MyNetworkLobbyManager>().minPlayers;
+    }
+
+    // Called by LobbyPlayerScript to false the boolean of playerIsInRoom when player left
+    public void SetPlayerIsInRoomBool(bool status)
+    {
+        playerIsInRoom = status;
     }
 
     #region Multiplayer Main Menu
@@ -88,6 +95,19 @@ public class NetworkButtonFunctions : NetworkBehaviour
         RemoveActiveWindow(disconnectMessage);
     }
 
+    // Attempt to join a room that is full and pop-up window to show the error, prevent excessive attempt to join room!
+    public void JoinAttemptFailDueToRoomIsFull()
+    {
+        RegisteringActiveWindow(fullRoomMessage);
+        uiMultiplayerManager.DisableJoinRoomButtonUponLeaving();
+        OnClickCancelConnectionAttempt();
+    }
+
+    public void CloseRoomFullWindow()
+    {
+        RemoveActiveWindow(fullRoomMessage);
+    }
+
     // Following 2 functions are registering / removing active windows (For clean managing UI)
     void RegisteringActiveWindow(GameObject window)
     {
@@ -128,7 +148,7 @@ public class NetworkButtonFunctions : NetworkBehaviour
         var players = FindObjectsOfType<LobbyPlayerScript>();
         foreach (var joinedPlayer in players)
         {
-            joinedPlayer.PromptLoadingScreen();
+            joinedPlayer.PlayerIsReadyToStart();
         }
     }
     #endregion

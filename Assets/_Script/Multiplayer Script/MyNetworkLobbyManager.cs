@@ -5,9 +5,11 @@ using UnityEngine.Networking;
 
 public class MyNetworkLobbyManager : NetworkLobbyManager {
 
+    // This only runs on server!
     public override void OnLobbyServerConnect(NetworkConnection conn)
     {
         FindObjectOfType<MultiplayerAudioManager>().PlayerEnterLeaveRoom();
+        // TODO While extra player is being kicked out and start game, the game cannot start (freeze)
     }
 
     public override void OnLobbyServerDisconnect(NetworkConnection conn)
@@ -44,10 +46,23 @@ public class MyNetworkLobbyManager : NetworkLobbyManager {
         Debug.Log("Stop Client");
     }
 
+    public override void OnLobbyStartHost()
+    {
+        base.OnLobbyStartHost();
+        Debug.Log("Start Host");
+    }
+
     public override void OnLobbyStopHost()
     {
         base.OnLobbyStopHost();
         Debug.Log("Stop Host");
     }
 
+    // If player tries to join a room that is full
+    public override void OnLobbyClientAddPlayerFailed()
+    {
+        base.OnLobbyClientAddPlayerFailed();
+        Debug.Log("Full");
+        FindObjectOfType<NetworkButtonFunctions>().JoinAttemptFailDueToRoomIsFull();
+    }
 }

@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class GameServerManager : NetworkBehaviour
 {
-    [Header("Gameplay Configuration")]
-    [SerializeField] float timeLimit;
-
     [Header("Setting Up")]
     [SerializeField] GameObject generalCanvasObject;
     [SerializeField] GameObject timesUpTextImage;
@@ -41,11 +38,12 @@ public class GameServerManager : NetworkBehaviour
     // Initialization
     void Start()
     {
+        currentTime = PlayerPrefsManager.GetTimeLimitForMultiplayer();
+
         // If the object is a server AND a local player = it is the one and only main server that overlooks the game
         if (isServer && isLocalPlayer)
         {
             isThisTimeKeeper = true;
-            currentTime = timeLimit;
             distanceSliderScript = distanceSlider.GetComponent<MultiplayerDistanceSlider>();
         }
 

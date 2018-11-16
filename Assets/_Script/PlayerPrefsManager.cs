@@ -18,6 +18,8 @@ public class PlayerPrefsManager : MonoBehaviour {
     const string HANDICAP_ONE_LIFE = "handicap_one_life";
     const string HANDICAP_ZERO_DIVINE = "handicap_zero_divine";
 
+    const string MULTIPLAYER_TIME_LIMIT = "multiplayer_time_limit";
+
     #region Option Settings
     public static void SetMusicVolume(float volume)
     {
@@ -136,6 +138,18 @@ public class PlayerPrefsManager : MonoBehaviour {
         int statusInInt = PlayerPrefs.GetInt(handicapZeroDivine, 0);
         bool status = (statusInInt == 1);
         return status;
+    }
+    #endregion
+
+    #region Multiplayer
+    public static void SetTimeLimitForMultiplayer(float timeLimit)
+    {
+        PlayerPrefs.SetFloat(MULTIPLAYER_TIME_LIMIT, timeLimit);
+    }
+
+    public static float GetTimeLimitForMultiplayer()
+    {
+        return PlayerPrefs.GetFloat(MULTIPLAYER_TIME_LIMIT);
     }
     #endregion
 }

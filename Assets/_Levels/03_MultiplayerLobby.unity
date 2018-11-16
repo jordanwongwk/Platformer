@@ -10388,13 +10388,13 @@ MonoBehaviour:
   m_MatchHost: mm.unet.unity3d.com
   m_MatchPort: 443
   matchName: default
-  matchSize: 4
+  matchSize: 2
   isNetworkActive: 0
   matchMaker: {fileID: 0}
   m_ShowLobbyGUI: 0
-  m_MaxPlayers: 4
+  m_MaxPlayers: 2
   m_MaxPlayersPerConnection: 1
-  m_MinPlayers: 1
+  m_MinPlayers: 2
   m_LobbyPlayerPrefab: {fileID: 114214567227774144, guid: a1bb6edc2eec7a74ca388364646a4529,
     type: 2}
   m_GamePlayerPrefab: {fileID: 1863887115596614, guid: 2e75b4edb0d77ff43a5496f26ff7ca1a,

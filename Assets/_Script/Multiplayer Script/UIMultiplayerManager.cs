@@ -34,20 +34,23 @@ public class UIMultiplayerManager : MonoBehaviour {
 
     public void OnClickShowTutorialList()
     {
-        tutorialListPanel.SetActive(true);
-        ActiveTutorialPanels.Add(tutorialListPanel);
+        TurnOnPanel(tutorialListPanel);
     }
 
     public void OnClickShowNetworkTutorial()
     {
-        networkTutorialPanel.SetActive(true);
-        ActiveTutorialPanels.Add(networkTutorialPanel);
+        TurnOnPanel(networkTutorialPanel);
     }
 
     public void OnClickShowGameTutorial()
     {
-        gameTutorialPanel.SetActive(true);
-        ActiveTutorialPanels.Add(gameTutorialPanel);
+        TurnOnPanel(gameTutorialPanel);
+    }
+
+    private void TurnOnPanel(GameObject panelToTurnOn)
+    {
+        panelToTurnOn.SetActive(true);
+        ActiveTutorialPanels.Add(panelToTurnOn);
     }
 
     public void OnClickCloseTutorial()
@@ -73,9 +76,19 @@ public class UIMultiplayerManager : MonoBehaviour {
 
     private void Update()
     {
-        if (!isPlayerBusyInRoom && Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            LevelManager.Instance.ExitToMainMenu();
+            // If the player is already in room 
+            if (isPlayerBusyInRoom) { return; }
+
+            if (ActiveTutorialPanels.Count > 0)
+            {
+                OnClickCloseTutorial();
+            }
+            else
+            {
+                LevelManager.Instance.ExitToMainMenu();
+            }
         }
     }
 }

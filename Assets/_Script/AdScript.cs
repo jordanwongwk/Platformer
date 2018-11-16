@@ -31,7 +31,7 @@ public class AdScript : MonoBehaviour {
     {
         // ***Test***
 
-        string adID = "ca-app-pub-3940256099942544/1033173712"; 
+        /*string adID = "ca-app-pub-3940256099942544/1033173712"; 
 
         #if UNITY_ANDROID
                 string adUnitId = adID;
@@ -46,24 +46,24 @@ public class AdScript : MonoBehaviour {
         AdRequest request = new AdRequest.Builder()
         .AddTestDevice(AdRequest.TestDeviceSimulator)       // Simulator.
         .AddTestDevice("2077ef9a63d2b398840261c8221a0c9b")  // My test device.
-        .Build();
+        .Build();*/
 
         //***End Test***
 
         //***Production***
 
         #if UNITY_ANDROID
-            //string appID = "ca-app-pub-7050819570050866~4842209208";
+            string appID = "ca-app-pub-7050819570050866~4842209208";
         #else
-            //string appID = "unexpected platform";
+            string appID = "unexpected platform";
         #endif
 
-        //MobileAds.Initialize(appID);
+        MobileAds.Initialize(appID);
 
-        //string adUnitID = "ca-app-pub-7050819570050866/9328249121";
+        string adUnitID = "ca-app-pub-7050819570050866/9328249121";
 
-        //interstitial = new InterstitialAd(adUnitID);
-        //AdRequest request = new AdRequest.Builder().Build();
+        interstitial = new InterstitialAd(adUnitID);
+        AdRequest request = new AdRequest.Builder().Build();
 
         //***End Production
 

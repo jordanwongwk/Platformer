@@ -87,7 +87,6 @@ public class NetworkPlayer : NetworkBehaviour {
     const float DEATH_DELAY = 3.0f;
     const int LIMITED_LIFE_AMOUNT = 5;
 
-
     #region Initialization
     private void Awake()
     {
@@ -850,6 +849,8 @@ public class NetworkPlayer : NetworkBehaviour {
         if (!isFiringOrbitalBeam)
         {
             isFiringOrbitalBeam = true;
+            // TODO Call a function at PUpScript to Call for opponent's warning
+            // Currently, even with a duplicate, the warning siren SFX still plays but no beam
             orbitalBeamChargingEffect.SetActive(isFiringOrbitalBeam);
             oBeamChargingSoundSource.Play();
             CmdCallOrbitalBeamChargingEffect(isFiringOrbitalBeam);

@@ -182,6 +182,7 @@ public class LobbyPlayerScript : NetworkBehaviour
         if (isLocalPlayer)
         {
             if (isThisPlayerReady) { CmdPlayerReadyCheck(false); }      // Forced the player to set to NOT READY first before leaving
+            networkButtonUIManager.SetPlayerIsInRoomBool(false);
             offlineUIManager.DisableJoinRoomButtonUponLeaving();
             StartCoroutine(LeaveRoomDelay());
         }
@@ -199,9 +200,9 @@ public class LobbyPlayerScript : NetworkBehaviour
     #endregion
 
     // When "START GAME", prompt the following action to server
-    public void PromptLoadingScreen()
+    public void PlayerIsReadyToStart()
     {
-        CmdActiveLoadingScreen(true);
+        CmdPlayerIsReadyToStart(true);
     }
 
     // [Call from NetworkManager] When scene changed, disable all private and public canvas
@@ -239,10 +240,9 @@ public class LobbyPlayerScript : NetworkBehaviour
 
     // When game start, the CMD is called to tell the server to load up the loading panel
     [Command]
-    void CmdActiveLoadingScreen(bool status)
+    void CmdPlayerIsReadyToStart(bool status)
     {
-        loadingPanel.gameObject.SetActive(status);
-        RpcActiveLoadingScreen(status);
+        RpcPlayerIsReadyToStart(status);
     }
     #endregion
 
@@ -256,10 +256,13 @@ public class LobbyPlayerScript : NetworkBehaviour
 
     // Called to pop-up the loading panel on other clients and at the same time ask it to send Ready Message!
     [ClientRpc]
-    void RpcActiveLoadingScreen(bool status)
+    void RpcPlayerIsReadyToStart(bool status)
     {
         loadingPanel.gameObject.SetActive(status);
-        GetComponent<NetworkLobbyPlayer>().SendReadyToBeginMessage();
+        if (isLocalPlayer)
+        {
+            GetComponent<NetworkLobbyPlayer>().SendReadyToBeginMessage();
+        }
     }
     #endregion
 }
